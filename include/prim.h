@@ -1,0 +1,1 @@
+void prim(double *adjacency, int n);
