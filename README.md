@@ -1,5 +1,8 @@
+# HDBSCAN (Hierarchical density based clustering)
 
-# Interfaces:
+![main algo](doc/main-algo.png "Main algo outline")
+
+## Interfaces:
 
 ### Input (Tobia)
 N datapoints in a d-dimensional euclidean space. \
@@ -17,4 +20,11 @@ Minimum Spanning Tree: \
 Cluster allocation: \
 `n` dimensional array containing the cluster id of each point. 0 = no cluster / noise. Stored as c-array.
 
+## Setting this up
 
+```bash
+mkdir build && cd build
+cmake -G Ninja ..
+ninja        # building binaries
+ninja check  # running tests
+```
