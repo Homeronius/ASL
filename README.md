@@ -28,3 +28,13 @@ cmake -G Ninja ..
 ninja        # building binaries
 ninja check  # running tests
 ```
+
+## References
+
+[R. J. G. B. Campello, D. Moulavi, A. Zimek, and J. Sander, “Hierarchical density estimates for data clustering, visualization, and outlier detection”](https://dl.acm.org/doi/pdf/10.1145/2733381)
+
+[L. McInnes and J. Healy, “Accelerated hierarchical density based clustering”](https://arxiv.org/pdf/1705.07321.pdf#cite.ram2009linear)
+
+[https://github.com/ojmakhura/hdbscan](https://github.com/ojmakhura/hdbscan)
+
+[https://github.com/rohanmohapatra/hdbscan-cpp](https://github.com/rohanmohapatra/hdbscan-cpp)
