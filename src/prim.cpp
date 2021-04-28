@@ -1,3 +1,5 @@
+#include "prim.h"
+
 #include <floats.h>
 
 /**
@@ -42,9 +44,9 @@ void prim(double *adjacency, int *result, int n) {
         contained[i] = true;
 
         // update the cost values of the nodes that
-        // are not yet in MST and adjacent to i
+        // are not yet in MST with possible lower distance to i
         for (j = 0; j < n; j++)
-            if (contained[j] == false && adjacency[i * n + j] < cost[i])
-                parent[j] = i, cost[v] = adjacency[i * n + j];
+            if (contained[j] == false && adjacency[i * n + j] < cost[j])
+                parent[j] = i, cost[j] = adjacency[i * n + j];
     }
 }
