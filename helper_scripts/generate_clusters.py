@@ -1,3 +1,5 @@
+from os import path
+from os import makedirs
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -23,13 +25,15 @@ def blobs_dataset(n_samples, n_features, n_clusters, cluster_std):
     return {"data": X, "labels": y, "std": cluster_std}
 
 
-def save_datasets(basename, dataset_list):
+def save_datasets(datadir, basename, dataset_list):
     """Save list of datasets given as dict to location specified in basename.
 
     Parameters
     ----------
+    datadir:
+        relative path to directory to store datasets to (i.e. '../data')
     basename :
-        relative path and basename of datasets (i.e. '../data/blobs')
+        basename of datasets
     dataset_list :
         dataset_list
     """
@@ -41,7 +45,7 @@ def save_datasets(basename, dataset_list):
 
         fname = "{}_{}.csv".format(basename, i)
         np.savetxt(
-            fname,
+            path.join(datadir, fname),
             np.concatenate((X, y[:, None]), axis=1, dtype=np.object_),
             delimiter=",",
             comments="",
@@ -89,9 +93,14 @@ def main():
     for std in std_range:
         datasets.append(blobs_dataset(n_samples, n_features, n_centers, std))
 
-    # Set basename of datasets
-    basename = "../data/blobs"
-    save_datasets(basename, datasets)
+    # Set relative location and basename of datasets
+    datadir = path.relpath("../data/")
+    if not path.exists(datadir):
+        makedirs(datadir)
+
+    basename = "blobs"
+
+    save_datasets(datadir, basename, datasets)
 
     print("Generated {} datasets with std {}.".format(n_datasets, std_range))
 
