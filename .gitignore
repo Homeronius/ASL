@@ -17,7 +17,7 @@ CTestTestfile.cmake
 # Precompiled Headers
 *.gch
 *.pch
-
+object
 # Libraries
 *.lib
 *.a
@@ -46,3 +46,6 @@ CTestTestfile.cmake
 
 # Build folder
 build/
+
+#IDE settings
+.vscode/settings.json
