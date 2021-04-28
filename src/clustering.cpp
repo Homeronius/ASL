@@ -1,12 +1,12 @@
 #include <stdlib.h>
-#include<vector>
+#include<list>
 #include "union_find.h"
 
 typedef double float_t;
 
 
 
-std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t number_of_edges){
+std::list<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t number_of_edges){
     /*
     Parameters:
         edgesA: array of idxs of first node of the edges in mst.
@@ -17,7 +17,8 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
     Output:
         std:vector of clusters
     */
-    Union_find heirarchy(n);
+   int minimum_cluster_size = 10;
+    Union_find heirarchy(n,10);
     
     for (size_t i = 0; i < number_of_edges; i++) {
         heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
