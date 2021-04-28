@@ -1,17 +1,16 @@
+#include "prim.h"
+
 #include <floats.h>
 
-/*
- * Function:  prim 
- * ----------------
- * Computes the minimum spanning tree (MST) of a
- * given (undirected + complete) graph based on 
- * its adjacency matrix that contains the weights of the edges.
- *  
- *  adjacency: the adjacency matrix, n x n
- *  result: (@TODO specify result format we want)
- *          the location where to store the result into 
- *  n: number of nodes in the graph
- *  
+/**
+ * @brief Compute the minimum spanning tree (MST) of a given
+ *        graph based on its adjacency matrix with corresponding
+ *        edge weights. The graph is assumed to be undirected.
+ * 
+ * @param adjacency the adjacency matrix of the graph [n,n]
+ * @param result pointer to store result into @TODO: figure out the result format
+ * @param n number of nodes in the graph
+ * 
  */
 void prim(double *adjacency, int *result, int n) {
     // represent tree via each node's parent?
@@ -45,9 +44,9 @@ void prim(double *adjacency, int *result, int n) {
         contained[i] = true;
 
         // update the cost values of the nodes that
-        // are not yet in MST and adjacent to i
+        // are not yet in MST with possible lower distance to i
         for (j = 0; j < n; j++)
-            if (contained[j] == false && adjacency[i * n + j] < cost[i])
-                parent[j] = i, cost[v] = adjacency[i * n + j];
+            if (contained[j] == false && adjacency[i * n + j] < cost[j])
+                parent[j] = i, cost[j] = adjacency[i * n + j];
     }
 }

@@ -33,8 +33,12 @@ ninja check  # running tests
 
 [R. J. G. B. Campello, D. Moulavi, A. Zimek, and J. Sander, “Hierarchical density estimates for data clustering, visualization, and outlier detection”](https://dl.acm.org/doi/pdf/10.1145/2733381)
 
-[L. McInnes and J. Healy, “Accelerated hierarchical density based clustering”](https://arxiv.org/pdf/1705.07321.pdf#cite.ram2009linear)
+[L. McInnes and J. Healy, “Accelerated hierarchical density based clustering”](https://arxiv.org/pdf/1705.07321.pdf)
 
 [https://github.com/ojmakhura/hdbscan](https://github.com/ojmakhura/hdbscan)
 
 [https://github.com/rohanmohapatra/hdbscan-cpp](https://github.com/rohanmohapatra/hdbscan-cpp)
+
+
+# Team 35
+© Tobia Claglüna, Martin Erhart, Alexander Hägele, Tom Lausberg
