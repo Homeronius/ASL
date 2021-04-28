@@ -16,7 +16,7 @@ void read_csv(double **dataset, int **labels, int (*shape)[2], const char *fname
     // Open filestream
     std::ifstream delimited_file(fname);
 
-    if (!delimited_file.is_open()) throw std::runtime_error("Could not open file");
+    if (!delimited_file.is_open()) throw std::runtime_error("Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists");
 
     std::string line, size, element;
 
