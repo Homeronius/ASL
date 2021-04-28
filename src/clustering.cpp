@@ -2,9 +2,6 @@
 #include<list>
 #include "union_find.h"
 
-typedef double float_t;
-
-
 
 std::list<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t number_of_edges){
     /*

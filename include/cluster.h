@@ -39,8 +39,8 @@ public:
             root_id = c1.root_id;
         }
     };
-
     ~Cluster();
+    
     void finalize(Cluster* p, float_t lambda){
         lambda_death = lambda;
         parent = p;
@@ -56,4 +56,7 @@ public:
     }
 };
 
+bool operator==(const Cluster& A, const Cluster& B){
+    return A.root_id == B.root_id;
+}
 #endif //_HDBSCAN_CLUSTER_H_
