@@ -1,6 +1,6 @@
 #include "prim.h"
 
-#include <floats.h>
+#include <float.h>
 #include <math.h>
 
 #include "distance.h"
@@ -41,7 +41,7 @@ void prim(double *adjacency, int *result, int n) {
         double min = __DBL_MAX__;
         for (j = 0; j < n; j++)
             if (contained[j] == false && cost[j] < min)
-                min = cost[v], i = j;
+                min = cost[j], i = j;
 
         // add i to MST
         contained[i] = true;
@@ -103,7 +103,7 @@ void prim_advanced(double *X, double *core_distances, int *result, int n, int d)
             curr_min_cost_j = cost[j];
             core_dist_j = core_distances[j];
             // @TODO have distance function here
-            dist_between = distance(&X[i * n], &X[j * n], d);
+            dist_between = euclidean_distance(&X[i * n], &X[j * n], d);
 
             mutual_reach_dist = fmax(core_dist_i, fmax(core_dist_j, dist_between));
 
