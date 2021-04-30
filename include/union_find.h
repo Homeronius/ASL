@@ -8,7 +8,7 @@
 
 #include"cluster.h"
 
-typedef float float_t;
+typedef double float_t;
 
 /**
  * @brief Modified union_find structure which tracks cluster creation

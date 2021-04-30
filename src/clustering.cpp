@@ -3,7 +3,7 @@
 #include "union_find.h"
 
 
-std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t number_of_edges){
+std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size){
     /*
     Parameters:
         edgesA: array of idxs of first node of the edges in mst.
@@ -14,10 +14,10 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
     Output:
         std:vector of clusters
     */
-   int minimum_cluster_size = 10;
-    Union_find heirarchy(n,10);
+
+    Union_find heirarchy(n,minimum_cluster_size);
     
-    for (size_t i = 0; i < number_of_edges; i++) {
+    for (size_t i = 0; i < n; i++) {
         heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
     }
     heirarchy.finalize();
@@ -54,5 +54,7 @@ int* point_labels(std::vector<Cluster> selected_clusters, int number_of_points){
             labels[component] = cluster_idx;
         }
     }
+
+    return labels;
 }
 

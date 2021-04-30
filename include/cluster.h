@@ -7,7 +7,7 @@
 #include<list>
 #include<algorithm>
 
-typedef float float_t;
+typedef double float_t;
 
 /**
  * @brief Pruned cluster class
@@ -73,7 +73,7 @@ public:
         child2 = &c2;
         selected = false;
     };
-    ~Cluster();
+    ~Cluster(){};
     /**
      * @brief Close cluster after merging.
      * 
@@ -94,6 +94,7 @@ public:
         for(int i = 0; i < lambdas.size(); i++){
             sum +=  lambdas[i] - lambda_death;
         }
+        return sum;
     }
 
     double get_max_cluster_weight(){
@@ -136,9 +137,12 @@ public:
     std::vector<int> get_components(){
         return components;
     }
+
+    bool operator==(const Cluster& B){
+        return root_id == B.root_id;
+    }
+
 };
 
-bool operator==(const Cluster& A, const Cluster& B){
-    return A.root_id == B.root_id;
-}
+
 #endif //_HDBSCAN_CLUSTER_H_

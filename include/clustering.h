@@ -13,6 +13,10 @@
  * @param number_of_edges number of edges in mst
  * @return std::list<Cluster> returns list of clusters, which represent condensed cluster tree
  */
-std::list<Cluster> clustering(int* edgesA, int* edgesB, float_t distances, size_t n, size_t number_of_edges);
+std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size);
+
+std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters);
+
+int* point_labels(std::vector<Cluster> selected_clusters, int number_of_points);
 
 #endif //_HDBSCAN_CLUSTERING_H_

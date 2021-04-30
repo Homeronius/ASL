@@ -1,9 +1,12 @@
 #include "distance.h"
 #include "utils.h"
+#include "clustering.h"
+#include "cluster.h"
 
 #include <cstdlib>
 #include <cstdio>
 #include <cstddef>
+#include <vector>
 
 int main() {
 
@@ -35,6 +38,17 @@ int main() {
 
     free(dataset);
     free(labels);
+
+	int* edgesA;
+	int* edgesB;
+	float_t* distances;
+	int minimum_cluster_size = 10;
+	
+	std::vector<Cluster> condensed_cluster_tree = clustering(edgesA,edgesB,distances,n,minimum_cluster_size);
+	
+	std::vector<Cluster> selected_clusters = extract_clusters(condensed_cluster_tree);
+	
+	int* our_labels = point_labels(selected_clusters,n);
 
     return 0;
 
