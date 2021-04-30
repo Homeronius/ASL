@@ -21,9 +21,13 @@ private:
     std::vector<int> components;
     std::vector<float_t> lambdas;
 
-    Cluster* parent;
 public:
+    Cluster* child1;
+    Cluster* child2;
+    Cluster* parent;
     int root_id;
+    bool selected;
+
     /**
      * @brief Construct a new Cluster object.
      * 
@@ -33,12 +37,17 @@ public:
      */
     Cluster(float_t lambda, int root_id, std::vector<int> elements): components(elements), root_id(root_id) {
         lambdas.assign(components.size(), lambda);
+        child1 = nullptr;
+        child2 = nullptr;
+        selected = true;
     };
     /**
      * @brief Default Construct a empty Cluster object
      * 
      */
     Cluster(){
+        child1 = nullptr;
+        child2 = nullptr;
         root_id = -1;
     };
     /**
@@ -60,6 +69,9 @@ public:
         } else {
             root_id = c1.root_id;
         }
+        child1 = &c1;
+        child2 = &c2;
+        selected = false;
     };
     ~Cluster();
     /**
@@ -77,7 +89,29 @@ public:
      * 
      * @return double Sum of lifetimes of the original nodes.
      */
-    double cluster_weight();
+    double get_cluster_weight(){
+        double sum = 0;
+        for(int i = 0; i < lambdas.size(); i++){
+            sum +=  lambdas[i] - lambda_death;
+        }
+    }
+
+    double get_max_cluster_weight(){
+        if (selected){
+            return get_cluster_weight();
+        } else {
+            return get_children_cluster_weight();
+        }
+    }
+
+    double get_children_cluster_weight(){
+        if (child1 != nullptr && child2 != nullptr){
+            return child1->get_cluster_weight() + child2->get_cluster_weight();
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * @brief add single node to cluster
      * 
@@ -97,6 +131,10 @@ public:
     void add_leaf(std::vector<int> root_ids, float_t lambda){
         components.insert(components.end(), root_ids.begin(), root_ids.end()); //append root ids
         lambdas.insert(lambdas.end(),root_ids.size(),lambda); //append current lambda for of new elemennts
+    }
+
+    std::vector<int> get_components(){
+        return components;
     }
 };
 

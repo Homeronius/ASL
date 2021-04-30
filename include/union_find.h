@@ -22,7 +22,7 @@ private:
     int number_of_components;
     int minimum_cluster_size;
     std::list<Cluster> open_clusters;
-    std::list<Cluster> finished_clusters;
+    std::vector<Cluster> finished_clusters;
 
 public:
     /**
@@ -54,7 +54,9 @@ public:
      * 
      * @return std::list<Cluster> 
      */
-    std::list<Cluster> get_clusters() {return finished_clusters;};
+    std::vector<Cluster> get_clusters() {return finished_clusters;};
+
+    void finalize();
 };
 
 #endif //_HDBSCAN_UNION_FIND_H_

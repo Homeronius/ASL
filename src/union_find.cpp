@@ -147,3 +147,10 @@ bool Union_find::connected(int p, int q){
 int Union_find::component_size(int p) {
     return sz[find(p)];
 }
+
+void Union_find::finalize(){
+    for (auto &&c : open_clusters){
+        c.finalize(nullptr,0);
+        finished_clusters.push_back(c);
+    }
+}
