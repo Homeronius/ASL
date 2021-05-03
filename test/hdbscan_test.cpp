@@ -25,13 +25,6 @@ bool compare_edge_arrays(const edge *a, const edge *b, int n) {
     return true;
 }
 
-bool compare_double(double a, double b) {
-  if (fabs(a - b) > DBL_EPSILON) {
-    return false;
-  }
-  return true;
-}
-
 TEST(distance, distance_matrix) {
   const int d = 4;
   const int n = 2;
@@ -51,7 +44,7 @@ TEST(distance, quickselect) {
 
   double result = quickselect(input, 0, n, 2);
 
-  EXPECT_PRED2(compare_double, result, 3.0);
+  EXPECT_DOUBLE_EQ(result, 3.0);
 }
 
 TEST(distance, core_distance) {
