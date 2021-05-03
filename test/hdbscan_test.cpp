@@ -47,26 +47,36 @@ TEST(distance, distance_matrix) {
   EXPECT_PRED3(compare_arrays, dist, expected, 4);
 }
 
-TEST(distance, quickselect) {
+TEST(distance, quickselect1) {
   const int n = 4;
   double input[n] = {1.0, 2.0, 3.0, 4.0};
 
-  double result = quickselect(input, 0, n, 2);
+  double result = quickselect(input, 0, n - 1, 2);
 
   EXPECT_DOUBLE_EQ(result, 3.0);
+}
+
+TEST(distance, quickselect2) {
+  const int n = 6;
+  double input[n] = {7., 4., 6., 3., 9., 1.};
+
+  double result = quickselect(input, 0, n - 1, 2);
+
+  EXPECT_DOUBLE_EQ(result, 4.0);
 }
 
 TEST(distance, core_distance) {
   const int d = 1;
   const int n = 4;
+  const int mpts = 2;
   double input[n*d] = {1.0, 2.0, 3.0, 4.0};
   double core_dist[n];
 
-  compute_core_distances(input, core_dist, 2, 4, 1);
+  compute_core_distances(input, core_dist, mpts, n, d);
 
   const double expected[n] = {1.0, 1.0, 1.0, 1.0};
 
-  EXPECT_PRED3(compare_arrays, core_dist, expected, 4);
+  EXPECT_PRED3(compare_arrays, core_dist, expected, n);
 }
 
 TEST(Prim, BasicGraph1) {
@@ -142,7 +152,7 @@ TEST(AdvancedPrim, ComparisonRandom) {
     srand(42);
     const int n = 100;
     const int d = 10;
-    const int mpts = 3;
+    const int mpts = 2;
 
     double input[n * d];
     for (int i = 0; i < n * d; i++) {

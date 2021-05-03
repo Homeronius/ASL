@@ -31,7 +31,7 @@ int partition(double *list, int left, int right, int pivot) {
 
   int store_idx = left;
 
-  for (int i = left; i < right - 1; i++) {
+  for (int i = left; i < right; i++) {
     if (list[i] < pivot_val) {
       double tmp = list[store_idx];
       list[store_idx] = list[i];
@@ -52,7 +52,7 @@ double quickselect(double *list, int left, int right, int k) {
     return list[left];
   }
 
-  double pivot = left + rand() % (right - left + 1);
+  int pivot = left + rand() % (right - left + 1);
   pivot = partition(list, left, right, pivot);
 
   if (k == pivot) {
@@ -70,10 +70,10 @@ void compute_core_distances(double *input, double *core_dist,
 
   for (int k = 0; k < n; k++) {
     for (int i = 0; i < n; i++) {
-      distances[i] = euclidean_distance(input+k*d, input+i*d, d);
+      distances[i] = euclidean_distance(input+i*d, input+k*d, d);
     }
 
-    core_dist[k] = quickselect(distances, 0, n, mpts-1);
+    core_dist[k] = quickselect(distances, 0, n - 1, mpts - 1);
   }
 }
 
@@ -90,7 +90,7 @@ void compute_distance_matrix(double *input, double *dist,
 
   // d_mreach(p1, p2) = max(d_core(p1), d_core(p2), euclidean_distance(p1, p2))
   for (int i = 0; i < n; i++) {
-    quickselect(tmp+i*n, 0, n, mpts-1);
+    quickselect(tmp+i*n, 0, n - 1, mpts - 1);
   }
 
   for (int i = 0; i < n; i++) {
