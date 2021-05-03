@@ -82,17 +82,17 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
         contained[i] = false;
     }
 
+    double min_cost, core_dist_i, core_dist_j,
+        curr_min_cost_j, dist_between, mutual_reach_dist;
+
     // start from vertex 0
     int i = 0;
+    cost[i] = 0.0;
+    parent[i] = -1;
+    contained[i] = true;
     for (int iter = 0; iter < n - 1; iter++) {
         // i is the node we want to add
         int new_node, j;
-        double min_cost, core_dist_i, core_dist_j,
-            curr_min_cost_j, dist_between, mutual_reach_dist;
-
-        // add i to MST
-        // @TODO: properly add result here
-        contained[i] = true;
 
         core_dist_i = core_distances[i];
         min_cost = __DBL_MAX__;
@@ -107,10 +107,10 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
             curr_min_cost_j = cost[j];
             core_dist_j = core_distances[j];
             // @TODO different distance funcs?
-            dist_between = euclidean_distance(&X[i * n], &X[j * n], d);
+            dist_between = euclidean_distance(X + i * d, X + j * d, d);
 
             mutual_reach_dist = fmax(core_dist_i, fmax(core_dist_j, dist_between));
-
+            
             if (mutual_reach_dist < curr_min_cost_j) {
                 parent[j] = i;
                 cost[j] = mutual_reach_dist;
@@ -127,5 +127,10 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
         }
 
         i = new_node;
+
+        // add i to MST
+        contained[i] = true;
+        result[iter] = {min_cost, parent[i], i};
+
     }
 }

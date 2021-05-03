@@ -1,9 +1,10 @@
 #include <float.h>
 #include <math.h>
-#include <prim.h>
+#include <stdlib.h>
 
 #include "distance.h"
 #include "gtest/gtest.h"
+#include "prim.h"
 
 bool compare_arrays(const double *a, const double *b, int n) {
   for (int i = 0; i < n; i++) {
@@ -17,12 +18,20 @@ bool compare_edge_arrays(const edge *a, const edge *b, int n) {
     for (int i = 0; i < n; i++) {
         if (fabs(a[i].weight - b[i].weight) > DBL_EPSILON ||
             (a[i].u != b[i].u || a[i].v != b[i].v)) {
-            std::cout << "Expected:" << a[i].weight << a[i].u << a[i].v << "\n";
-            std::cout << "Got:" << b[i].weight << b[i].u << b[i].v << "\n";
+            std::cout << "Expected: {" << a[i].weight << ", " << a[i].u << ", " << a[i].v << "}\n";
+            std::cout << "Got: {" << b[i].weight << ", " << b[i].u << ", " << b[i].v << "}\n";
             return false;
         }
     }
     return true;
+}
+
+double edge_sum(edge *a, int n) {
+    double acc = 0;
+    for (int i = 0; i < n; i++) {
+        acc += a[i].weight;
+    }
+    return acc;
 }
 
 TEST(distance, distance_matrix) {
@@ -123,4 +132,36 @@ TEST(Prim, BasicGraph2) {
     };
 
     EXPECT_PRED3(compare_edge_arrays, expected, result, (n - 1));
+}
+
+TEST(AdvancedPrim, ComparisonRandom) {
+    // !!!! Fails currently
+    /* Compare the results of the basic prim algorithm
+       to the output of the advanced version with 
+       the implicit mutual reachability graph */
+    srand(42);
+    const int n = 100;
+    const int d = 10;
+    const int mpts = 3;
+
+    double input[n * d];
+    for (int i = 0; i < n * d; i++) {
+      // rand between -10 and 10
+      input[i] = (double)rand() / RAND_MAX * 20.0 - 10.0;
+    }
+    double dist[n * n];
+    double core_distances[n];
+
+    compute_core_distances(input, core_distances, mpts, n, d);
+    compute_distance_matrix(input, dist, mpts, n, d);
+
+    edge result_basic[(n - 1)];
+    prim(dist, result_basic, n);
+
+    edge result_advanced[(n - 1)];
+    prim_advanced(input, core_distances, result_advanced, n, d);
+
+    // probably pick one of those, currently both fail
+    EXPECT_TRUE(compare_edge_arrays(result_basic, result_advanced, (n - 1)));
+    EXPECT_DOUBLE_EQ(edge_sum(result_basic, (n - 1)), edge_sum(result_advanced, (n - 1)));
 }
