@@ -73,7 +73,7 @@ void compute_core_distances(double *input, double *core_dist,
       distances[i] = euclidean_distance(input+k*d, input+i*d, d);
     }
 
-    core_dist[k] = quickselect(distances, 0, n-1, mpts-1);
+    core_dist[k] = quickselect(distances, 0, n, mpts-1);
   }
 }
 
@@ -90,7 +90,7 @@ void compute_distance_matrix(double *input, double *dist,
 
   // d_mreach(p1, p2) = max(d_core(p1), d_core(p2), euclidean_distance(p1, p2))
   for (int i = 0; i < n; i++) {
-    quickselect(tmp+i*n, 0, n-1, mpts-1);
+    quickselect(tmp+i*n, 0, n, mpts-1);
   }
 
   for (int i = 0; i < n; i++) {

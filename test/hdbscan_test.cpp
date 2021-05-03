@@ -5,7 +5,7 @@
 #include "distance.h"
 #include "gtest/gtest.h"
 
-bool compare_arrays(double *a, double *b, int n) {
+bool compare_arrays(const double *a, const double *b, int n) {
   for (int i = 0; i < n; i++) {
     if (fabs(a[i] - b[i]) > DBL_EPSILON)
       return false;
@@ -13,7 +13,7 @@ bool compare_arrays(double *a, double *b, int n) {
   return true;
 }
 
-bool compare_edge_arrays(edge *a, edge *b, int n) {
+bool compare_edge_arrays(const edge *a, const edge *b, int n) {
     for (int i = 0; i < n; i++) {
         if (fabs(a[i].weight - b[i].weight) > DBL_EPSILON ||
             (a[i].u != b[i].u || a[i].v != b[i].v)) {
@@ -25,17 +25,46 @@ bool compare_edge_arrays(edge *a, edge *b, int n) {
     return true;
 }
 
-TEST(Distance, Test) {
+bool compare_double(double a, double b) {
+  if (fabs(a - b) > DBL_EPSILON) {
+    return false;
+  }
+  return true;
+}
+
+TEST(distance, distance_matrix) {
   const int d = 4;
   const int n = 2;
   double input[n*d] = {1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0};
   double dist[n*n];
 
-  compute_distance_matrix(input, dist, 2, 2, 4);
+  compute_distance_matrix(input, dist, 3, 2, 4);
 
-  double expected[n*n] = {0.0, 2.0, 2.0, 0.0};
+  const double expected[n*n] = {0.0, 2.0, 2.0, 0.0};
 
-  EXPECT_TRUE(compare_arrays(dist, expected, d));
+  EXPECT_PRED3(compare_arrays, dist, expected, 4);
+}
+
+TEST(distance, quickselect) {
+  const int n = 4;
+  double input[n] = {1.0, 2.0, 3.0, 4.0};
+
+  double result = quickselect(input, 0, n, 2);
+
+  EXPECT_PRED2(compare_double, result, 3.0);
+}
+
+TEST(distance, core_distance) {
+  const int d = 1;
+  const int n = 4;
+  double input[n*d] = {1.0, 2.0, 3.0, 4.0};
+  double core_dist[n];
+
+  compute_core_distances(input, core_dist, 2, 4, 1);
+
+  const double expected[n] = {1.0, 1.0, 1.0, 1.0};
+
+  EXPECT_PRED3(compare_arrays, core_dist, expected, 4);
 }
 
 TEST(Prim, BasicGraph1) {
@@ -61,14 +90,14 @@ TEST(Prim, BasicGraph1) {
 
     // @TODO: is edge order unique according to prim
     // and starting with vertex 0?
-    edge expected[(n - 1)] = {
+    const edge expected[(n - 1)] = {
         {2., 0, 1},
         {3., 1, 2},
         {5., 1, 4},
         {6., 0, 3},
     };
 
-    EXPECT_TRUE(compare_edge_arrays(expected, result, (n - 1)));
+    EXPECT_PRED3(compare_edge_arrays, expected, result, (n - 1));
 }
 
 TEST(Prim, BasicGraph2) {
@@ -94,11 +123,11 @@ TEST(Prim, BasicGraph2) {
     // @TODO: is edge order unique according to prim
     // and starting with vertex 0? or just compare edge weight sum, if MST
     // is not unique
-    edge expected[(n - 1)] = {
+    const edge expected[(n - 1)] = {
         {1., 0, 1},
         {1., 1, 2},
         {1., 0, 3},
     };
 
-    EXPECT_TRUE(compare_edge_arrays(expected, result, (n - 1)));
+    EXPECT_PRED3(compare_edge_arrays, expected, result, (n - 1));
 }
