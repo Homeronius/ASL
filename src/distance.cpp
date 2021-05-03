@@ -13,6 +13,17 @@ double euclidean_distance(double *p1, double *p2, int d) {
   return sqrt(sum);
 }
 
+double manhattan_distance(double *p1, double *p2, int d) {
+  double sum = 0.0;
+
+  for (int i = 0; i < d; i++) {
+    double diff = p1[i] - p2[i];
+    sum += fabs(diff);
+  }
+
+  return sum;
+}
+
 int partition(double *list, int left, int right, int pivot) {
   double pivot_val = list[pivot];
   list[pivot] = list[right];
@@ -53,7 +64,21 @@ double quickselect(double *list, int left, int right, int k) {
   }
 }
 
-void compute_distance_matrix(double *input, double *dist, int mpts, int n, int d) {
+void compute_core_distances(double *input, double *core_dist,
+                            int mpts, int n, int d) {
+  double distances[n];
+
+  for (int k = 0; k < n; k++) {
+    for (int i = 0; i < n; i++) {
+      distances[i] = euclidean_distance(input+k*d, input+i*d, d);
+    }
+
+    core_dist[k] = quickselect(distances, 0, n-1, mpts-1);
+  }
+}
+
+void compute_distance_matrix(double *input, double *dist,
+                             int mpts, int n, int d) {
   double tmp[n*n];
 
   for (int i = 0; i < n; i++) {

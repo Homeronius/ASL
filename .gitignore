@@ -46,6 +46,7 @@ object
 
 # Build folder
 build/
+data/
 
 #IDE settings
 .vscode/settings.json
