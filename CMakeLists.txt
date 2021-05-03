@@ -7,16 +7,22 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
+set(CMAKE_CXX_FLAGS "-O3 --tree-vectorize -march=native")
+
 set(HDBSCAN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(HEADER_FILES ${HDBSCAN_INCLUDE_DIR}/distance.h)
-set(HEADER_FILES ${HDBSCAN_INCLUDE_DIR}/union_find.h)
-set(HEADER_FILES ${HDBSCAN_INCLUDE_DIR}/clustering.h)
-set(HEADER_FILES ${HDBSCAN_INCLUDE_DIR}/cluster.h)
-set(HEADER_FILES ${HDBSCAN_INCLUDE_DIR}/utils.h)
+set(HEADER_FILES
+    ${HDBSCAN_INCLUDE_DIR}/distance.h
+    ${HDBSCAN_INCLUDE_DIR}/union_find.h
+    ${HDBSCAN_INCLUDE_DIR}/clustering.h
+    ${HDBSCAN_INCLUDE_DIR}/cluster.h
+    ${HDBSCAN_INCLUDE_DIR}/utils.h
+)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+add_custom_target(benchmark COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark)
 
 if(DEFINED ENV{GTEST_ROOT})
   find_package(GTest REQUIRED)

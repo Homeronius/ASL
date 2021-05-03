@@ -29,6 +29,13 @@ ninja        # building binaries
 ninja check  # running tests
 ```
 
+## Benchmarking
+
+You might need to install the `perf` tool to run the benchmarks.
+If you have a processor that is not based on the Intel Skylake architecture, please modify the event and unmask values in `benchmark_util.h`.
+
+To run the benchmarks: `ninja benchmark`
+
 ## References
 
 [R. J. G. B. Campello, D. Moulavi, A. Zimek, and J. Sander, “Hierarchical density estimates for data clustering, visualization, and outlier detection”](https://dl.acm.org/doi/pdf/10.1145/2733381)
