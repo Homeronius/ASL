@@ -1,3 +1,4 @@
+import sys
 from os import path
 from os import makedirs
 import matplotlib.pyplot as plt
@@ -52,27 +53,11 @@ def save_datasets(datadir, basename, dataset_list):
             header=header,
         )
 
-
-def plot_dataset2D(X, y):
-    """Plot first two features of dataset.
-
-    Parameters
-    ----------
-    X :
-        datapoints (n x d)
-    y :
-        labels (n)
-    """
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-
-    ax.scatter(X[:, 0], X[:, 1], marker="o", c=y, s=20, edgecolor="k")
-
-    plt.show()
-
-
 def main():
+    if len(sys.argv) != 2:
+        print('Usage: generate_clusters.py <relative_data_folder_path>')
+        return
+
     # Number of datasets to be generated
     n_datasets = 5
     datasets = []
@@ -94,9 +79,11 @@ def main():
         datasets.append(blobs_dataset(n_samples, n_features, n_centers, std))
 
     # Set relative location and basename of datasets
-    datadir = path.relpath("../data/")
+    datadir = path.relpath(sys.argv[1])
     if not path.exists(datadir):
         makedirs(datadir)
+
+    print('Writing datasets to', str(datadir))
 
     basename = "blobs"
 
