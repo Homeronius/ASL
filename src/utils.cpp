@@ -62,13 +62,13 @@ void read_csv(double **dataset, int **labels, int (*shape)[2], const char *fname
 
 }
 
-void write_csv(double *dataset, int *labels, int (*shape)[2], const char *fname){
+void write_csv(double *dataset, int *labels, int shape[2], const char *fname){
 
     // Open filestream
     std::ofstream delimited_file(fname);
 
-    int n = *shape[0];
-    int d = *shape[1];
+    int n = shape[0];
+    int d = shape[1];
 
     if (!delimited_file.is_open()) throw std::runtime_error("Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists");
 

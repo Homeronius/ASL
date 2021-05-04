@@ -99,7 +99,7 @@ int main() {
 
     // Store the clustered data
     const char *out_filename = "../../data/blobs_0_predicted.csv";
-    write_csv(dataset, labels, &shape, out_filename);
+    write_csv(dataset, our_labels, shape, out_filename);
 
     return 0;
 
