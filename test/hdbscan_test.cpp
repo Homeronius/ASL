@@ -40,7 +40,7 @@ TEST(distance, distance_matrix) {
   double input[n*d] = {1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0};
   double dist[n*n];
 
-  compute_distance_matrix(input, dist, 3, 2, 4);
+  compute_distance_matrix(input, dist, 3, n, d);
 
   const double expected[n*n] = {0.0, 2.0, 2.0, 0.0};
 

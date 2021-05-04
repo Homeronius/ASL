@@ -63,17 +63,17 @@ int main(int argc, char **argv) {
 
   measure_and_print(&compute);
 
-  printf("FLOPS count scalar double: %ld\n",
+  printf("FLOPS count scalar double: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_SCALAR_DOUBLE));
-  printf("FLOPS count scalar float: %ld\n",
+  printf("FLOPS count scalar float: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_SCALAR_SINGLE));
-  printf("FLOPS count 128 packed double: %ld\n",
+  printf("FLOPS count 128 packed double: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE));
-  printf("FLOPS count 128 packed float: %ld\n",
+  printf("FLOPS count 128 packed float: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE));
-  printf("FLOPS count 256 packed double: %ld\n",
+  printf("FLOPS count 256 packed double: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE));
-  printf("FLOPS count 256 packed float: %ld\n",
+  printf("FLOPS count 256 packed float: %lld\n",
     measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE));
   
   free(matrix);

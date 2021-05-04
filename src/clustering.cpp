@@ -23,7 +23,7 @@ std::vector<Cluster*> clustering(edge* mst, size_t n, size_t minimum_cluster_siz
         heirarchy.unify(mst[i].u,mst[i].v,mst[i].weight);
     }
     heirarchy.finalize();
-    printf("Created %i cluster(s)\n", heirarchy.get_clusters().size());
+    printf("Created %zu cluster(s)\n", heirarchy.get_clusters().size());
     return heirarchy.get_clusters();
 
 }
