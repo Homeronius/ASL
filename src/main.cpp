@@ -59,7 +59,7 @@ int main() {
     }
 
     // 3.1 Sort edges by increasing weight
-    qsort(mst, 8, sizeof(edge), compare_edges);
+    qsort(mst, n_ext, sizeof(edge), compare_edges);
 
     printf("MST computed and extended. First edge in arr : (%i, %i) | weight : %f\n", mst[0].u, mst[0].v, mst[0].weight);
     printf("Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext-1].u, mst[n_ext-1].v, mst[n_ext-1].weight);
@@ -85,7 +85,7 @@ int main() {
 
     // 4.2 Build the hierarchical tree itself
 
-	int minimum_cluster_size = 3;
+	int minimum_cluster_size = 10;
 
 	std::vector<Cluster> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
 

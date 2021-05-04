@@ -39,7 +39,7 @@ int Union_find::find(int p) {
 }
 
 void Union_find::merge_clusters(int root1, int root2, float_t distance){
-    printf("Merging Cluster: %i-%i\t",root1,root2);
+    printf("Merging Cluster: %i-%i\n\tsizes: %i,%i\n\t",root1,root2,sz[root1],sz[root2]);
     float_t lambda = 1 / distance;
 
     //CASE 1: root1 & root2 are both not clusters.
@@ -100,6 +100,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
                 components.push_back(i);
             }
             c2->add_leaf(components, lambda);
+            return;
         }
     } else if (sz[root2] < minimum_cluster_size){
         printf("Case 3\n");
@@ -110,6 +111,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
                 components.push_back(i);
             }
             c1->add_leaf(components, lambda);
+            return;
         }
     }
 
