@@ -61,3 +61,30 @@ void read_csv(double **dataset, int **labels, int (*shape)[2], const char *fname
     delimited_file.close();
 
 }
+
+void write_csv(double *dataset, int *labels, int (*shape)[2], const char *fname){
+
+    // Open filestream
+    std::ofstream delimited_file(fname);
+
+    int n = *shape[0];
+    int d = *shape[1];
+
+    if (!delimited_file.is_open()) throw std::runtime_error("Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists");
+
+    if(delimited_file.good()){
+        // write header
+        delimited_file << n << ",";
+        delimited_file << d << "\n";
+
+        // write data
+        for(int i = 0; i < n; ++i){
+            for(int j = 0; j < d; ++j){
+                delimited_file << dataset[i*d + j] << ",";
+            }
+            delimited_file << labels[i] << "\n";
+        }
+    }
+
+    delimited_file.close();
+}
