@@ -17,15 +17,15 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
     */
 
     Union_find heirarchy(n,minimum_cluster_size);
-    
+
     for (size_t i = 0; i < n; i++) {
-        printf("Unifying %i, %i\n",edgesA[i],edgesB[i]);
+        //printf("Unifying %i, %i\n",edgesA[i],edgesB[i]);
         heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
     }
     heirarchy.finalize();
-    printf("Created %i cluster(s)\n", heirarchy.get_clusters().size());
+    //printf("Created %i cluster(s)\n", heirarchy.get_clusters().size());
     return heirarchy.get_clusters();
-    
+
 }
 
 std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters){
