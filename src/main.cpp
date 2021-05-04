@@ -97,6 +97,10 @@ int main() {
 
 	int* our_labels = point_labels(selected_clusters, n_ext);
 
+    // Store the clustered data
+    const char *out_filename = "../../data/blobs_0_predicted.csv";
+    write_csv(dataset, labels, &shape, out_filename);
+
     return 0;
 
 }
