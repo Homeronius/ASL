@@ -16,7 +16,7 @@ int main() {
     float_t *dataset = NULL;
     int *labels = NULL;
     int shape[2];
-    const char *filename = "../data/blobs_0.csv";
+    const char *filename = "../../data/blobs_0.csv";
 
     read_csv(&dataset, &labels, &shape, filename);
 
@@ -81,7 +81,7 @@ int main() {
 
     // 4.2 Build the hierarchical tree itself
 
-	int minimum_cluster_size = 10;
+	int minimum_cluster_size = 3;
 
 	std::vector<Cluster> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
 

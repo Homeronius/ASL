@@ -16,12 +16,11 @@ typedef double float_t;
 class Cluster {
 private:
     
-    float_t lambda_death;
-
-    std::vector<int> components;
-    std::vector<float_t> lambdas;
 
 public:
+    float_t lambda_death;
+    std::vector<int> components;
+    std::vector<float_t> lambdas;
     Cluster* child1;
     Cluster* child2;
     Cluster* parent;
@@ -39,6 +38,7 @@ public:
         lambdas.assign(components.size(), lambda);
         child1 = nullptr;
         child2 = nullptr;
+        parent = nullptr;
         selected = true;
     };
     /**
@@ -48,7 +48,19 @@ public:
     Cluster(){
         child1 = nullptr;
         child2 = nullptr;
+        parent = nullptr;
         root_id = -1;
+        selected = false;
+    };
+
+    Cluster(const Cluster &c){
+        child1 = c.child1;
+        child2 = c.child2;
+        parent = c.parent;
+        root_id = c.root_id;
+        selected = c.selected;
+        lambdas = std::vector<float_t>(c.lambdas);
+        components = std::vector<int>(c.components);
     };
     /**
      * @brief Construct a new Cluster object by merging to existing clusters
@@ -60,8 +72,16 @@ public:
     Cluster(Cluster c1, Cluster c2, float_t lambda){
         // TODO check correctness of copy
         // c.components = c1.components + c2.components
-        std::copy(c1.components.begin(),c1.components.end(),components.begin());
-        std::copy(c2.components.begin(),c2.components.end(),components.begin()+c1.components.size());
+
+        for (int i = 0; i < c1.components.size(); i++){
+            components.push_back(c1.components[i]);
+        }
+        for (int i = 0; i < c2.components.size(); i++){
+            components.push_back(c2.components[i]);
+        }
+        
+        // std::copy(c1.components.begin(),c1.components.end(),components.begin());
+        // std::copy(c2.components.begin(),c2.components.end(),components.begin()+c1.components.size());
         lambdas.assign(components.size(), lambda);
 
         if(c1.components.size() < c2.components.size()){

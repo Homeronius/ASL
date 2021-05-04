@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include<list>
 #include "union_find.h"
+#include <cstdio>
 
 
 std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size){
@@ -18,9 +19,11 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
     Union_find heirarchy(n,minimum_cluster_size);
     
     for (size_t i = 0; i < n; i++) {
+        printf("Unifying %i, %i\n",edgesA[i],edgesB[i]);
         heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
     }
     heirarchy.finalize();
+    printf("Created %i cluster(s)\n", heirarchy.get_clusters().size());
     return heirarchy.get_clusters();
     
 }
@@ -31,7 +34,7 @@ std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters){
     for (auto &&c : clusters){
         if (c.selected){
             Cluster* parent = c.parent;
-            if (parent->get_cluster_weight() > parent->get_max_cluster_weight()){
+            if (parent != nullptr && parent->get_cluster_weight() > parent->get_max_cluster_weight()){
                 parent->selected = true;
                 parent->child1->selected = false;
                 parent->child2->selected = false;

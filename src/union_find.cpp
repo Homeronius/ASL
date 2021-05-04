@@ -39,15 +39,16 @@ int Union_find::find(int p) {
 }
 
 void Union_find::merge_clusters(int root1, int root2, float_t distance){
-
+    printf("Merging Cluster: %i-%i\t",root1,root2);
     float_t lambda = 1 / distance;
 
     //CASE 1: root1 & root2 are both not clusters.
     if (sz[root1] < minimum_cluster_size && sz[root2] < minimum_cluster_size) {
+        printf("Case 1\n");
         //create new cluster from root1 and root2
         std::vector<int> components;
         int root_id;
-        if (sz[root1 < root2]){
+        if (sz[root1] < sz[root2]){
             root_id = root2;
         } else {
             root_id = root1;
@@ -74,11 +75,13 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
 
     //CASE 2: one root is a cluster, the other a single leaf.
     if(sz[root1] == 1){ // add single node to cluster2
+        printf("Case 2\n");
         if(c2.root_id == root2){
             c2.add_leaf(root1, lambda);
             return;
         }
     } else if (sz[root2] == 1) { // add single node to cluster1
+        printf("Case 2\n");
         if(c1.root_id == root1){
             c1.add_leaf(root2, lambda);
             return;
@@ -86,7 +89,8 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
     }
 
     //CASE 3: one root is a cluster, the other a group of leafs (< min cluster size)
-    if(sz[root1] < minimum_cluster_size){ 
+    if(sz[root1] < minimum_cluster_size){
+        printf("Case 3\n"); 
         // add root1 to cluster 2
         std::vector<int> components;
         for (size_t i = 0; i < number_of_components; i++){
@@ -95,7 +99,8 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
             }
             c2.add_leaf(components, lambda);
         }
-    } else {
+    } else if (sz[root2] < minimum_cluster_size){
+        printf("Case 3\n");
         // add root2 to cluster 1
         std::vector<int> components;
         for (size_t i = 0; i < number_of_components; i++){
@@ -107,6 +112,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
     }
     
     //CASE 4: both roots are clusters
+    printf("Case 4\n");
     Cluster c_new(c1,c2,lambda);
 
     c1.finalize(&c_new,lambda);
