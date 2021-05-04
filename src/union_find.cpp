@@ -39,12 +39,12 @@ int Union_find::find(int p) {
 }
 
 void Union_find::merge_clusters(int root1, int root2, float_t distance){
-    //printf("Merging Cluster: %i-%i\t",root1,root2);
+    printf("Merging Cluster: %i-%i\t",root1,root2);
     float_t lambda = 1 / distance;
 
     //CASE 1: root1 & root2 are both not clusters.
     if (sz[root1] < minimum_cluster_size && sz[root2] < minimum_cluster_size) {
-        //printf("Case 1\n");
+        printf("Case 1\n");
         //create new cluster from root1 and root2
         std::vector<int> components;
         int root_id;
@@ -63,64 +63,66 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
         return;
     }
 
-    Cluster c1;
-    Cluster c2;
+    Cluster *c1;
+    Cluster *c2;
     for (auto &&c : open_clusters){
         if(c.root_id == root1){
-            c1 = c;
+            c1 = &c;
         } else if (c.root_id == root2){
-            c2 = c;
+            c2 = &c;
         }
     }
 
+
     //CASE 2: one root is a cluster, the other a single leaf.
     if(sz[root1] == 1){ // add single node to cluster2
-        //printf("Case 2\n");
-        if(c2.root_id == root2){
-            c2.add_leaf(root1, lambda);
+        if(c2->root_id == root2){
+            c2->add_leaf(root1, lambda);
+            printf("Case 2, size: %i\n", c2->get_components().size());
             return;
         }
+        
     } else if (sz[root2] == 1) { // add single node to cluster1
-        //printf("Case 2\n");
-        if(c1.root_id == root1){
-            c1.add_leaf(root2, lambda);
+        if(c1->root_id == root1){
+            c1->add_leaf(root2, lambda);
+            printf("Case 2, size: %i\n", c1->get_components().size());
             return;
         }
     }
 
     //CASE 3: one root is a cluster, the other a group of leafs (< min cluster size)
     if(sz[root1] < minimum_cluster_size){
-        //printf("Case 3\n");
+        printf("Case 3\n");
         // add root1 to cluster 2
         std::vector<int> components;
         for (size_t i = 0; i < number_of_components; i++){
             if (id[i] == root1){
                 components.push_back(i);
             }
-            c2.add_leaf(components, lambda);
+            c2->add_leaf(components, lambda);
         }
     } else if (sz[root2] < minimum_cluster_size){
-        //printf("Case 3\n");
+        printf("Case 3\n");
         // add root2 to cluster 1
         std::vector<int> components;
         for (size_t i = 0; i < number_of_components; i++){
             if (id[i] == root2){
                 components.push_back(i);
             }
-            c1.add_leaf(components, lambda);
+            c1->add_leaf(components, lambda);
         }
     }
 
     //CASE 4: both roots are clusters
-    //printf("Case 4\n");
-    Cluster c_new(c1,c2,lambda);
+    printf("Case 4\n");
+    Cluster c_new(*c1,*c2,lambda);
 
-    c1.finalize(&c_new,lambda);
-    c2.finalize(&c_new,lambda);
-    finished_clusters.push_back(c1);
-    finished_clusters.push_back(c2);
-    open_clusters.remove(c1);
-    open_clusters.remove(c2);
+    c1->finalize(&c_new,lambda);
+    c2->finalize(&c_new,lambda);
+    finished_clusters.push_back(*c1);
+    finished_clusters.push_back(*c2);
+    open_clusters.remove(*c1);
+    open_clusters.remove(*c2);
     open_clusters.push_back(c_new);
 }
 
