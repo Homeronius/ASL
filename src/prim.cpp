@@ -9,11 +9,11 @@
  * @brief Compute the minimum spanning tree (MST) of a given
  *        graph based on its adjacency matrix with corresponding
  *        edge weights. The graph is assumed to be undirected.
- * 
+ *
  * @param adjacency the adjacency matrix of the graph [n,n]
  * @param result pointer to store result into
  * @param n number of nodes in the graph
- * 
+ *
  */
 void prim(double *adjacency, edge *result, int n) {
   // represent tree via each node's parent?
@@ -61,13 +61,13 @@ void prim(double *adjacency, edge *result, int n) {
  * @brief Compute the minimum spanning tree (MST) of the
  *        mutual reachabilty graph, given implicitly by the
  *        datapoints and the core distances.
- * 
+ *
  * @param X the input data of shape [n,d]
  * @param core_distances array of core_distance for each sample [n]
  * @param result pointer to store result into
  * @param n number of nodes in the graph
  * @param d the dimensionality of the data
- * 
+ *
  */
 void prim_advanced(double *X, double *core_distances, edge *result, int n, int d) {
   // represent tree via each node's parent?
@@ -133,4 +133,15 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
     contained[i] = true;
     result[iter] = {min_cost, parent[i], i};
   }
+}
+
+int compare_edges(const void *e1, const void *e2){
+    double w_diff = ((edge *)e1)->weight - ((edge *)e2)->weight;
+    if (w_diff < 0) {
+        return -1;
+    } else if (w_diff > 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }

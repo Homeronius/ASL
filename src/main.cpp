@@ -44,7 +44,6 @@ int main() {
     float_t *core_dist = static_cast<float_t *>(malloc(n * sizeof(float_t)));
     float_t *mutual_reachability_matrix = static_cast<float_t *>(malloc(n * n * sizeof(float_t)));
     compute_core_distances(dataset, core_dist, mpts, n, d);
-    compute_distance_matrix(dataset, mutual_reachability_matrix, mpts, n, d);
 
     printf("Core distances computed.\n");
 
@@ -54,14 +53,16 @@ int main() {
     prim_advanced(dataset, core_dist, mst, n, d);
 
 
-    printf("MST computed. First edge in arr : (%i, %i) | weight : %f\n", mst[0].u, mst[0].v, mst[0].weight);
-
     // 3. Extend graph with self-edge -> MST_{ext}
     for(int i = 0; i < n; ++i){
         mst[(n-1) + i] = {core_dist[i], i, i};
     }
 
-    printf("MST extended. Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext-1].u, mst[n_ext-1].v, mst[n_ext-1].weight);
+    // 3.1 Sort edges by increasing weight
+    qsort(mst, 8, sizeof(edge), compare_edges);
+
+    printf("MST computed and extended. First edge in arr : (%i, %i) | weight : %f\n", mst[0].u, mst[0].v, mst[0].weight);
+    printf("Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext-1].u, mst[n_ext-1].v, mst[n_ext-1].weight);
 
     // 4. Build hierarchical tree
 
