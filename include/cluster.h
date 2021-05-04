@@ -60,8 +60,8 @@ public:
         parent = c.parent;
         root_id = c.root_id;
         selected = c.selected;
-        lambdas = std::vector<float_t>(c.lambdas);
-        components = std::vector<int>(c.components);
+        std::copy(c.components.begin(),c.components.end(), std::back_inserter(components));
+        std::copy(c.lambdas.begin(),c.lambdas.end(), std::back_inserter(lambdas));
     };
     /**
      * @brief Construct a new Cluster object by merging to existing clusters
@@ -121,7 +121,7 @@ public:
 
     double get_children_cluster_weight(){
         if (child1 != nullptr && child2 != nullptr){
-            return child1->get_cluster_weight() + child2->get_cluster_weight();
+            return child1->get_max_cluster_weight() + child2->get_max_cluster_weight();
         } else {
             return 0;
         }
