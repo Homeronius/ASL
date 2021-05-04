@@ -7,6 +7,7 @@
 #include<vector>
 #include<list>
 #include<algorithm>
+#include<cassert>
 
 typedef double float_t;
 
@@ -35,33 +36,40 @@ public:
      * @param root_id id of corresponding union_find root element
      * @param elements list of nodes contained in cluster
      */
-    Cluster(float_t lambda, int root_id, std::vector<int> elements): components(elements), root_id(root_id) {
+    Cluster(float_t lambda, int root_id, std::vector<int> components) : components(components), root_id(root_id) {
         lambdas.assign(components.size(), lambda);
         child1 = nullptr;
         child2 = nullptr;
         parent = nullptr;
         selected = true;
+        assert(child1 != this);
+        assert(child2 != this);
+        assert(parent != this);
     };
     /**
      * @brief Default Construct a empty Cluster object
      *
      */
-    Cluster(){
-        child1 = nullptr;
-        child2 = nullptr;
-        parent = nullptr;
-        root_id = -1;
-        selected = false;
-    };
+    // Cluster(){
+    //     child1 = nullptr;
+    //     child2 = nullptr;
+    //     parent = nullptr;
+    //     root_id = -1;
+    //     selected = false;
+    // };
 
     Cluster(const Cluster &c){
+        std::copy(c.components.begin(),c.components.end(), std::back_inserter(components));
+        std::copy(c.lambdas.begin(),c.lambdas.end(), std::back_inserter(lambdas));
         child1 = c.child1;
         child2 = c.child2;
         parent = c.parent;
         root_id = c.root_id;
         selected = c.selected;
-        std::copy(c.components.begin(),c.components.end(), std::back_inserter(components));
-        std::copy(c.lambdas.begin(),c.lambdas.end(), std::back_inserter(lambdas));
+        assert(child1 != this);
+        assert(child2 != this);
+        assert(parent != this);
+        
     };
     /**
      * @brief Construct a new Cluster object by merging to existing clusters
@@ -70,22 +78,26 @@ public:
      * @param c2 second cluster.
      * @param lambda inverse of the distance at time of creation.
      */
-    Cluster(Cluster c1, Cluster c2, float_t lambda){
+    Cluster(Cluster* c1, Cluster* c2, float_t lambda){
         // TODO check correctness of copy
         // c.components = c1.components + c2.components
         // Have to use back_inserter as components is empty initially
-        std::copy(c1.components.begin(),c1.components.end(), std::back_inserter(components));
-        std::copy(c2.components.begin(),c2.components.end(), std::back_inserter(components));
+        std::copy(c1->components.begin(),c1->components.end(), std::back_inserter(components));
+        std::copy(c2->components.begin(),c2->components.end(), std::back_inserter(components));
         lambdas.assign(components.size(), lambda);
 
-        if(c1.components.size() < c2.components.size()){
-            root_id = c2.root_id;
+        if(c1->components.size() < c2->components.size()){
+            root_id = c2->root_id;
         } else {
-            root_id = c1.root_id;
+            root_id = c1->root_id;
         }
-        child1 = &c1;
-        child2 = &c2;
         selected = false;
+        child1 = c1;
+        child2 = c2;
+        parent = nullptr;
+        assert(child1 != this);
+        assert(child2 != this);
+        assert(parent != this);
     };
     ~Cluster(){};
     /**

@@ -48,5 +48,8 @@ object
 build/
 data/
 
+#virtual enviorment
+helper_scripts/venv/
+
 #IDE settings
-.vscode/settings.json
+.vscode

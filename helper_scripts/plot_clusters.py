@@ -19,11 +19,18 @@ def plot_dataset2D(X, y):
     """
 
     fig = plt.figure()
+    
     ax = fig.add_subplot(111)
 
     ax.scatter(X[:, 0], X[:, 1], marker="o", c=y, s=20, edgecolor="k")
+    # for i in range(X.shape[0]):
+    #     ax.annotate(i, (X[i, 0]+.1, X[i, 1]+.1))
+    
+    # plt.axis('equal')
+    plt.axis('square')
 
     plt.show()
+    
 
 
 def main():

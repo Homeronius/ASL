@@ -39,7 +39,7 @@ int Union_find::find(int p) {
 }
 
 void Union_find::merge_clusters(int root1, int root2, float_t distance){
-    printf("Merging Cluster: %i-%i\n\tsizes: %i,%i\n\t",root1,root2,sz[root1],sz[root2]);
+    printf("Merging Cluster: %04d-%04d\tsizes: %04d,%04d\t",root1,root2,sz[root1],sz[root2]);
     float_t lambda = 1 / distance;
 
     //CASE 1: root1 & root2 are both not clusters.
@@ -58,18 +58,17 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
                 components.push_back(i);
             }
         }
-        Cluster c_new(lambda,root_id,components);
-        open_clusters.push_back(c_new);
+        open_clusters.push_back(new Cluster(lambda,root_id,components));
         return;
     }
 
     Cluster *c1;
     Cluster *c2;
     for (auto &&c : open_clusters){
-        if(c.root_id == root1){
-            c1 = &c;
-        } else if (c.root_id == root2){
-            c2 = &c;
+        if(c->root_id == root1){
+            c1 = c;
+        } else if (c->root_id == root2){
+            c2 = c;
         }
     }
 
@@ -117,14 +116,14 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
 
     //CASE 4: both roots are clusters
     printf("Case 4\n");
-    Cluster c_new(*c1,*c2,lambda);
+    Cluster* c_new = new Cluster(c1,c2,lambda);
 
-    c1->finalize(&c_new,lambda);
-    c2->finalize(&c_new,lambda);
-    finished_clusters.push_back(*c1);
-    finished_clusters.push_back(*c2);
-    open_clusters.remove(*c1);
-    open_clusters.remove(*c2);
+    c1->finalize(c_new,lambda);
+    c2->finalize(c_new,lambda);
+    finished_clusters.push_back(c1);
+    finished_clusters.push_back(c2);
+    open_clusters.remove(c1);
+    open_clusters.remove(c2);
     open_clusters.push_back(c_new);
 }
 
@@ -160,7 +159,7 @@ int Union_find::component_size(int p) {
 
 void Union_find::finalize(){
     for (auto &&c : open_clusters){
-        c.finalize(nullptr,0);
+        c->finalize(nullptr,0);
         finished_clusters.push_back(c);
     }
 }

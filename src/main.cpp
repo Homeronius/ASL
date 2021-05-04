@@ -85,13 +85,13 @@ int main() {
 
     // 4.2 Build the hierarchical tree itself
 
-	int minimum_cluster_size = 10;
+	int minimum_cluster_size = 5;
 
-	std::vector<Cluster> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
+	std::vector<Cluster*> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
 
     printf("Finished creating condensed cluster tree");
 
-	std::vector<Cluster> selected_clusters = extract_clusters(condensed_cluster_tree);
+	std::vector<Cluster*> selected_clusters = extract_clusters(condensed_cluster_tree);
 
     printf("Finished extracting clusters. Found %i clusters. \n", selected_clusters.size());
 

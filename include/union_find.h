@@ -21,8 +21,8 @@ private:
     int* id;
     int number_of_components;
     int minimum_cluster_size;
-    std::list<Cluster> open_clusters;
-    std::vector<Cluster> finished_clusters;
+    std::list<Cluster*> open_clusters;
+    std::vector<Cluster*> finished_clusters;
 
 public:
     /**
@@ -54,7 +54,7 @@ public:
      * 
      * @return std::list<Cluster> 
      */
-    std::vector<Cluster> get_clusters() {return finished_clusters;};
+    std::vector<Cluster*> get_clusters() {return finished_clusters;};
 
     void finalize();
 };

@@ -4,7 +4,7 @@
 #include <cstdio>
 
 
-std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size){
+std::vector<Cluster*> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size){
     /*
     Parameters:
         edgesA: array of idxs of first node of the edges in mst.
@@ -19,7 +19,7 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
     Union_find heirarchy(n,minimum_cluster_size);
 
     for (size_t i = 0; i < n; i++) {
-        printf("Unifying %i, %i,\t dist %lf\n",edgesA[i],edgesB[i], distances[i]);
+        // printf("Unifying %i, %i,\t dist %lf\n",edgesA[i],edgesB[i], distances[i]);
         heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
     }
     heirarchy.finalize();
@@ -28,21 +28,61 @@ std::vector<Cluster> clustering(int* edgesA, int* edgesB, float_t* distances, si
 
 }
 
-std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters){
-    std::vector<Cluster> selected_clusters;
 
-    for (auto &&c : clusters){
-        if (c.selected){
-            Cluster* parent = c.parent;
-            if (parent != nullptr && parent->get_cluster_weight() > parent->get_max_cluster_weight()){
-                parent->selected = true;
-                parent->child1->selected = false;
-                parent->child2->selected = false;
+
+void get_preorder(std::vector<Cluster*>& ordered_clusters,Cluster* c){
+    if(c == nullptr ) {
+        // printf("null, returning\n");
+        return;
+    };
+    ordered_clusters.push_back(c);
+    // printf("Call %d, ptr %p with children: %p,%p\n",ordered_clusters.size(),c,c->child1,c->child2);
+    get_preorder(ordered_clusters,c->child1);
+    get_preorder(ordered_clusters,c->child2);
+    return;
+}
+
+std::vector<Cluster*> extract_clusters(std::vector<Cluster*> clusters){
+    std::vector<Cluster*> selected_clusters;
+
+    std::vector<Cluster*> ordered_clusters;
+    // ordered_clusters.reserve(clusters.size());
+    get_preorder(ordered_clusters, clusters.back());
+
+    for (int i = 0; i < ordered_clusters.size(); i++)
+    {
+        if(ordered_clusters[i]->selected){
+            Cluster* parent = ordered_clusters[i]->parent;
+            if (parent != nullptr ){
+                double current_weight = parent->get_cluster_weight();
+                double children_weight = parent->get_children_cluster_weight();
+                if(current_weight > children_weight){
+                    parent->selected = true;
+                    parent->child1->selected = false;
+                    parent->child2->selected = false;
+                }
             }
         }
     }
+    
+    
+    // for (auto &&c : clusters){
+    //     if (c.selected){
+    //         Cluster* parent = c.parent;
+
+    //         if (parent != nullptr ){
+    //             double current_weight = parent->get_cluster_weight();
+    //             double children_weight = parent->get_children_cluster_weight();
+    //             if(current_weight > children_weight){
+    //                 parent->selected = true;
+    //                 parent->child1->selected = false;
+    //                 parent->child2->selected = false;
+    //             }
+    //         }
+    //     }
+    // }
     for (auto &&c : clusters){
-        if (c.selected){
+        if (c->selected){
             selected_clusters.push_back(c);
         }
     }
@@ -50,14 +90,14 @@ std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters){
 }
 
 
-int* point_labels(std::vector<Cluster> selected_clusters, int number_of_points){
+int* point_labels(std::vector<Cluster*> selected_clusters, int number_of_points){
     int* labels = (int*) calloc(number_of_points,sizeof(int));
     for(int cluster_idx = 1; cluster_idx <= selected_clusters.size(); cluster_idx++){
-        for (auto &&component : selected_clusters[cluster_idx-1].get_components()){
+        for (auto &&component : selected_clusters[cluster_idx-1]->get_components()){
             labels[component] = cluster_idx;
+            printf("Setting %d to %d\n",component,cluster_idx);
         }
     }
-
     return labels;
 }
 
