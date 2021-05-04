@@ -2,6 +2,7 @@
 #define _HDBSCAN_CLUSTER_H_
 
 
+#include <iterator>
 #include<stdlib.h>
 #include<vector>
 #include<list>
@@ -11,11 +12,11 @@ typedef double float_t;
 
 /**
  * @brief Pruned cluster class
- * 
+ *
  */
 class Cluster {
 private:
-    
+
     float_t lambda_death;
 
     std::vector<int> components;
@@ -30,7 +31,7 @@ public:
 
     /**
      * @brief Construct a new Cluster object.
-     * 
+     *
      * @param lambda inverse of the distance at time of creation.
      * @param root_id id of corresponding union_find root element
      * @param elements list of nodes contained in cluster
@@ -43,7 +44,7 @@ public:
     };
     /**
      * @brief Default Construct a empty Cluster object
-     * 
+     *
      */
     Cluster(){
         child1 = nullptr;
@@ -52,7 +53,7 @@ public:
     };
     /**
      * @brief Construct a new Cluster object by merging to existing clusters
-     * 
+     *
      * @param c1 first cluster
      * @param c2 second cluster.
      * @param lambda inverse of the distance at time of creation.
@@ -60,8 +61,9 @@ public:
     Cluster(Cluster c1, Cluster c2, float_t lambda){
         // TODO check correctness of copy
         // c.components = c1.components + c2.components
-        std::copy(c1.components.begin(),c1.components.end(),components.begin());
-        std::copy(c2.components.begin(),c2.components.end(),components.begin()+c1.components.size());
+        // Have to use back_inserter as components is empty initially
+        std::copy(c1.components.begin(),c1.components.end(), std::back_inserter(components));
+        std::copy(c2.components.begin(),c2.components.end(), std::back_inserter(components));
         lambdas.assign(components.size(), lambda);
 
         if(c1.components.size() < c2.components.size()){
@@ -76,7 +78,7 @@ public:
     ~Cluster(){};
     /**
      * @brief Close cluster after merging.
-     * 
+     *
      * @param p parent cluster into which it has been merged.
      * @param lambda inverse of the distance at time of completion.
      */
@@ -85,8 +87,8 @@ public:
         parent = p;
     }
     /**
-     * @brief Used to calculate stability of cluster. 
-     * 
+     * @brief Used to calculate stability of cluster.
+     *
      * @return double Sum of lifetimes of the original nodes.
      */
     double get_cluster_weight(){
@@ -115,9 +117,9 @@ public:
 
     /**
      * @brief add single node to cluster
-     * 
+     *
      * @param root_id id of leaf node
-     * @param lambda 
+     * @param lambda
      */
     void add_leaf(int root_id, float_t lambda){
         components.push_back(root_id);
@@ -125,9 +127,9 @@ public:
     }
     /**
      * @brief add group (< min cluster size) to cluster
-     * 
+     *
      * @param root_ids ids of elements
-     * @param lambda 
+     * @param lambda
      */
     void add_leaf(std::vector<int> root_ids, float_t lambda){
         components.insert(components.end(), root_ids.begin(), root_ids.end()); //append root ids
