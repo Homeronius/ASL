@@ -53,7 +53,7 @@ std::vector<Cluster> extract_clusters(std::vector<Cluster> clusters){
 int* point_labels(std::vector<Cluster> selected_clusters, int number_of_points){
     int* labels = (int*) calloc(number_of_points,sizeof(int));
     for(int cluster_idx = 1; cluster_idx <= selected_clusters.size(); cluster_idx++){
-        for (auto &&component : selected_clusters[cluster_idx].get_components()){
+        for (auto &&component : selected_clusters[cluster_idx-1].get_components()){
             labels[component] = cluster_idx;
         }
     }
