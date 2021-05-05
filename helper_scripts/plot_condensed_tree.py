@@ -16,11 +16,13 @@ def create_graph(df):
     DG = nx.DiGraph()
 
     sizes = []
+    colors = []
     for index, row in df.iterrows():
         if row["child1_id"] != "0":
             DG.add_edge(row["id"], row["child1_id"])
             DG.add_edge(row["id"], row["child2_id"])
         sizes.append(row["weight"])
+        colors.append('#1f78b4' if row["selected"]==0 else '#f54823')
 
     # print(DG.edges)
     # print(nx.is_tree(DG))
@@ -30,13 +32,14 @@ def create_graph(df):
         return
 
     # Rescale sizes
-    sizes = [10 * s for s in sizes]
+    sizes = [20 * s for s in sizes]
 
     # same layout using matplotlib with no labels
     plt.subplot(121)
     plt.title("condensed_tree")
     pos = graphviz_layout(DG, prog="dot")
-    nx.draw(DG, pos, with_labels=False, arrows=True, node_size=sizes)
+    nx.draw(DG, pos, with_labels=False, arrows=True, node_size=sizes,
+            node_color=colors)
     plt.show()
 
 
