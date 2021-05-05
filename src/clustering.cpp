@@ -48,8 +48,8 @@ std::vector<Cluster*> extract_clusters(std::vector<Cluster*> clusters){
     std::vector<Cluster*> ordered_clusters;
     // ordered_clusters.reserve(clusters.size());
     get_preorder(ordered_clusters, clusters.back());
-
-    for (int i = 0; i < ordered_clusters.size(); i++)
+    
+    for (int i = ordered_clusters.size()-1; i >=0; i--)
     {
         if(ordered_clusters[i]->selected){
             Cluster* parent = ordered_clusters[i]->parent;
