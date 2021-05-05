@@ -19,6 +19,6 @@ std::vector<Cluster*> extract_clusters(std::vector<Cluster*> clusters);
 
 void get_preorder(std::vector<Cluster*>& ordered_clusters,Cluster* c);
 
-int* point_labels(std::vector<Cluster*> selected_clusters, int number_of_points);
+void point_labels(std::vector<Cluster*> selected_clusters, int number_of_points, int* labels);
 
 #endif //_HDBSCAN_CLUSTERING_H_vector<Cluster>

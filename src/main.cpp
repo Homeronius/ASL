@@ -97,7 +97,8 @@ int main() {
 
     printf("Finished extracting clusters. Found %i clusters. \n", selected_clusters.size());
 
-	int* our_labels = point_labels(selected_clusters, n_ext);
+    int* our_labels = (int*) calloc(n_ext,sizeof(int));
+	point_labels(selected_clusters, n_ext, our_labels);
 
     
     
@@ -110,7 +111,8 @@ int main() {
     write_csv(dataset, our_labels, shape, out_filename);
 
     for (size_t i = 0; i < condensed_cluster_tree.size(); i++){
-        free(condensed_cluster_tree[i]);
+        // free(condensed_cluster_tree[i]);
+        delete condensed_cluster_tree[i];
     }
     return 0;
 

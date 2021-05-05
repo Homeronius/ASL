@@ -168,6 +168,14 @@ public:
         return root_id == B.root_id;
     }
 
+    void unselect_children(){
+        if(child1 == nullptr) return;
+        child1->selected = false;
+        child2->selected = false;
+        child1->unselect_children();
+        child2->unselect_children();
+    }
+
 };
 
 

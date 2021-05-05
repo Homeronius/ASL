@@ -54,8 +54,7 @@ std::vector<Cluster*> extract_clusters(std::vector<Cluster*> ordered_clusters){
                 double children_weight = parent->get_children_cluster_weight();
                 if(current_weight > children_weight){
                     parent->selected = true;
-                    parent->child1->selected = false;
-                    parent->child2->selected = false;
+                    parent->unselect_children();
                 }
             }
         }
@@ -85,13 +84,12 @@ std::vector<Cluster*> extract_clusters(std::vector<Cluster*> ordered_clusters){
 }
 
 
-int* point_labels(std::vector<Cluster*> selected_clusters, int number_of_points){
-    int* labels = (int*) calloc(number_of_points,sizeof(int));
-    for(int cluster_idx = 1; cluster_idx <= selected_clusters.size(); cluster_idx++){
-        for (auto &&component : selected_clusters[cluster_idx-1]->get_components()){
-            labels[component] = cluster_idx;
-            printf("Setting %d to %d\n",component,cluster_idx);
+void point_labels(std::vector<Cluster*> selected_clusters, int number_of_points, int* labels){
+
+    for(int cluster_idx = 0; cluster_idx < selected_clusters.size(); cluster_idx++){
+        for (auto &&component : selected_clusters[cluster_idx]->get_components()){
+            labels[component] = cluster_idx+1;
+            printf("Setting %d to %d\n",component,cluster_idx+1);
         }
     }
-    return labels;
 }
