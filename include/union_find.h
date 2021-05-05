@@ -48,6 +48,7 @@ public:
      * @param distance mutual reachability distance between two original node in mst 
      */
     void merge_clusters(int root1, int root2, float_t distance);
+    void merge_clusters2(int root1, int root2, float_t distance);
 
     /**
      * @brief Get the clusters finished list of clusters, which represent the condensed cluster tree.

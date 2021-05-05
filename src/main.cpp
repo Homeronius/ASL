@@ -65,29 +65,10 @@ int main() {
     printf("Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext-1].u, mst[n_ext-1].v, mst[n_ext-1].weight);
 
     // 4. Build hierarchical tree
+    // 4.1 Build the hierarchical tree itself
+	int minimum_cluster_size = 6;
 
-    // 4.1 Convert AoS mst into SoA
-    // (optimization easily done with SIMD instructions, or rather unify the interface :D)
-	int* edges_A;
-	int* edges_B;
-	float_t* core_dist_ext;
-
-    edges_A = static_cast<int *>(malloc(n_ext * sizeof(int)));
-    edges_B = static_cast<int *>(malloc(n_ext * sizeof(int)));
-    core_dist_ext = static_cast<float_t *>(malloc(n_ext * sizeof(float_t)));
-
-    // Do conversion (quick and dirty)
-    for(int i = 0; i < n_ext; ++i){
-        core_dist_ext[i] = mst[i].weight;
-        edges_A[i] = mst[i].u;
-        edges_B[i] = mst[i].v;
-    }
-
-    // 4.2 Build the hierarchical tree itself
-
-	int minimum_cluster_size = 5;
-
-	std::vector<Cluster*> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
+	std::vector<Cluster*> condensed_cluster_tree = clustering(mst, n_ext, minimum_cluster_size);
     printf("Finished creating condensed cluster tree\n");
 
     std::vector<Cluster*> ordered_clusters;

@@ -25,8 +25,7 @@ def blobs_dataset(n_samples, n_features, n_clusters, cluster_std, seed=None):
     """
 
     X, y = make_blobs(n_samples, n_features, n_clusters, cluster_std, random_state=seed)
-    return {"data": X, "labels": y, "std": cluster_std}
-
+    return {"data": X, "labels": y+1, "std": cluster_std}
 
 def save_datasets(datadir, basename, dataset_list):
     """Save list of datasets given as dict to location specified in basename.
@@ -65,13 +64,13 @@ def main():
     seed = 42
 
     # Number of datasets to be generated
-    n_datasets = 5
+    n_datasets = 1
     datasets = []
 
     # Number of samples (n)
-    n_samples = 25
+    n_samples = 1000
     # Dimension of each data point (d)
-    n_features = 4
+    n_features = 2
     # Number of clusters
     n_centers = 3
 

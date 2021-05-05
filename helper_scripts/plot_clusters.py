@@ -3,13 +3,14 @@ import numpy
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import adjusted_rand_score
+from matplotlib.colors import ListedColormap
 
 def read_dataset(path):
     data = numpy.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
     return data[:,:-1], data[:,-1]
 
 
-def plot_dataset2D(X, y, score=None):
+def plot_dataset2D(X, y, y_true, score=None, labels=False):
     """Plot first two features of dataset.
 
     Parameters
@@ -19,8 +20,12 @@ def plot_dataset2D(X, y, score=None):
     y :
         labels (n)
     """
-    sns.set_theme()
-    sns.color_palette('colorblind')
+    cb_cmap = ListedColormap(sns.color_palette('colorblind'))
+
+    # construct cmap
+    flatui = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
+    my_cmap = ListedColormap(sns.color_palette(flatui).as_hex())
+    new_cmap = sns.light_palette("Navy", as_cmap=True)
 
     fig = plt.figure()
 
@@ -29,9 +34,12 @@ def plot_dataset2D(X, y, score=None):
     if score is not None:
         ax.set_title(f'Adjusted Rand Index : {score:.4f}')
 
-    ax.scatter(X[:, 0], X[:, 1], marker="o", c=y, s=20, edgecolor="k")
-    # for i in range(X.shape[0]):
-    #     ax.annotate(i, (X[i, 0]+.1, X[i, 1]+.1))
+    ax.scatter(X[:, 0], X[:, 1], marker="o", c=y, s=20, edgecolor="k", cmap=my_cmap)
+    ax.legend(y)
+    
+    if labels:
+        for i in range(X.shape[0]):
+            ax.annotate(f"{int(y_true[i])}:{int(y[i])}", (X[i, 0]+.1, X[i, 1]+.1))
 
     # plt.axis('equal')
     plt.axis('square')
@@ -55,7 +63,7 @@ def main():
         # Compute similarity score
         score = adjusted_rand_score(y_pred, y_true)
 
-    plot_dataset2D(X_pred, y_pred, score)
+    plot_dataset2D(X_pred, y_pred, y_true, score)
 
 
 

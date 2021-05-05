@@ -2,9 +2,9 @@
 #include<list>
 #include "union_find.h"
 #include <cstdio>
+#include "prim.h"
 
-
-std::vector<Cluster*> clustering(int* edgesA, int* edgesB, float_t* distances, size_t n, size_t minimum_cluster_size){
+std::vector<Cluster*> clustering(edge* mst, size_t n, size_t minimum_cluster_size){
     /*
     Parameters:
         edgesA: array of idxs of first node of the edges in mst.
@@ -20,7 +20,7 @@ std::vector<Cluster*> clustering(int* edgesA, int* edgesB, float_t* distances, s
 
     for (size_t i = 0; i < n; i++) {
         // printf("Unifying %i, %i,\t dist %lf\n",edgesA[i],edgesB[i], distances[i]);
-        heirarchy.unify(edgesA[i],edgesB[i],distances[i]);
+        heirarchy.unify(mst[i].u,mst[i].v,mst[i].weight);
     }
     heirarchy.finalize();
     printf("Created %i cluster(s)\n", heirarchy.get_clusters().size());

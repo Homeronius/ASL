@@ -1,6 +1,6 @@
 #include <assert.h>
 #include<vector>
-
+#include<cassert>
 #include "union_find.h"
 
 Union_find::Union_find(int set_size, int cluster_size){
@@ -36,6 +36,84 @@ int Union_find::find(int p) {
     }
 
     return root;
+}
+
+
+void Union_find::merge_clusters2(int root1, int root2, float_t distance){
+    printf("Merging Cluster: %04d-%04d\tsizes: %04d,%04d\t",root1,root2,sz[root1],sz[root2]);
+    float_t lambda = 1 / distance;
+    
+    Cluster *c1 = nullptr;
+    Cluster *c2 = nullptr;
+    for (auto &&c : open_clusters){
+        if(c->root_id == root1){
+            c1 = c;
+        } else if (c->root_id == root2){
+            c2 = c;
+        }
+    }
+
+    if (c1 == nullptr && c2 == nullptr){ //create new cluster
+        printf("Case 1\n");
+        std::vector<int> components;
+        int root_id;
+        if (sz[root1] < sz[root2]){
+            root_id = root2;
+        } else {
+            root_id = root1;
+        }
+        for (size_t i = 0; i < number_of_components; i++){
+            if (id[i] == root1 || id[i] == root2){
+                components.push_back(i);
+            }
+        }
+        open_clusters.push_back(new Cluster(lambda,root_id,components));
+        printf("Merged Cluster: %04d\tsize: %04d\n",root_id,components.size());
+
+    } else if (c1 == nullptr && c2 != nullptr){ //add leaf to c2
+        printf("Case 2a\n");
+        std::vector<int> components;
+        for (size_t i = 0; i < number_of_components; i++){
+            if (id[i] == root1){
+                components.push_back(i);
+                printf("comps:%d\n",components.size());
+            }
+        }
+        c2->add_leaf(components, lambda);
+        printf("comps:%d\n",components.size());
+        printf("Merged Cluster: %04d\tsize: %04d\n",c2->root_id,c2->components.size());
+    } else if (c1 != nullptr && c2 == nullptr){ //add leaf to c1
+        printf("Case 2b\n");
+        std::vector<int> components;
+        for (size_t i = 0; i < number_of_components; i++){
+            if (id[i] == root2){
+                components.push_back(i);
+            }
+        }
+        c1->add_leaf(components, lambda);
+        printf("comps:%d\n",components.size());
+        printf("Merged Cluster: %04d\tsize: %04d\n",c1->root_id,c1->components.size());
+    } else if (c1 != nullptr && c2 != nullptr){ //add merge c1 and c2
+        printf("Case 3\n");
+        Cluster* c_new = new Cluster(c1,c2,lambda);
+        c1->finalize(c_new,lambda);
+        c2->finalize(c_new,lambda);
+        finished_clusters.push_back(c1);
+        finished_clusters.push_back(c2);
+        open_clusters.remove(c1);
+        open_clusters.remove(c2);
+        open_clusters.push_back(c_new);
+        printf("Merged Cluster: %04d\tsize: %04d\n",c_new->root_id,c_new->components.size());
+        for (auto &&c : open_clusters)
+        {
+            assert(c1 != c);
+            assert(c2 != c);
+        }
+    } else {
+        assert(false && "no case chosen");
+    }
+
+
 }
 
 void Union_find::merge_clusters(int root1, int root2, float_t distance){
@@ -101,6 +179,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
             c2->add_leaf(components, lambda);
             return;
         }
+        assert(false && "case 3 root not found");
     } else if (sz[root2] < minimum_cluster_size){
         printf("Case 3\n");
         // add root2 to cluster 1
@@ -112,6 +191,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
             c1->add_leaf(components, lambda);
             return;
         }
+        assert(false && "case 3 root not found");
     }
 
     //CASE 4: both roots are clusters
@@ -125,6 +205,14 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance){
     open_clusters.remove(c1);
     open_clusters.remove(c2);
     open_clusters.push_back(c_new);
+
+    for (auto &&c : open_clusters)
+    {
+        assert(c1 != c);
+        assert(c2 != c);
+    }
+
+    
 }
 
 void Union_find::unify(int p, int q, float_t distance) {
@@ -135,7 +223,7 @@ void Union_find::unify(int p, int q, float_t distance) {
     int root2 = find(q);
 
     if (sz[root1]+sz[root2] >= minimum_cluster_size){ //union will be valid cluster
-        merge_clusters(root1,root2, distance);
+        merge_clusters2(root1,root2, distance);
     }
 
     if (sz[root1] < sz[root2]) {
