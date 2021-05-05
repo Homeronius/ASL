@@ -10,9 +10,12 @@ HDBSCAN::HDBSCAN(const int mpts, const int minimum_cluster_size):
 HDBSCAN::~HDBSCAN(){
     free(dataset);
     free(labels);
-    //for (size_t i = 0; i < condensed_cluster_tree.size(); i++){
-        //delete condensed_cluster_tree[i];
-    //}
+    free(predicted_labels);
+    free(mst);
+    free(core_dist);
+    for (size_t i = 0; i < condensed_cluster_tree.size(); i++){
+        delete condensed_cluster_tree[i];
+    }
 };
 
 const char *HDBSCAN::get_path(std::string& fname) const {
