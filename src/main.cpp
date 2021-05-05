@@ -3,6 +3,7 @@
 #include "clustering.h"
 #include "cluster.h"
 #include "prim.h"
+#include "hdbscan.h"
 
 #include <cstdlib>
 #include <cstdio>
@@ -13,88 +14,29 @@ typedef double float_t;
 
 int main() {
 
-    float_t *dataset = NULL;
-    int *labels = NULL;
-    int shape[2];
-    const char *filename = "../../data/blobs_0.csv";
+    const char *dataset_path = "../../data/blobs_0.csv";
+    const char *prediction_path = "../../data/blobs_0_prediction.csv";
+    const char *condensed_cluster_tree_path = "../../data/blobs_0_tree.csv";
 
-    read_csv(&dataset, &labels, &shape, filename);
+    const int mpts = 4;
+    const int minimum_cluster_size = 5;
+    HDBSCAN clusterer(mpts, minimum_cluster_size);
 
-    int n = shape[0];
-    int d = shape[1];
-	printf("Loaded dataset of size [%d, %d]\n\n", n, d);
+    clusterer.load_dataset(dataset_path);
+    //clusterer.show_dataset_head();
 
-	printf("DATA\n");
-	for(int i = 0; i < 3; ++i){
-		for(int j = 0; j < d; ++j){
-			printf("%f, ", dataset[i*d + j]);
-		}
-		printf("\n");
-	}
-	printf("...\n\n");
+    clusterer.build_mst();
 
-	printf("LABELS\n");
-	for(int i = 0; i < 3; ++i){
-		printf("%d\n", labels[i]);
-	}
-	printf("...\n\n");
+    clusterer.build_condensed_cluster_tree();
 
-    // 1. Compute core distances
-    int mpts = 4;
-    float_t *core_dist = static_cast<float_t *>(malloc(n * sizeof(float_t)));
-    float_t *mutual_reachability_matrix = static_cast<float_t *>(malloc(n * n * sizeof(float_t)));
-    compute_core_distances(dataset, core_dist, mpts, n, d);
+    clusterer.select_clusters();
 
-    printf("Core distances computed.\n");
+    clusterer.extract_labels();
 
-    // 2. Compute the MST -> mutual reachability graph
-    int n_ext = 2*n - 1;
-    edge *mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
-    prim_advanced(dataset, core_dist, mst, n, d);
+    clusterer.store_predicted_labels(prediction_path);
 
+    clusterer.store_condensed_cluster_tree(condensed_cluster_tree_path);
 
-    // 3. Extend graph with self-edge -> MST_{ext}
-    for(int i = 0; i < n; ++i){
-        mst[(n-1) + i] = {core_dist[i], i, i};
-    }
-
-    // 3.1 Sort edges by increasing weight
-    qsort(mst, n_ext, sizeof(edge), compare_edges);
-
-    printf("MST computed and extended. First edge in arr : (%i, %i) | weight : %f\n", mst[0].u, mst[0].v, mst[0].weight);
-    printf("Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext-1].u, mst[n_ext-1].v, mst[n_ext-1].weight);
-
-    // 4. Build hierarchical tree
-    // 4.1 Build the hierarchical tree itself
-	int minimum_cluster_size = 6;
-
-	std::vector<Cluster*> condensed_cluster_tree = clustering(mst, n_ext, minimum_cluster_size);
-    printf("Finished creating condensed cluster tree\n");
-
-    std::vector<Cluster*> ordered_clusters;
-    get_preorder(ordered_clusters, condensed_cluster_tree.back());
-
-	std::vector<Cluster*> selected_clusters = extract_clusters(ordered_clusters);
-
-    printf("Finished extracting clusters. Found %i clusters. \n", selected_clusters.size());
-
-    int* our_labels = (int*) calloc(n_ext,sizeof(int));
-	point_labels(selected_clusters, n_ext, our_labels);
-
-    
-    
-    // Store the clustered data
-    const char *tree_filename = "../../data/tree.csv";
-    condensed_tree_to_csv(ordered_clusters,tree_filename);
-
-    // Store the clustered data
-    const char *out_filename = "../../data/blobs_0_predicted.csv";
-    write_csv(dataset, our_labels, shape, out_filename);
-
-    for (size_t i = 0; i < condensed_cluster_tree.size(); i++){
-        // free(condensed_cluster_tree[i]);
-        delete condensed_cluster_tree[i];
-    }
     return 0;
 
 }

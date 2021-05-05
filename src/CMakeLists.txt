@@ -4,6 +4,7 @@ add_library(hdbscan_lib
   clustering.cpp
   utils.cpp
   prim.cpp
+  hdbscan.cpp
 )
 target_include_directories(hdbscan_lib PUBLIC ${HDBSCAN_INCLUDE_DIR})
 

@@ -16,6 +16,7 @@ set(HEADER_FILES
     ${HDBSCAN_INCLUDE_DIR}/clustering.h
     ${HDBSCAN_INCLUDE_DIR}/cluster.h
     ${HDBSCAN_INCLUDE_DIR}/utils.h
+    ${HDBSCAN_INCLUDE_DIR}/hdbscan.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
