@@ -42,13 +42,9 @@ void get_preorder(std::vector<Cluster*>& ordered_clusters,Cluster* c){
     return;
 }
 
-std::vector<Cluster*> extract_clusters(std::vector<Cluster*> clusters){
+std::vector<Cluster*> extract_clusters(std::vector<Cluster*> ordered_clusters){
     std::vector<Cluster*> selected_clusters;
 
-    std::vector<Cluster*> ordered_clusters;
-    // ordered_clusters.reserve(clusters.size());
-    get_preorder(ordered_clusters, clusters.back());
-    
     for (int i = ordered_clusters.size()-1; i >=0; i--)
     {
         if(ordered_clusters[i]->selected){
@@ -75,13 +71,12 @@ std::vector<Cluster*> extract_clusters(std::vector<Cluster*> clusters){
     //             double children_weight = parent->get_children_cluster_weight();
     //             if(current_weight > children_weight){
     //                 parent->selected = true;
-    //                 parent->child1->selected = false;
-    //                 parent->child2->selected = false;
-    //             }
+    //                 parent->child1->selected = false;#include <string>
+
     //         }
     //     }
     // }
-    for (auto &&c : clusters){
+    for (auto &&c : ordered_clusters){
         if (c->selected){
             selected_clusters.push_back(c);
         }
@@ -100,4 +95,3 @@ int* point_labels(std::vector<Cluster*> selected_clusters, int number_of_points)
     }
     return labels;
 }
-

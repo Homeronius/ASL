@@ -88,25 +88,30 @@ int main() {
 	int minimum_cluster_size = 5;
 
 	std::vector<Cluster*> condensed_cluster_tree = clustering(edges_A, edges_B, core_dist_ext, n_ext, minimum_cluster_size);
+    printf("Finished creating condensed cluster tree\n");
 
-    printf("Finished creating condensed cluster tree");
+    std::vector<Cluster*> ordered_clusters;
+    get_preorder(ordered_clusters, condensed_cluster_tree.back());
 
-	std::vector<Cluster*> selected_clusters = extract_clusters(condensed_cluster_tree);
+	std::vector<Cluster*> selected_clusters = extract_clusters(ordered_clusters);
 
     printf("Finished extracting clusters. Found %i clusters. \n", selected_clusters.size());
 
 	int* our_labels = point_labels(selected_clusters, n_ext);
 
-    for (size_t i = 0; i < condensed_cluster_tree.size(); i++)
-    {
-        free(condensed_cluster_tree[i]);
-    }
     
+    
+    // Store the clustered data
+    const char *tree_filename = "../../data/tree.csv";
+    condensed_tree_to_csv(ordered_clusters,tree_filename);
 
     // Store the clustered data
     const char *out_filename = "../../data/blobs_0_predicted.csv";
     write_csv(dataset, our_labels, shape, out_filename);
 
+    for (size_t i = 0; i < condensed_cluster_tree.size(); i++){
+        free(condensed_cluster_tree[i]);
+    }
     return 0;
 
 }

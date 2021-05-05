@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 
+#include <cluster.h>
 /**
  * @brief Function to load a dataset (X and y) in csv format
  *        First line being metadata header of form (n_samples, n_features, std of blobs)
@@ -86,5 +87,23 @@ void write_csv(double *dataset, int *labels, int shape[2], const char *fname){
         }
     }
 
+    delimited_file.close();
+}
+
+void condensed_tree_to_csv(std::vector<Cluster*> tree, const char *fname){
+    // Open filestream
+    std::ofstream delimited_file(fname);
+    if (!delimited_file.is_open()) throw std::runtime_error("Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists");
+    
+    if(delimited_file.good()){
+        //assuming preorder
+
+        delimited_file << "id, weight, size, child1_id, child2_id\n";
+        for (size_t i = 0; i < tree.size(); i++)
+        {
+            Cluster* c = tree[i];
+            delimited_file << c << "," << c->get_cluster_weight() << "," << c->components.size() << "," << c->child1 << "," << c->child2 << "\n"; 
+        }
+    }
     delimited_file.close();
 }
