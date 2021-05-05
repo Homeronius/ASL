@@ -17,12 +17,24 @@ def create_graph(df):
 
     sizes = []
     colors = []
+    selected_nodes = []
+    unselected_nodes = []
+    selected_sizes = []
+    unselected_sizes = []
     for index, row in df.iterrows():
         if row["child1_id"] != "0":
             DG.add_edge(row["id"], row["child1_id"])
             DG.add_edge(row["id"], row["child2_id"])
         sizes.append(row["weight"])
-        colors.append('#1f78b4' if row["selected"]==0 else '#f54823')
+
+        # colors.append('#1f78b4' if row["selected"]==0 else '#f54823')
+        if row['selected'] == 1:
+            selected_nodes.append(row["id"])
+            selected_sizes.append(row["weight"])
+        else:
+            unselected_nodes.append(row["id"])
+            unselected_sizes.append(row["weight"])
+
 
     # print(DG.edges)
     # print(nx.is_tree(DG))
@@ -32,7 +44,8 @@ def create_graph(df):
         return
 
     # Rescale sizes
-    sizes = [20 * s for s in sizes]
+    selected_sizes = [10 * s for s in selected_sizes]
+    unselected_sizes = [10 * s for s in unselected_sizes]
 
     # same layout using matplotlib with no labels
     plt.subplot(121)
@@ -40,8 +53,20 @@ def create_graph(df):
     pos = graphviz_layout(DG, prog="dot")
     nx.draw(DG, pos, with_labels=False, arrows=True, node_size=sizes,
             node_color=colors)
-    plt.show()
 
+    nodes = nx.draw_networkx_nodes(DG, pos, nodelist=unselected_nodes, edgecolors='#ffffff', node_size=unselected_sizes, node_color=unselected_sizes, cmap=plt.cm.viridis)
+    nodes = nx.draw_networkx_nodes(DG, pos, nodelist=selected_nodes, edgecolors='#ff0000', linewidths=2, node_size=selected_sizes, node_color=selected_sizes, cmap=plt.cm.viridis)
+    edges = nx.draw_networkx_edges(
+        DG,
+        pos,
+        node_size=sizes,
+        arrowstyle="->",
+        arrowsize=10,
+        edge_cmap=plt.cm.Blues,
+        width=2,
+    )
+
+    plt.show()
 
 def main():
     if len(sys.argv) != 2:
