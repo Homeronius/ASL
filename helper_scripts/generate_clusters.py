@@ -69,7 +69,7 @@ def main():
     datasets = []
 
     # Number of samples (n)
-    n_samples = 1000
+    n_samples = 25
     # Dimension of each data point (d)
     n_features = 4
     # Number of clusters
