@@ -15,10 +15,13 @@ int main() {
 
   const int mpts = 4;
   const int minimum_cluster_size = 5;
-  HDBSCAN clusterer(mpts, minimum_cluster_size);
+  int n, d;
+  double *dataset;
+  int *labels;
 
-  clusterer.load_dataset(dataset_path);
+  load_dataset(dataset_path, &dataset, &labels, &n, &d);
   // clusterer.show_dataset_head();
+  HDBSCAN clusterer(mpts, minimum_cluster_size, dataset, labels, n, d);
 
   clusterer.build_mst();
 
@@ -31,6 +34,9 @@ int main() {
   clusterer.store_predicted_labels(prediction_path);
 
   clusterer.store_condensed_cluster_tree(condensed_cluster_tree_path);
+
+  free(dataset);
+  free(labels);
 
   return 0;
 }

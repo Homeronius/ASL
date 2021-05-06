@@ -13,6 +13,9 @@
 
 typedef double float_t;
 
+void load_dataset(const char *fname, double **dataset, int **labels, int *n,
+                  int *d);
+
 class HDBSCAN {
 private:
   std::string dataset_path;
@@ -40,10 +43,10 @@ private:
   const char *get_path(std::string &fname) const;
 
 public:
-  HDBSCAN(const int mpts, const int minimum_cluster_size);
+  HDBSCAN(const int mpts, const int minimum_cluster_size, double *dataset,
+          int *labels, int n, int d);
   ~HDBSCAN();
 
-  void load_dataset(const char *fname);
   void show_dataset_head() const;
   void build_mst();
   void build_condensed_cluster_tree();

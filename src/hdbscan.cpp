@@ -2,12 +2,12 @@
 
 typedef double float_t;
 
-HDBSCAN::HDBSCAN(const int mpts, const int minimum_cluster_size)
-    : mpts(mpts), minimum_cluster_size(minimum_cluster_size) {}
+HDBSCAN::HDBSCAN(const int mpts, const int minimum_cluster_size,
+                 double *dataset, int *labels, int n, int d)
+    : mpts(mpts), minimum_cluster_size(minimum_cluster_size), dataset(dataset),
+      labels(labels), n(n), d(d), n_ext(2 * n - 1) {}
 
 HDBSCAN::~HDBSCAN() {
-  free(dataset);
-  free(labels);
   free(predicted_labels);
   free(mst);
   free(core_dist);
@@ -20,17 +20,14 @@ const char *HDBSCAN::get_path(std::string &fname) const {
   return fname.c_str();
 }
 
-void HDBSCAN::load_dataset(const char *fname) {
-  dataset_path = std::string(fname);
-
+void load_dataset(const char *fname, double **dataset, int **labels, int *n,
+                  int *d) {
   int shape[2];
 
-  read_csv(&dataset, &labels, &shape, fname);
+  read_csv(dataset, labels, &shape, fname);
 
-  n = shape[0];
-  d = shape[1];
-
-  n_ext = 2 * n - 1;
+  *n = shape[0];
+  *d = shape[1];
 
 #ifdef HDBSCAN_VERBOSE
   printf("Loaded dataset of size [%d, %d]\n\n", n, d);

@@ -12,6 +12,10 @@ static double *vec;
 static double *result;
 
 static char *dataset_path;
+static double *dataset;
+static int *labels;
+static int n;
+static int d;
 static HDBSCAN *clusterer;
 
 void fill_matrix(double *A, int n) {
@@ -50,23 +54,18 @@ void compute2() {
   }
 }
 
-void init_hdbscan() {
+void compute_hdbscan() {
   const int mpts = 4;
   const int minimum_cluster_size = 5;
+  clusterer = new HDBSCAN(mpts, minimum_cluster_size, dataset, labels, n, d);
 
-  clusterer = new HDBSCAN(mpts, minimum_cluster_size);
-
-  clusterer->load_dataset(dataset_path);
-}
-
-void compute_hdbscan() {
   clusterer->build_mst();
   clusterer->build_condensed_cluster_tree();
   clusterer->select_clusters();
   clusterer->extract_labels();
-}
 
-void finalize_hdbscan() { delete clusterer; }
+  delete clusterer;
+}
 
 long long measure_flops(unsigned long config) {
   int fd = start_flops_counter(config);
@@ -93,7 +92,7 @@ int main(int argc, char **argv) {
 
   dataset_path = argv[1];
 
-  init_hdbscan();
+  load_dataset(dataset_path, &dataset, &labels, &n, &d);
 
   measure_and_print(&compute_hdbscan);
 
@@ -112,7 +111,8 @@ int main(int argc, char **argv) {
   printf("FLOPS count 256 packed float: %lld\n",
          measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE));
 
-  finalize_hdbscan();
+  free(dataset);
+  free(labels);
 
   // free(matrix);
   // free(vec);
