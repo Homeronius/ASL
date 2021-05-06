@@ -7,7 +7,7 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-set(CMAKE_CXX_FLAGS "-O3 -march=native")
+set(CMAKE_CXX_FLAGS "-O3 -march=native -fno-omit-frame-pointer")
 
 set(HDBSCAN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(HEADER_FILES
