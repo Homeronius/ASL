@@ -29,6 +29,9 @@ ninja        # building binaries
 ninja check  # running tests
 ```
 
+To enable verbose mode: `cmake -G Ninja -DHDBSCAN_VERBOSE=1`
+Please do not compile with verbose mode enabled when benchmarking.
+
 ## Benchmarking
 
 You might need to install the `perf` tool to run the benchmarks.

@@ -25,7 +25,11 @@ std::vector<Cluster *> clustering(edge *mst, size_t n,
     heirarchy.unify(mst[i].u, mst[i].v, mst[i].weight);
   }
   heirarchy.finalize();
+
+#ifdef HDBSCAN_VERBOSE
   printf("Created %zu cluster(s)\n", heirarchy.get_clusters().size());
+#endif
+
   return heirarchy.get_clusters();
 }
 
@@ -89,7 +93,10 @@ void point_labels(std::vector<Cluster *> selected_clusters,
        cluster_idx++) {
     for (auto &&component : selected_clusters[cluster_idx]->get_components()) {
       labels[component] = cluster_idx + 1;
+
+#ifdef HDBSCAN_VERBOSE
       printf("Setting %d to %d\n", component, cluster_idx + 1);
+#endif
     }
   }
 }

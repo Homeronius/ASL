@@ -1,13 +1,18 @@
-#include "benchmark_util.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "benchmark_util.h"
+#include "hdbscan.h"
+
 #define N 4'000
 
-double *matrix;
-double *vec;
-double *result;
+static double *matrix;
+static double *vec;
+static double *result;
+
+static char *dataset_path;
+static HDBSCAN *clusterer;
 
 void fill_matrix(double *A, int n) {
   for (int i = 0; i < n; i++) {
@@ -45,22 +50,54 @@ void compute2() {
   }
 }
 
+void init_hdbscan() {
+  const int mpts = 4;
+  const int minimum_cluster_size = 5;
+
+  clusterer = new HDBSCAN(mpts, minimum_cluster_size);
+
+  clusterer->load_dataset(dataset_path);
+}
+
+void compute_hdbscan() {
+  clusterer->build_mst();
+  clusterer->build_condensed_cluster_tree();
+  clusterer->select_clusters();
+  clusterer->extract_labels();
+}
+
+void finalize_hdbscan() { delete clusterer; }
+
 long long measure_flops(unsigned long config) {
   int fd = start_flops_counter(config);
-  compute2();
-  return stop_flops_counter(fd);
+  // compute2();
+  compute_hdbscan();
+  long long count = stop_flops_counter(fd);
+
+  return count;
 }
 
 int main(int argc, char **argv) {
 
-  matrix = (double *)malloc(N * N * sizeof(double));
-  vec = (double *)malloc(N * sizeof(double));
-  result = (double *)calloc(N, sizeof(double));
+  // matrix = (double *)malloc(N * N * sizeof(double));
+  // vec = (double *)malloc(N * sizeof(double));
+  // result = (double *)calloc(N, sizeof(double));
 
-  fill_matrix(matrix, N);
-  fill_vector(vec, N);
+  // fill_matrix(matrix, N);
+  // fill_vector(vec, N);
 
-  measure_and_print(&compute);
+  if (argc != 2) {
+    printf("Usage: hdbscan_benchmark <input_path>\n");
+    return -1;
+  }
+
+  dataset_path = argv[1];
+
+  init_hdbscan();
+
+  measure_and_print(&compute_hdbscan);
+
+  // measure_and_print(&compute);
 
   printf("FLOPS count scalar double: %lld\n",
          measure_flops(FP_ARITH_INST_RETIRED_SCALAR_DOUBLE));
@@ -75,9 +112,11 @@ int main(int argc, char **argv) {
   printf("FLOPS count 256 packed float: %lld\n",
          measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE));
 
-  free(matrix);
-  free(vec);
-  free(result);
+  finalize_hdbscan();
+
+  // free(matrix);
+  // free(vec);
+  // free(result);
 
   return 0;
 }

@@ -32,7 +32,9 @@ void HDBSCAN::load_dataset(const char *fname) {
 
   n_ext = 2 * n - 1;
 
+#ifdef HDBSCAN_VERBOSE
   printf("Loaded dataset of size [%d, %d]\n\n", n, d);
+#endif
 }
 
 void HDBSCAN::show_dataset_head() const {
@@ -60,13 +62,17 @@ void HDBSCAN::build_mst() {
   core_dist = static_cast<float_t *>(malloc(n * sizeof(float_t)));
   compute_core_distances(dataset, core_dist, mpts, n, d);
 
+#ifdef HDBSCAN_VERBOSE
   printf("Core distances computed.\n");
+#endif
 
   // 2. Compute the MST -> mutual reachability graph
   mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
   prim_advanced(dataset, core_dist, mst, n, d);
 
+#ifdef HDBSCAN_VERBOSE
   printf("Minimum-Spanning-Tree constructed.\n");
+#endif
 }
 
 void HDBSCAN::build_condensed_cluster_tree() {
@@ -79,11 +85,13 @@ void HDBSCAN::build_condensed_cluster_tree() {
   // 3.1 Sort edges by increasing weight
   qsort(mst, n_ext, sizeof(edge), compare_edges);
 
+#ifdef HDBSCAN_VERBOSE
   printf(
       "MST computed and extended. First edge in arr : (%i, %i) | weight : %f\n",
       mst[0].u, mst[0].v, mst[0].weight);
   printf("Last self-edge in arr : (%i, %i) | weight : %f\n", mst[n_ext - 1].u,
          mst[n_ext - 1].v, mst[n_ext - 1].weight);
+#endif
 
   // 4. Build hierarchical tree
 
@@ -93,7 +101,9 @@ void HDBSCAN::build_condensed_cluster_tree() {
   // minimum_cluster_size);
   condensed_cluster_tree = clustering(mst, n_ext, minimum_cluster_size);
 
+#ifdef HDBSCAN_VERBOSE
   printf("Finished creating condensed cluster tree\n");
+#endif
 }
 
 void HDBSCAN::select_clusters() {
@@ -102,8 +112,10 @@ void HDBSCAN::select_clusters() {
 
   selected_clusters = extract_clusters(ordered_cluster_tree);
 
+#ifdef HDBSCAN_VERBOSE
   printf("Finished extracting clusters. Found %i clusters. \n",
          static_cast<int>(selected_clusters.size()));
+#endif
 }
 
 void HDBSCAN::extract_labels() {

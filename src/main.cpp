@@ -1,14 +1,9 @@
-#include "cluster.h"
-#include "clustering.h"
-#include "distance.h"
-#include "hdbscan.h"
-#include "prim.h"
-#include "utils.h"
-
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
+
+#include "hdbscan.h"
 
 typedef double float_t;
 
