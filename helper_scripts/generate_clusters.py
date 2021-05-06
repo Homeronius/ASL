@@ -91,7 +91,7 @@ def main():
 
     print("Writing datasets to", str(datadir))
 
-    basename = "perf_test"
+    basename = "perf_data"
 
     save_datasets(datadir, basename, datasets)
 
