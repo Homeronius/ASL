@@ -29,8 +29,10 @@ ninja        # building binaries
 ninja check  # running tests
 ```
 
-To enable verbose mode: `cmake -G Ninja -DHDBSCAN_VERBOSE=1`
-Please do not compile with verbose mode enabled when benchmarking.
+## CMake arguments
+
+* `-DHDBSCAN_VERBOSE`: enable or disable (default) verbose mode by setting to 1 or 0; do not enable when benchmarking!
+* `-DHDBSCAN_DATA_DIR`: absolute path to folder with generated input files. Defaults to <project-dir>/data
 
 ## Benchmarking
 

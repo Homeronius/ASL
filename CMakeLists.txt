@@ -25,9 +25,21 @@ IF(HDBSCAN_VERBOSE MATCHES "1")
   ADD_DEFINITIONS(-D HDBSCAN_VERBOSE)
 ENDIF()
 
+IF(NOT DEFINED HDBSCAN_DATA_DIR)
+  set(HDBSCAN_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
+ENDIF()
+
+
 enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
-add_custom_target(benchmark COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark)
+add_custom_target(benchmark
+  COMMAND
+    # TODO: hardcoding input file is not nice
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark ${HDBSCAN_DATA_DIR}/blobs_0.csv
+  DEPENDS
+    hdbscan_benchmark_lib
+    hdbscan_benchmark
+)
 
 if(DEFINED ENV{GTEST_ROOT})
   find_package(GTest REQUIRED)
