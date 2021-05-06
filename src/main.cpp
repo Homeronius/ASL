@@ -1,8 +1,3 @@
-#include <cstddef>
-#include <cstdio>
-#include <cstdlib>
-#include <vector>
-
 #include "hdbscan.h"
 
 typedef double float_t;
