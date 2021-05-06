@@ -7,7 +7,7 @@ OUTPUT="timings.out"
 # Substring input the datasets have in common
 FILEBASE="data/perf_data"
 # Number of datasets to be processed
-N=3
+N=9
 
 if [ -s ${OUTPUT} ]
 then
