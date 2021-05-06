@@ -70,7 +70,7 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
       }
     }
     open_clusters.push_back(new Cluster(lambda, root_id, components));
-    printf("Merged Cluster: %04d\tsize: %04d\n", root_id, components.size());
+    printf("Merged Cluster: %04d\tsize: %04zu\n", root_id, components.size());
 
   } else if (c1 == nullptr && c2 != nullptr) { // add leaf to c2
     printf("Case 2a\n");
@@ -78,12 +78,12 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
     for (size_t i = 0; i < number_of_components; i++) {
       if (id[i] == root1) {
         components.push_back(i);
-        printf("comps:%d\n", components.size());
+        printf("comps:%zu\n", components.size());
       }
     }
     c2->add_leaf(components, lambda);
-    printf("comps:%d\n", components.size());
-    printf("Merged Cluster: %04d\tsize: %04d\n", c2->root_id,
+    printf("comps:%zu\n", components.size());
+    printf("Merged Cluster: %04d\tsize: %04zu\n", c2->root_id,
            c2->components.size());
   } else if (c1 != nullptr && c2 == nullptr) { // add leaf to c1
     printf("Case 2b\n");
@@ -94,8 +94,8 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
       }
     }
     c1->add_leaf(components, lambda);
-    printf("comps:%d\n", components.size());
-    printf("Merged Cluster: %04d\tsize: %04d\n", c1->root_id,
+    printf("comps:%zu\n", components.size());
+    printf("Merged Cluster: %04d\tsize: %04zu\n", c1->root_id,
            c1->components.size());
   } else if (c1 != nullptr && c2 != nullptr) { // add merge c1 and c2
     printf("Case 3\n");
@@ -107,7 +107,7 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
     open_clusters.remove(c1);
     open_clusters.remove(c2);
     open_clusters.push_back(c_new);
-    printf("Merged Cluster: %04d\tsize: %04d\n", c_new->root_id,
+    printf("Merged Cluster: %04d\tsize: %04zu\n", c_new->root_id,
            c_new->components.size());
     for (auto &&c : open_clusters) {
       assert(c1 != c);
@@ -157,14 +157,14 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance) {
   if (sz[root1] == 1) { // add single node to cluster2
     if (c2->root_id == root2) {
       c2->add_leaf(root1, lambda);
-      printf("Case 2, size: %i\n", c2->get_components().size());
+      printf("Case 2, size: %zu\n", c2->get_components().size());
       return;
     }
 
   } else if (sz[root2] == 1) { // add single node to cluster1
     if (c1->root_id == root1) {
       c1->add_leaf(root2, lambda);
-      printf("Case 2, size: %i\n", c1->get_components().size());
+      printf("Case 2, size: %zu\n", c1->get_components().size());
       return;
     }
   }

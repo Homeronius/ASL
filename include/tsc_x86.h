@@ -1,7 +1,6 @@
 // Taken from ASL homework 1.
 
-/* ==================== GNU C and possibly other UNIX compilers
- * ===================== */
+/* == GNU C and possibly other UNIX compilers =============================== */
 #if !defined(WIN32) || defined(__GNUC__)
 
 #if defined(__GNUC__) || defined(__linux__)
@@ -17,7 +16,7 @@
 #define myInt64 unsigned long long
 #define INT32 unsigned int
 
-/* ======================== WIN32 ======================= */
+/* == WIN32 ================================================================= */
 #else
 
 #define myInt64 signed __int64
@@ -38,8 +37,7 @@
 
 #define COUNTER_DIFF(a, b) (COUNTER(a) - COUNTER(b))
 
-/* ==================== GNU C and possibly other UNIX compilers
- * ===================== */
+/* == GNU C and possibly other UNIX compilers =============================== */
 #if !defined(WIN32) || defined(__GNUC__)
 
 typedef union {
@@ -53,7 +51,7 @@ typedef union {
   ASM VOLATILE("rdtsc" : "=a"((cpu_c).int32.lo), "=d"((cpu_c).int32.hi))
 #define CPUID() ASM VOLATILE("cpuid" : : "a"(0) : "bx", "cx", "dx")
 
-/* ======================== WIN32 ======================= */
+/* == WIN32 ================================================================= */
 #else
 
 typedef union {
