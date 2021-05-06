@@ -9,21 +9,21 @@ FILEBASE="data/perf_data"
 # Number of datasets to be processed
 N=3
 
-if [ -s $OUTPUT ]
+if [ -s ${OUTPUT} ]
 then
     printf "File already exists. Appending output ...\n"
     printf "======================\
             \nOutput from new performance run:\
-            \n======================\n" >> $OUTPUT
+            \n======================\n" >> ${OUTPUT}
 else
-    touch $OUTPUT
+    touch ${OUTPUT}
 fi
 
-for i in $(seq 0 $N);
+for i in $(seq 0 ${N});
 do
     printf "======================\
             \nMeasurement for ${FILEBASE}_${i}.csv\
-            \n======================\n" >> $OUTPUT
-    ${BINARY} "${FILEBASE}_${i}.csv" >> $OUTPUT
-    printf "\n" >> $OUTPUT
+            \n======================\n" >> ${OUTPUT}
+    ${BINARY} "${FILEBASE}_${i}.csv" >> ${OUTPUT}
+    printf "\n" >> ${OUTPUT}
 done
