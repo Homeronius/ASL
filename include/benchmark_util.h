@@ -17,7 +17,6 @@
 #define FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE 0x10C7
 #define FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE 0x20C7
 
-
 //------------------------------------------------------------------------------
 //---- Cycle counter
 //------------------------------------------------------------------------------
@@ -35,6 +34,5 @@ long long stop_perf_cycle_counter(int fd);
 
 int start_flops_counter(unsigned long config);
 long long stop_flops_counter(int fd);
-
 
 #endif // _BENCHMARK_UTIL_H_

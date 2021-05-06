@@ -1,43 +1,36 @@
 // Inspired by ASL homework 1
 
-#include <sys/time.h>
-#include <stdlib.h>
+#include <asm/unistd.h>
+#include <linux/perf_event.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-#include <sys/ioctl.h>
-#include <linux/perf_event.h>
-#include <asm/unistd.h>
 
-#include "tsc_x86.h"
 #include "benchmark_util.h"
+#include "tsc_x86.h"
 
 #define CYCLES_REQUIRED 1e8
 #define CALIBRATE
-
 
 //------------------------------------------------------------------------------
 //---- Helpers
 //------------------------------------------------------------------------------
 
-long perf_event_open(
-  perf_event_attr *hw_event,
-  pid_t pid,
-  int cpu,
-  int group_fd,
-  unsigned long flags
-) {
+long perf_event_open(perf_event_attr *hw_event, pid_t pid, int cpu,
+                     int group_fd, unsigned long flags) {
   int ret = syscall(__NR_perf_event_open, hw_event, pid, cpu, group_fd, flags);
   return ret;
 }
-
 
 //------------------------------------------------------------------------------
 //---- Cycle counter
 //------------------------------------------------------------------------------
 
-/* 
+/*
  * Timing function based on the TimeStep Counter of the CPU.
  */
 
@@ -47,21 +40,22 @@ double rdtsc(void (*compute)()) {
   myInt64 start;
   num_runs = NUM_RUNS;
 
-/* 
-  * The CPUID instruction serializes the pipeline.
-  * Using it, we can create execution barriers around the code we want to time.
-  * The calibrate section is used to make the computation large enough so as to 
-  * avoid measurements bias due to the timing overhead.
-  */
+/*
+ * The CPUID instruction serializes the pipeline.
+ * Using it, we can create execution barriers around the code we want to time.
+ * The calibrate section is used to make the computation large enough so as to
+ * avoid measurements bias due to the timing overhead.
+ */
 #ifdef CALIBRATE
-  while(num_runs < (1 << 14)) {
+  while (num_runs < (1 << 14)) {
     start = start_tsc();
     for (i = 0; i < num_runs; ++i) {
       compute();
     }
     cycles = stop_tsc(start);
 
-    if(cycles >= CYCLES_REQUIRED) break;
+    if (cycles >= CYCLES_REQUIRED)
+      break;
 
     num_runs *= 2;
   }
@@ -72,8 +66,8 @@ double rdtsc(void (*compute)()) {
     compute();
   }
 
-  cycles = stop_tsc(start)/num_runs;
-  return (double) cycles;
+  cycles = stop_tsc(start) / num_runs;
+  return (double)cycles;
 }
 
 double c_clock(void (*compute)()) {
@@ -83,30 +77,31 @@ double c_clock(void (*compute)()) {
 
   num_runs = NUM_RUNS;
 #ifdef CALIBRATE
-  while(num_runs < (1 << 14)) {
+  while (num_runs < (1 << 14)) {
     start = clock();
     for (i = 0; i < num_runs; ++i) {
       compute();
     }
     end = clock();
 
-    cycles = (double)(end-start);
+    cycles = (double)(end - start);
 
     // Same as in c_clock: CYCLES_REQUIRED should be expressed accordingly to
     // the order of magnitude of CLOCKS_PER_SEC
-    if(cycles >= CYCLES_REQUIRED/(FREQUENCY/CLOCKS_PER_SEC)) break;
+    if (cycles >= CYCLES_REQUIRED / (FREQUENCY / CLOCKS_PER_SEC))
+      break;
 
     num_runs *= 2;
   }
 #endif
 
   start = clock();
-  for(i=0; i<num_runs; ++i) { 
+  for (i = 0; i < num_runs; ++i) {
     compute();
   }
   end = clock();
 
-  return (double)(end-start)/num_runs;
+  return (double)(end - start) / num_runs;
 }
 
 double timeofday(void (*compute)()) {
@@ -116,44 +111,49 @@ double timeofday(void (*compute)()) {
 
   num_runs = NUM_RUNS;
 #ifdef CALIBRATE
-  while(num_runs < (1 << 14)) {
+  while (num_runs < (1 << 14)) {
     gettimeofday(&start, NULL);
     for (i = 0; i < num_runs; ++i) {
       compute();
     }
     gettimeofday(&end, NULL);
 
-    cycles = (double)((end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec)/1e6)*FREQUENCY;
+    cycles = (double)((end.tv_sec - start.tv_sec) +
+                      (end.tv_usec - start.tv_usec) / 1e6) *
+             FREQUENCY;
 
-    if(cycles >= CYCLES_REQUIRED) break;
+    if (cycles >= CYCLES_REQUIRED)
+      break;
 
     num_runs *= 2;
   }
 #endif
 
   gettimeofday(&start, NULL);
-  for(i=0; i < num_runs; ++i) {
+  for (i = 0; i < num_runs; ++i) {
     compute();
   }
   gettimeofday(&end, NULL);
 
-  return (double)((end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec)/1e6)/ num_runs;
+  return (double)((end.tv_sec - start.tv_sec) +
+                  (end.tv_usec - start.tv_usec) / 1e6) /
+         num_runs;
 }
 
 void measure_and_print(void (*compute)()) {
   double r = rdtsc(compute);
-  printf("RDTSC: %lf cycles (%lf sec @ %lf MHz)\n",
-    r, r/(FREQUENCY), (FREQUENCY)/1e6);
+  printf("RDTSC: %lf cycles (%lf sec @ %lf MHz)\n", r, r / (FREQUENCY),
+         (FREQUENCY) / 1e6);
 
   // On some systems, this number seems to be actually computed from a timer in
   // seconds then transformed into clock ticks using the variable CLOCKS_PER_SEC
   // Unfortunately, it appears that CLOCKS_PER_SEC is sometimes set improperly.
   double c = c_clock(compute);
-  printf("C clock(): %lf cycles (%lf sec @ %lf MHz)\n",
-    c, c/CLOCKS_PER_SEC, (double) CLOCKS_PER_SEC/1e6);
+  printf("C clock(): %lf cycles (%lf sec @ %lf MHz)\n", c, c / CLOCKS_PER_SEC,
+         (double)CLOCKS_PER_SEC / 1e6);
 
   double t = timeofday(compute);
-  printf("C gettimeofday(): %lf sec\n\n",t);
+  printf("C gettimeofday(): %lf sec\n\n", t);
 }
 
 int start_perf_cycle_counter() {
@@ -193,7 +193,6 @@ long long stop_perf_cycle_counter(int fd) {
 
   return count;
 }
-
 
 //------------------------------------------------------------------------------
 //---- Flops counter

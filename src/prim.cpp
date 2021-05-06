@@ -69,7 +69,8 @@ void prim(double *adjacency, edge *result, int n) {
  * @param d the dimensionality of the data
  *
  */
-void prim_advanced(double *X, double *core_distances, edge *result, int n, int d) {
+void prim_advanced(double *X, double *core_distances, edge *result, int n,
+                   int d) {
   // represent tree via each node's parent?
   int parent[n];
   // current minimal distance found to node
@@ -82,8 +83,8 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
     contained[i] = false;
   }
 
-  double min_cost, core_dist_i, core_dist_j,
-      curr_min_cost_j, dist_between, mutual_reach_dist;
+  double min_cost, core_dist_i, core_dist_j, curr_min_cost_j, dist_between,
+      mutual_reach_dist;
 
   // start from vertex 0
   int i = 0;
@@ -135,13 +136,13 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n, int d
   }
 }
 
-int compare_edges(const void *e1, const void *e2){
-    double w_diff = ((edge *)e1)->weight - ((edge *)e2)->weight;
-    if (w_diff < 0) {
-        return -1;
-    } else if (w_diff > 0) {
-        return 1;
-    } else {
-        return 0;
-    }
+int compare_edges(const void *e1, const void *e2) {
+  double w_diff = ((edge *)e1)->weight - ((edge *)e2)->weight;
+  if (w_diff < 0) {
+    return -1;
+  } else if (w_diff > 0) {
+    return 1;
+  } else {
+    return 0;
+  }
 }

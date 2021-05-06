@@ -1,13 +1,12 @@
 #ifndef _HDBSCAN_CLUSTER_H_
 #define _HDBSCAN_CLUSTER_H_
 
-
+#include <algorithm>
+#include <cassert>
 #include <iterator>
-#include<stdlib.h>
-#include<vector>
-#include<list>
-#include<algorithm>
-#include<cassert>
+#include <list>
+#include <stdlib.h>
+#include <vector>
 
 typedef double float_t;
 
@@ -17,166 +16,165 @@ typedef double float_t;
  */
 class Cluster {
 private:
-    
-
 public:
-    float_t lambda_death;
-    std::vector<int> components;
-    std::vector<float_t> lambdas;
-    Cluster* child1;
-    Cluster* child2;
-    Cluster* parent;
-    int root_id;
-    bool selected;
+  float_t lambda_death;
+  std::vector<int> components;
+  std::vector<float_t> lambdas;
+  Cluster *child1;
+  Cluster *child2;
+  Cluster *parent;
+  int root_id;
+  bool selected;
 
-    /**
-     * @brief Construct a new Cluster object.
-     *
-     * @param lambda inverse of the distance at time of creation.
-     * @param root_id id of corresponding union_find root element
-     * @param elements list of nodes contained in cluster
-     */
-    Cluster(float_t lambda, int root_id, std::vector<int> components) : components(components), root_id(root_id) {
-        lambdas.assign(components.size(), lambda);
-        child1 = nullptr;
-        child2 = nullptr;
-        parent = nullptr;
-        selected = true;
-        assert(child1 != this);
-        assert(child2 != this);
-        assert(parent != this);
-    };
-    /**
-     * @brief Default Construct a empty Cluster object
-     *
-     */
-    // Cluster(){
-    //     child1 = nullptr;
-    //     child2 = nullptr;
-    //     parent = nullptr;
-    //     root_id = -1;
-    //     selected = false;
-    // };
+  /**
+   * @brief Construct a new Cluster object.
+   *
+   * @param lambda inverse of the distance at time of creation.
+   * @param root_id id of corresponding union_find root element
+   * @param elements list of nodes contained in cluster
+   */
+  Cluster(float_t lambda, int root_id, std::vector<int> components)
+      : components(components), root_id(root_id) {
+    lambdas.assign(components.size(), lambda);
+    child1 = nullptr;
+    child2 = nullptr;
+    parent = nullptr;
+    selected = true;
+    assert(child1 != this);
+    assert(child2 != this);
+    assert(parent != this);
+  };
+  /**
+   * @brief Default Construct a empty Cluster object
+   *
+   */
+  // Cluster(){
+  //     child1 = nullptr;
+  //     child2 = nullptr;
+  //     parent = nullptr;
+  //     root_id = -1;
+  //     selected = false;
+  // };
 
-    Cluster(const Cluster &c){
-        std::copy(c.components.begin(),c.components.end(), std::back_inserter(components));
-        std::copy(c.lambdas.begin(),c.lambdas.end(), std::back_inserter(lambdas));
-        child1 = c.child1;
-        child2 = c.child2;
-        parent = c.parent;
-        root_id = c.root_id;
-        selected = c.selected;
-        assert(child1 != this);
-        assert(child2 != this);
-        assert(parent != this);
-        
-    };
-    /**
-     * @brief Construct a new Cluster object by merging to existing clusters
-     *
-     * @param c1 first cluster
-     * @param c2 second cluster.
-     * @param lambda inverse of the distance at time of creation.
-     */
-    Cluster(Cluster* c1, Cluster* c2, float_t lambda){
-        // TODO check correctness of copy
-        // c.components = c1.components + c2.components
-        // Have to use back_inserter as components is empty initially
-        std::copy(c1->components.begin(),c1->components.end(), std::back_inserter(components));
-        std::copy(c2->components.begin(),c2->components.end(), std::back_inserter(components));
-        lambdas.assign(components.size(), lambda);
+  Cluster(const Cluster &c) {
+    std::copy(c.components.begin(), c.components.end(),
+              std::back_inserter(components));
+    std::copy(c.lambdas.begin(), c.lambdas.end(), std::back_inserter(lambdas));
+    child1 = c.child1;
+    child2 = c.child2;
+    parent = c.parent;
+    root_id = c.root_id;
+    selected = c.selected;
+    assert(child1 != this);
+    assert(child2 != this);
+    assert(parent != this);
+  };
+  /**
+   * @brief Construct a new Cluster object by merging to existing clusters
+   *
+   * @param c1 first cluster
+   * @param c2 second cluster.
+   * @param lambda inverse of the distance at time of creation.
+   */
+  Cluster(Cluster *c1, Cluster *c2, float_t lambda) {
+    // TODO check correctness of copy
+    // c.components = c1.components + c2.components
+    // Have to use back_inserter as components is empty initially
+    std::copy(c1->components.begin(), c1->components.end(),
+              std::back_inserter(components));
+    std::copy(c2->components.begin(), c2->components.end(),
+              std::back_inserter(components));
+    lambdas.assign(components.size(), lambda);
 
-        if(c1->components.size() < c2->components.size()){
-            root_id = c2->root_id;
-        } else {
-            root_id = c1->root_id;
-        }
-        selected = false;
-        child1 = c1;
-        child2 = c2;
-        parent = nullptr;
-        assert(child1 != this);
-        assert(child2 != this);
-        assert(parent != this);
-    };
-    ~Cluster(){};
-    /**
-     * @brief Close cluster after merging.
-     *
-     * @param p parent cluster into which it has been merged.
-     * @param lambda inverse of the distance at time of completion.
-     */
-    void finalize(Cluster* p, float_t lambda){
-        lambda_death = lambda;
-        parent = p;
+    if (c1->components.size() < c2->components.size()) {
+      root_id = c2->root_id;
+    } else {
+      root_id = c1->root_id;
     }
-    /**
-     * @brief Used to calculate stability of cluster.
-     *
-     * @return double Sum of lifetimes of the original nodes.
-     */
-    double get_cluster_weight(){
-        double sum = 0;
-        for(int i = 0; i < lambdas.size(); i++){
-            sum +=  lambdas[i] - lambda_death;
-        }
-        return sum;
+    selected = false;
+    child1 = c1;
+    child2 = c2;
+    parent = nullptr;
+    assert(child1 != this);
+    assert(child2 != this);
+    assert(parent != this);
+  };
+  ~Cluster(){};
+  /**
+   * @brief Close cluster after merging.
+   *
+   * @param p parent cluster into which it has been merged.
+   * @param lambda inverse of the distance at time of completion.
+   */
+  void finalize(Cluster *p, float_t lambda) {
+    lambda_death = lambda;
+    parent = p;
+  }
+  /**
+   * @brief Used to calculate stability of cluster.
+   *
+   * @return double Sum of lifetimes of the original nodes.
+   */
+  double get_cluster_weight() {
+    double sum = 0;
+    for (int i = 0; i < lambdas.size(); i++) {
+      sum += lambdas[i] - lambda_death;
     }
+    return sum;
+  }
 
-    double get_max_cluster_weight(){
-        if (selected){
-            return get_cluster_weight();
-        } else {
-            return get_children_cluster_weight();
-        }
+  double get_max_cluster_weight() {
+    if (selected) {
+      return get_cluster_weight();
+    } else {
+      return get_children_cluster_weight();
     }
+  }
 
-    double get_children_cluster_weight(){
-        if (child1 != nullptr && child2 != nullptr){
-            return child1->get_max_cluster_weight() + child2->get_max_cluster_weight();
-        } else {
-            return 0;
-        }
+  double get_children_cluster_weight() {
+    if (child1 != nullptr && child2 != nullptr) {
+      return child1->get_max_cluster_weight() +
+             child2->get_max_cluster_weight();
+    } else {
+      return 0;
     }
+  }
 
-    /**
-     * @brief add single node to cluster
-     *
-     * @param root_id id of leaf node
-     * @param lambda
-     */
-    void add_leaf(int root_id, float_t lambda){
-        components.push_back(root_id);
-        lambdas.push_back(lambda);
-    }
-    /**
-     * @brief add group (< min cluster size) to cluster
-     *
-     * @param root_ids ids of elements
-     * @param lambda
-     */
-    void add_leaf(std::vector<int> root_ids, float_t lambda){
-        components.insert(components.end(), root_ids.begin(), root_ids.end()); //append root ids
-        lambdas.insert(lambdas.end(),root_ids.size(),lambda); //append current lambda for of new elemennts
-    }
+  /**
+   * @brief add single node to cluster
+   *
+   * @param root_id id of leaf node
+   * @param lambda
+   */
+  void add_leaf(int root_id, float_t lambda) {
+    components.push_back(root_id);
+    lambdas.push_back(lambda);
+  }
+  /**
+   * @brief add group (< min cluster size) to cluster
+   *
+   * @param root_ids ids of elements
+   * @param lambda
+   */
+  void add_leaf(std::vector<int> root_ids, float_t lambda) {
+    components.insert(components.end(), root_ids.begin(),
+                      root_ids.end()); // append root ids
+    lambdas.insert(lambdas.end(), root_ids.size(),
+                   lambda); // append current lambda for of new elemennts
+  }
 
-    std::vector<int> get_components(){
-        return components;
-    }
+  std::vector<int> get_components() { return components; }
 
-    bool operator==(const Cluster& B){
-        return root_id == B.root_id;
-    }
+  bool operator==(const Cluster &B) { return root_id == B.root_id; }
 
-    void unselect_children(){
-        if(child1 == nullptr) return;
-        child1->selected = false;
-        child2->selected = false;
-        child1->unselect_children();
-        child2->unselect_children();
-    }
-
+  void unselect_children() {
+    if (child1 == nullptr)
+      return;
+    child1->selected = false;
+    child2->selected = false;
+    child1->unselect_children();
+    child2->unselect_children();
+  }
 };
-
 
 #endif //_HDBSCAN_CLUSTER_H_
