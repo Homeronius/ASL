@@ -63,25 +63,26 @@ def main():
     # Set seed for reproducible outcomes
     seed = 42
 
-    # Number of datasets to be generated
+    # Number of datasets per std / n to be generated
     n_datasets = 1
     datasets = []
 
     # Number of samples (n)
-    n_samples = 1000
+    power_range = [5, 15]
+    n_samples = [2**i for i in  range(*power_range)]
     # Dimension of each data point (d)
     n_features = 2
     # Number of clusters
     n_centers = 3
 
     # Define standard deviations of the clusters
-    std_min = 1.0
-    std_max = 2.0
-    std_range = np.linspace(std_min, std_max, n_datasets)
+    std_range = [1.0, 1.0]
+    std_range = np.linspace(*std_range, n_datasets)
 
     # Generate multiple datasets with increasing std
-    for std in std_range:
-        datasets.append(blobs_dataset(n_samples, n_features, n_centers, std, seed))
+    for n in n_samples:
+        for std in std_range:
+            datasets.append(blobs_dataset(n, n_features, n_centers, std, seed))
 
     # Set relative location and basename of datasets
     datadir = path.relpath(sys.argv[1])
@@ -90,11 +91,11 @@ def main():
 
     print("Writing datasets to", str(datadir))
 
-    basename = "blobs"
+    basename = "perf_test"
 
     save_datasets(datadir, basename, datasets)
 
-    print("Generated {} datasets with std {}.".format(n_datasets, std_range))
+    print("Generated {} datasets with sizes {}.".format(n_datasets*len(n_samples)*len(std_range), n_samples))
 
 
 if __name__ == "__main__":
