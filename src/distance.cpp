@@ -2,6 +2,10 @@
 #include <math.h>
 #include <stdlib.h>
 
+#ifdef HDBSCAN_INSTRUMENT
+extern long hdbscan_sqrt_counter;
+#endif
+
 double euclidean_distance(double *p1, double *p2, int d) {
   double sum = 0.0;
 
@@ -9,6 +13,10 @@ double euclidean_distance(double *p1, double *p2, int d) {
     double diff = p1[i] - p2[i];
     sum += diff * diff;
   }
+
+#ifdef HDBSCAN_INSTRUMENT
+  hdbscan_sqrt_counter++;
+#endif
 
   return sqrt(sum);
 }

@@ -2,6 +2,10 @@
 
 typedef double float_t;
 
+#ifdef HDBSCAN_INSTRUMENT
+extern long hdbscan_sqrt_counter;
+#endif
+
 int main() {
 
   const char *dataset_path = "../../data/blobs_0.csv";
@@ -32,6 +36,10 @@ int main() {
 
   free(dataset);
   free(labels);
+
+#ifdef HDBSCAN_INSTRUMENT
+  printf("Number of sqrts: %ld\n", hdbscan_sqrt_counter);
+#endif
 
   return 0;
 }

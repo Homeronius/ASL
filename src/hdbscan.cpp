@@ -2,6 +2,10 @@
 
 typedef double float_t;
 
+#ifdef HDBSCAN_INSTRUMENT
+long hdbscan_sqrt_counter = 0;
+#endif
+
 HDBSCAN::HDBSCAN(const int mpts, const int minimum_cluster_size,
                  double *dataset, int *labels, int n, int d)
     : mpts(mpts), minimum_cluster_size(minimum_cluster_size), dataset(dataset),
