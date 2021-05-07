@@ -31,7 +31,10 @@ private:
 
   // Algorithm related buffer pointers
   float_t *core_dist = nullptr; // core distance for each datapoint
-  edge *mst = nullptr;          // minimum-spanning-tree
+#ifdef HDBSCAN_PRECOMPUTE_DIST
+  float_t *dist = nullptr; // full pairwise dist matrix
+#endif
+  edge *mst = nullptr; // minimum-spanning-tree
   std::vector<Cluster *> condensed_cluster_tree;
   std::vector<Cluster *> ordered_cluster_tree;
   std::vector<Cluster *> selected_clusters;

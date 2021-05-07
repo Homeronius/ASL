@@ -8,7 +8,7 @@
 
 
 ## Prim
- - [ ] Precomputation distance matrix
+ - [x] Precomputation distance matrix
  - [ ] Memory alignment?
  - [ ] Locality?
  - [ ] Unrolling, blocks?

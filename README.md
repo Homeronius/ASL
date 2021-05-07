@@ -49,10 +49,15 @@ ninja check  # running tests
 
 ## CMake arguments
 Note that all of these arguments are cached by CMake (i.e. need to be explicitly set to 0 again after having them used).
+### General arguments
 * `-DHDBSCAN_VERBOSE`: enable or disable (default) verbose mode by setting to 1 or 0; do not enable when benchmarking!
 * `-DHDBSCAN_DATA_DIR`: absolute path to folder with generated input files. Defaults to <project-dir>/data
 * `-DHDBSCAN_INSTRUMENT`: enable or disable (default) cost analysis instrumentation. Do not enable when benchmarking as it adds extra operations!
 * `-BENCHMARK_AMD`: enable when using an AMD system for benchmarking (not fully verified correctness yet). See the comments in `benchmark_util.h`
+
+### Arguments to determine algorithm version
+* `-DHDBSCAN_PRECOMPUTE_DIST`: enable or disable full computation of the pairwise distance matrix. If set to 0, only the `core_distances`
+are precomputed and the prim algorithm implicitly assumes the mutual reachability graph.
 
 ## Benchmarking
 
