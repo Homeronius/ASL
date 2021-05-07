@@ -119,15 +119,15 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(argv[2], F_OK) == 0) { // exists -> append
       fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c,
-              t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n",
+              r, c, t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
               dp_mult, dp_div, dp_mult_add);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(argv[2], "w");
       // Header
       fprintf(fptr, "r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
-      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c,
-              t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n",
+              r, c, t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
               dp_mult, dp_div, dp_mult_add);
     }
     fclose(fptr);
