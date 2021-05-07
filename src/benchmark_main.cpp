@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
   compute_hdbscan();
   long long p = stop_perf_cycle_counter(fd);
   printf("PERF cycles: %lld\n", p);
-
+#ifndef BENCHMARK_AMD
   long long sd = measure_flops(FP_ARITH_INST_RETIRED_SCALAR_DOUBLE);
   printf("FLOPS count scalar double: %lld\n", sd);
   long long ss = measure_flops(FP_ARITH_INST_RETIRED_SCALAR_SINGLE);
@@ -81,9 +81,6 @@ int main(int argc, char **argv) {
          "operations)\n",
          ps256);
 
-  free(dataset);
-  free(labels);
-
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
@@ -101,6 +98,45 @@ int main(int argc, char **argv) {
 
     fclose(fptr);
   }
+#else
+  long long sp_add_sub = measure_flops(SP_ADD_SUB_FLOPS);
+  printf("FLOPS count float add/sub: %lld\n", sp_add_sub);
+  long long sp_mult = measure_flops(SP_MULT_FLOPS);
+  printf("FLOPS count float mult: %lld\n", sp_mult);
+  long long sp_div = measure_flops(SP_DIV_FLOPS);
+  printf("FLOPS count float div: %lld\n", sp_div);
+  long long sp_mult_add = measure_flops(SP_MULT_ADD_FLOPS);
+  printf("FLOPS count float multiply-add: %lld\n", sp_mult_add);
+  long long dp_add_sub = measure_flops(DP_ADD_SUB_FLOPS);
+  printf("FLOPS count double add/sub: %lld\n", dp_add_sub);
+  long long dp_mult = measure_flops(DP_MULT_FLOPS);
+  printf("FLOPS count double mult: %lld\n", dp_mult);
+  long long dp_div = measure_flops(DP_DIV_FLOPS);
+  printf("FLOPS count double div: %lld\n", dp_div);
+  long long dp_mult_add = measure_flops(DP_MULT_ADD_FLOPS);
+  printf("FLOPS count double multiply-add: %lld\n", dp_mult_add);
+  FILE *fptr;
+  if (argc == 3) {
+    // Check if file already exists
+    if (access(argv[2], F_OK) == 0) { // exists -> append
+      fptr = fopen(argv[2], "a");
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c,
+              t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
+              dp_mult, dp_div, dp_mult_add);
+    } else { // file doesn't exist -> create new, inclusive header line
+      fptr = fopen(argv[2], "w");
+      // Header
+      fprintf(fptr, "r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c,
+              t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add, dp_add_sub,
+              dp_mult, dp_div, dp_mult_add);
+    }
+    fclose(fptr);
+  }
+#endif
+
+  free(dataset);
+  free(labels);
 
   return 0;
 }
