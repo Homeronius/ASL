@@ -44,12 +44,16 @@ TEST(distance, distance_matrix_mpts2) {
       1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
   };
   double dist[n * n];
+  double core_dist[n];
 
-  compute_distance_matrix(input, dist, mpts, n, d);
+  compute_distance_matrix(input, core_dist, dist, mpts, n, d);
 
-  const double expected[n * n] = {2.0, 2.0, 4.0, 2.0, 2.0, 2.0, 4.0, 2.0, 2.0};
+  const double expected_dist[n * n] = {2.0, 2.0, 4.0, 2.0, 2.0,
+                                       2.0, 4.0, 2.0, 2.0};
+  const double expected_core_dist[n] = {2.0, 2.0, 2.0};
 
-  EXPECT_PRED3(compare_arrays, dist, expected, n * n);
+  EXPECT_PRED3(compare_arrays, dist, expected_dist, n * n);
+  EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
 }
 
 TEST(distance, distance_matrix_mpts3) {
@@ -60,12 +64,16 @@ TEST(distance, distance_matrix_mpts3) {
       1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
   };
   double dist[n * n];
+  double core_dist[n];
 
-  compute_distance_matrix(input, dist, mpts, n, d);
+  compute_distance_matrix(input, core_dist, dist, mpts, n, d);
 
-  const double expected[n * n] = {4.0, 4.0, 4.0, 4.0, 2.0, 4.0, 4.0, 4.0, 4.0};
+  const double expected_dist[n * n] = {4.0, 4.0, 4.0, 4.0, 2.0,
+                                       4.0, 4.0, 4.0, 4.0};
+  const double expected_core_dist[n] = {4.0, 2.0, 4.0};
 
-  EXPECT_PRED3(compare_arrays, dist, expected, n * n);
+  EXPECT_PRED3(compare_arrays, dist, expected_dist, n * n);
+  EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
 }
 
 TEST(distance, quickselect1) {
@@ -196,8 +204,8 @@ TEST(AdvancedPrim, ComparisonRandom) {
   double dist[n * n];
   double core_distances[n];
 
-  compute_core_distances(input, core_distances, mpts, n, d);
-  compute_distance_matrix(input, dist, mpts, n, d);
+  // compute_core_distances(input, core_distances, mpts, n, d);
+  compute_distance_matrix(input, core_distances, dist, mpts, n, d);
 
   edge result_basic[n - 1];
   prim(dist, result_basic, n);
