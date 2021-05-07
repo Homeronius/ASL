@@ -48,15 +48,17 @@ ninja check  # running tests
 ```
 
 ## CMake arguments
-
+Note that all of these arguments are cached by CMake (i.e. need to be explicitly set to 0 again after having them used).
 * `-DHDBSCAN_VERBOSE`: enable or disable (default) verbose mode by setting to 1 or 0; do not enable when benchmarking!
 * `-DHDBSCAN_DATA_DIR`: absolute path to folder with generated input files. Defaults to <project-dir>/data
 * `-DHDBSCAN_INSTRUMENT`: enable or disable (default) cost analysis instrumentation. Do not enable when benchmarking as it adds extra operations!
+* `-BENCHMARK_AMD`: enable when using an AMD system for benchmarking (not fully verified correctness yet). See the comments in `benchmark_util.h`
 
 ## Benchmarking
 
 You might need to install the `perf` tool to run the benchmarks.
-If you have a processor that is not based on the Intel Skylake architecture, please modify the event and unmask values in `benchmark_util.h`.
+Benchmarking is currently set up for the Intel Skylake architecture and AMD processor family 17h.
+Please see and modify the event and unmask values in `benchmark_util.h` if needed.
 
 To run the benchmarks: `ninja benchmark`
 
