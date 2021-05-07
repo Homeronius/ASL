@@ -1,5 +1,6 @@
 #include "benchmark_util.h"
 #include "hdbscan.h"
+#include "unistd.h"
 
 static char *dataset_path;
 static double *dataset;
@@ -31,6 +32,7 @@ long long measure_flops(unsigned long config) {
 
 int main(int argc, char **argv) {
 
+  printf("argc: %i\n", argc);
   if (argc < 2 || argc > 3) {
     printf("Usage: hdbscan_benchmark <input_path> [<output-file>]\n");
     return -1;
@@ -82,19 +84,20 @@ int main(int argc, char **argv) {
   free(dataset);
   free(labels);
 
+  FILE *fptr;
   if (argc == 3) {
-    FILE *fptr = fopen(argv[2], "w");
-
-    fprintf(fptr, "%f\n", r);
-    fprintf(fptr, "%f\n", c);
-    fprintf(fptr, "%f\n", t);
-    fprintf(fptr, "%lld\n", p);
-    fprintf(fptr, "%lld\n", sd);
-    fprintf(fptr, "%lld\n", ss);
-    fprintf(fptr, "%lld\n", pd128);
-    fprintf(fptr, "%lld\n", ps128);
-    fprintf(fptr, "%lld\n", pd256);
-    fprintf(fptr, "%lld\n", ps256);
+    // Check if file already exists
+    if (access(argv[2], F_OK) == 0) { // exists -> append
+      fptr = fopen(argv[2], "a");
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c, t, p, sd,
+              ss, pd128, ps128, pd256, ps256);
+    } else { // file doesn't exist -> create new, inclusive header line
+      fptr = fopen(argv[2], "w");
+      // Header
+      fprintf(fptr, "r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
+      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c, t, p, sd,
+              ss, pd128, ps128, pd256, ps256);
+    }
 
     fclose(fptr);
   }
