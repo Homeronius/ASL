@@ -36,17 +36,36 @@ double edge_sum(edge *a, int n) {
   return acc;
 }
 
-TEST(distance, distance_matrix) {
+TEST(distance, distance_matrix_mpts2) {
   const int d = 4;
-  const int n = 2;
-  double input[n * d] = {1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0};
+  const int n = 3;
+  const int mpts = 2;
+  double input[n * d] = {
+      1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
+  };
   double dist[n * n];
 
-  compute_distance_matrix(input, dist, 3, n, d);
+  compute_distance_matrix(input, dist, mpts, n, d);
 
-  const double expected[n * n] = {0.0, 2.0, 2.0, 0.0};
+  const double expected[n * n] = {2.0, 2.0, 4.0, 2.0, 2.0, 2.0, 4.0, 2.0, 2.0};
 
-  EXPECT_PRED3(compare_arrays, dist, expected, 4);
+  EXPECT_PRED3(compare_arrays, dist, expected, n * n);
+}
+
+TEST(distance, distance_matrix_mpts3) {
+  const int d = 4;
+  const int n = 3;
+  const int mpts = 3;
+  double input[n * d] = {
+      1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
+  };
+  double dist[n * n];
+
+  compute_distance_matrix(input, dist, mpts, n, d);
+
+  const double expected[n * n] = {4.0, 4.0, 4.0, 4.0, 2.0, 4.0, 4.0, 4.0, 4.0};
+
+  EXPECT_PRED3(compare_arrays, dist, expected, n * n);
 }
 
 TEST(distance, quickselect1) {
