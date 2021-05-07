@@ -32,7 +32,6 @@ long long measure_flops(unsigned long config) {
 
 int main(int argc, char **argv) {
 
-  printf("argc: %i\n", argc);
   if (argc < 2 || argc > 3) {
     printf("Usage: hdbscan_benchmark <input_path> [<output-file>]\n");
     return -1;
@@ -86,14 +85,14 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(argv[2], F_OK) == 0) { // exists -> append
       fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c, t, p, sd,
-              ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
+              c, t, p, sd, ss, pd128, ps128, pd256, ps256);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(argv[2], "w");
       // Header
-      fprintf(fptr, "r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
-      fprintf(fptr, "%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", r, c, t, p, sd,
-              ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "n,d,r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
+              c, t, p, sd, ss, pd128, ps128, pd256, ps256);
     }
 
     fclose(fptr);
