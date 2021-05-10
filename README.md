@@ -67,6 +67,12 @@ Please see and modify the event and unmask values in `benchmark_util.h` if neede
 
 To run the benchmarks: `ninja benchmark`
 
+Note! If all flop counts stay at zero, it might be that your user does not have the permission to see kernel PMU events. To fix this, try
+```
+sudo sysctl -w kernel.perf_event_paranoid=-1
+```
+This gives the user access to (almost) all events.
+Reference [here](https://www.kernel.org/doc/Documentation/sysctl/kernel.txt).
 ## References
 
 [R. J. G. B. Campello, D. Moulavi, A. Zimek, and J. Sander, “Hierarchical density estimates for data clustering, visualization, and outlier detection”](https://dl.acm.org/doi/pdf/10.1145/2733381)
