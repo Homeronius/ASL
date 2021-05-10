@@ -115,24 +115,18 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
 
 void compute_distance_matrix(double *input, double *core_dist, double *dist,
                              int mpts, int n, int d) {
-  double tmp[n * n];
-
+  double tmp[n];
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {
-      tmp[i * n + k] = euclidean_distance(input + i * d, input + k * d, d);
-      dist[i * n + k] = tmp[i * n + k];
+      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+      dist[i * n + k] = tmp[k];
     }
-  }
-
-  // d_mreach(p1, p2) = max(d_core(p1), d_core(p2), euclidean_distance(p1, p2))
-  for (int i = 0; i < n; i++) {
-    core_dist[i] = iterative_quickselect(tmp + i * n, 0, n - 1, mpts - 1);
+    core_dist[i] = iterative_quickselect(tmp, 0, n - 1, mpts - 1);
   }
 
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {
-      dist[i * n + k] = fmax(fmax(tmp[i * n + mpts - 1], tmp[k * n + mpts - 1]),
-                             dist[i * n + k]);
+      dist[i * n + k] = fmax(fmax(core_dist[i], core_dist[k]), dist[i * n + k]);
     }
   }
 }
