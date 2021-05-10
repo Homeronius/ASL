@@ -19,21 +19,21 @@
 #define FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE 0x20C7
 
 #else
-// AMD Family 17h Zen 1 performance events
+// AMD Family 17h Zen 2 performance events
 // for RETIRED_SSE_AVX_OPERATIONS.
-// I followed the instructions here:
+// Zen 2 does not seem to differ between single or double precision.
+// see:
+// https://lore.kernel.org/lkml/20200318190002.307290-3-vijaythakkar@me.com/ I
+// also followed the instructions here:
 // https://stackoverflow.com/questions/46104738/amd-perf-events
 // i.e. inspect the performance events as given by
 // libpfm4, specifically the ones given by ./showevtinfo
 
-#define SP_ADD_SUB_FLOPS 0x0103
-#define SP_MULT_FLOPS 0x0203
-#define SP_DIV_FLOPS 0x0403
-#define SP_MULT_ADD_FLOPS 0x0803
-#define DP_ADD_SUB_FLOPS 0x1003
-#define DP_MULT_FLOPS 0x2003
-#define DP_DIV_FLOPS 0x4003
-#define DP_MULT_ADD_FLOPS 0x8003
+#define ALL_FLOPS 0xff03
+#define ADD_SUB_FLOPS 0x0103
+#define MULT_FLOPS 0x0203
+#define DIV_SQRT_FLOPS 0x0403
+#define MULT_ADD_FLOPS 0x0803
 
 #endif
 

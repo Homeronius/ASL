@@ -126,40 +126,29 @@ int main(int argc, char **argv) {
     fclose(fptr);
   }
 #else
-  long long sp_add_sub = measure_flops(SP_ADD_SUB_FLOPS);
-  printf("FLOPS count float add/sub: %lld\n", sp_add_sub);
-  long long sp_mult = measure_flops(SP_MULT_FLOPS);
-  printf("FLOPS count float mult: %lld\n", sp_mult);
-  long long sp_div = measure_flops(SP_DIV_FLOPS);
-  printf("FLOPS count float div: %lld\n", sp_div);
-  long long sp_mult_add = measure_flops(SP_MULT_ADD_FLOPS);
-  printf("FLOPS count float multiply-add: %lld\n", sp_mult_add);
-  long long dp_add_sub = measure_flops(DP_ADD_SUB_FLOPS);
-  printf("FLOPS count double add/sub: %lld\n", dp_add_sub);
-  long long dp_mult = measure_flops(DP_MULT_FLOPS);
-  printf("FLOPS count double mult: %lld\n", dp_mult);
-  long long dp_div = measure_flops(DP_DIV_FLOPS);
-  printf("FLOPS count double div: %lld\n", dp_div);
-  long long dp_mult_add = measure_flops(DP_MULT_ADD_FLOPS);
-  printf("FLOPS count double multiply-add: %lld\n", dp_mult_add);
+  long long all_flops = measure_flops(ALL_FLOPS);
+  printf("FLOPS count overall: %lld\n", all_flops);
+  long long add_sub = measure_flops(ADD_SUB_FLOPS);
+  printf("FLOPS count add/sub: %lld\n", add_sub);
+  long long mult = measure_flops(MULT_FLOPS);
+  printf("FLOPS count mult: %lld\n", mult);
+  long long div_sqrt = measure_flops(DIV_SQRT_FLOPS);
+  printf("FLOPS count div/sqrt: %lld\n", div_sqrt);
+  long long mult_add = measure_flops(MULT_ADD_FLOPS);
+  printf("FLOPS count multiply-add: %lld\n", mult_add);
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
     if (access(argv[2], F_OK) == 0) { // exists -> append
       fptr = fopen(argv[2], "a");
-      fprintf(fptr,
-              "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n",
-              n, d, r, c, t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add,
-              dp_add_sub, dp_mult, dp_div, dp_mult_add);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
+              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(argv[2], "w");
       // Header
-      fprintf(fptr, "n,d,r,c,t,p,sp_add_sub,sp_mult,sp_div,sp_mult_add,dp_add_"
-                    "sub,dp_mult,dp_div,dp_mult_add\n");
-      fprintf(fptr,
-              "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n",
-              n, d, r, c, t, p, sp_add_sub, sp_mult, sp_div, sp_mult_add,
-              dp_add_sub, dp_mult, dp_div, dp_mult_add);
+      fprintf(fptr, "n,d,r,c,t,p,all,add_sub,mult,div_sqrt,mult_add\n");
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
+              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add);
     }
 
     fclose(fptr);
