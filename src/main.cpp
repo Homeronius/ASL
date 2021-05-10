@@ -6,9 +6,14 @@ typedef double float_t;
 extern long hdbscan_sqrt_counter;
 #endif
 
-int main() {
+int main(int argc, char **argv) {
 
-  const char *dataset_path = "../../data/blobs_0.csv";
+  if (argc != 2) {
+    printf("Usage: hdbscan <input-file-path>");
+    return -1;
+  }
+
+  const char *dataset_path = argv[1];
   const char *prediction_path = "../../data/blobs_0_prediction.csv";
   const char *condensed_cluster_tree_path = "../../data/blobs_0_tree.csv";
 
