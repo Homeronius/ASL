@@ -7,7 +7,11 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-set(CMAKE_CXX_FLAGS "-O3 -march=native -fno-omit-frame-pointer")
+set(CMAKE_CXX_FLAGS "-O3 -march=native")
+
+# Useful for debugging vectorized code without dealing with all kinds of
+# optimizations.
+# set(CMAKE_CXX_FLAGS "-O0 -mavx -mavx2 -msse -mfma -mbmi -mbmi2")
 
 set(HDBSCAN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(HEADER_FILES
@@ -47,10 +51,18 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 add_custom_target(benchmark
   COMMAND
     # TODO: hardcoding input file is not nice
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark ${HDBSCAN_DATA_DIR}/blobs_0.csv
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark ${HDBSCAN_DATA_DIR}/perf_data_7.csv
   DEPENDS
     hdbscan_benchmark_lib
     hdbscan_benchmark
+)
+add_custom_target(benchmark_vec
+  COMMAND
+    # TODO: hardcoding input file is not nice
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/hdbscan_benchmark_vec ${HDBSCAN_DATA_DIR}/perf_data_7.csv
+  DEPENDS
+    hdbscan_benchmark_lib
+    hdbscan_benchmark_vec
 )
 
 if(DEFINED ENV{GTEST_ROOT})
