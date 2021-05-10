@@ -279,7 +279,12 @@ double quickselect(double *list, int left, int right, int k) {
     return list[left];
   }
 
-  int pivot = left + rand() % (right - left + 1);
+  // Random pivot
+  // int pivot = left + rand() % (right - left + 1);
+
+  // Take element in the middle as pivot
+  int pivot = left + (right - left) / 2;
+
   pivot = partition(list, left, right, pivot);
 
   if (k == pivot) {
