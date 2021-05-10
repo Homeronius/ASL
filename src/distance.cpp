@@ -60,7 +60,11 @@ double quickselect(double *list, int left, int right, int k) {
     return list[left];
   }
 
-  int pivot = left + rand() % (right - left + 1);
+  // Random pivot
+  // int pivot = left + rand() % (right - left + 1);
+
+  // Take element in the middle as pivot
+  int pivot = left + (right - left) / 2;
   pivot = partition(list, left, right, pivot);
 
   if (k == pivot) {
@@ -79,10 +83,10 @@ double iterative_quickselect(double *list, int left, int right, int k) {
     }
 
     // Random pivot
-    int pivot_idx = left + rand() % (right - left + 1);
+    // int pivot_idx = left + rand() % (right - left + 1);
 
     // Take element in the middle as pivot
-    // int pivot_idx = left + (right - left) / 2;
+    int pivot_idx = left + (right - left) / 2;
 
     pivot_idx = partition(list, left, right, pivot_idx);
 
