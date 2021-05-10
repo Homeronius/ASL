@@ -1,6 +1,7 @@
 // Inspired by ASL homework 1
 
 #include <asm/unistd.h>
+#include <cassert>
 #include <linux/perf_event.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -197,6 +198,73 @@ long long stop_perf_cycle_counter(int fd) {
 //------------------------------------------------------------------------------
 //---- Flops counter
 //------------------------------------------------------------------------------
+
+// For some reason max. 4 events work
+int start_all_flops_counter(const unsigned long *configs, unsigned long *ids,
+                            int n) {
+  assert(n > 1);
+
+  perf_event_attr attr;
+  int fds[n];
+
+  // group leader
+  memset(&attr, 0, sizeof(perf_event_attr));
+  attr.size = sizeof(perf_event_attr);
+  attr.type = PERF_TYPE_RAW;
+  attr.config = configs[0];
+  attr.disabled = 1;
+  attr.exclude_kernel = 1; // do not count instructions the kernel executes
+  attr.exclude_hv = 1;
+  attr.read_format = PERF_FORMAT_GROUP | PERF_FORMAT_ID;
+  fds[0] = perf_event_open(&attr, 0, -1, -1, 0);
+
+  assert(fds[0]);
+
+  ioctl(fds[0], PERF_EVENT_IOC_ID, ids);
+
+  for (int i = 1; i < n; i++) {
+    memset(&attr, 0, sizeof(struct perf_event_attr));
+    attr.size = sizeof(struct perf_event_attr);
+    attr.type = PERF_TYPE_RAW;
+    attr.config = configs[i];
+    attr.disabled = 1;
+    attr.exclude_kernel = 1;
+    attr.exclude_hv = 1;
+    attr.read_format = PERF_FORMAT_GROUP | PERF_FORMAT_ID;
+    fds[i] = perf_event_open(&attr, 0, -1, fds[0], 0);
+
+    assert(fds[i]);
+
+    ioctl(fds[i], PERF_EVENT_IOC_ID, ids + i);
+  }
+
+  ioctl(fds[0], PERF_EVENT_IOC_RESET, PERF_IOC_FLAG_GROUP);
+  ioctl(fds[0], PERF_EVENT_IOC_ENABLE, PERF_IOC_FLAG_GROUP);
+
+  return fds[0];
+}
+
+void stop_all_flops_counter(int fd, unsigned long *ids, unsigned long *result,
+                            int n) {
+  assert(fd != -1);
+
+  // disable and read out the counter
+  ioctl(fd, PERF_EVENT_IOC_DISABLE, PERF_IOC_FLAG_GROUP);
+
+  char buf[4096];
+  struct read_format_t *rf = (struct read_format_t *)buf;
+
+  read(fd, &buf, sizeof(buf));
+
+  for (int i = 0; i < rf->nr; i++) {
+    for (int k = 0; k < n; k++) {
+      if (rf->values[i].id == ids[k]) {
+        result[k] = rf->values[i].value;
+      }
+    }
+  }
+  close(fd);
+}
 
 int start_flops_counter(unsigned long config) {
   perf_event_attr attr;

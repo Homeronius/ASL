@@ -52,7 +52,21 @@ long long stop_perf_cycle_counter(int fd);
 //---- Flops counter
 //------------------------------------------------------------------------------
 
+// Reference for monitoring multiple perf events:
+// https://stackoverflow.com/questions/42088515/perf-event-open-how-to-monitoring-multiple-events
+struct read_format_t {
+  unsigned long nr;
+  struct {
+    unsigned long value;
+    unsigned long id;
+  } values[];
+};
+
 int start_flops_counter(unsigned long config);
 long long stop_flops_counter(int fd);
+int start_all_flops_counter(const unsigned long *configs, unsigned long *ids,
+                            int n);
+void stop_all_flops_counter(int fd, unsigned long *ids, unsigned long *result,
+                            int n);
 
 #endif // _BENCHMARK_UTIL_H_

@@ -58,24 +58,52 @@ int main(int argc, char **argv) {
   compute_hdbscan();
   long long p = stop_perf_cycle_counter(fd);
   printf("PERF cycles: %lld\n", p);
+
 #ifndef BENCHMARK_AMD
-  long long sd = measure_flops(FP_ARITH_INST_RETIRED_SCALAR_DOUBLE);
+
+  int n = 3;
+  unsigned long ids[n];
+  unsigned long result[n];
+
+  const unsigned long double_configs[] = {
+      FP_ARITH_INST_RETIRED_SCALAR_DOUBLE,
+      FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE,
+      FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE};
+
+  // Note: for some reason, monitoring multiple performance events only works
+  // for up to 4 events.
+  fd = start_all_flops_counter(double_configs, ids, n);
+  compute_hdbscan();
+  stop_all_flops_counter(fd, ids, result, n);
+
+  long long sd = result[0];
+  long long pd128 = result[1];
+  long long pd256 = result[2];
+
+  const unsigned long single_configs[] = {
+      FP_ARITH_INST_RETIRED_SCALAR_SINGLE,
+      FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE,
+      FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE};
+
+  fd = start_all_flops_counter(single_configs, ids, n);
+  compute_hdbscan();
+  stop_all_flops_counter(fd, ids, result, n);
+
+  long long ss = result[0];
+  long long ps128 = result[1];
+  long long ps256 = result[2];
+
   printf("FLOPS count scalar double: %lld\n", sd);
-  long long ss = measure_flops(FP_ARITH_INST_RETIRED_SCALAR_SINGLE);
   printf("FLOPS count scalar float: %lld\n", ss);
-  long long pd128 = measure_flops(FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE);
   printf("FLOPS count 128 packed double: %lld (multiply by 2 to get scalar "
          "operations)\n",
          pd128);
-  long long ps128 = measure_flops(FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE);
   printf("FLOPS count 128 packed float: %lld (multiply by 4 to get scalar "
          "operations)\n",
          ps128);
-  long long pd256 = measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE);
   printf("FLOPS count 256 packed double: %lld (multiply by 4 to get scalar "
          "operations)\n",
          pd256);
-  long long ps256 = measure_flops(FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE);
   printf("FLOPS count 256 packed float: %lld (multiply by 8 to get scalar "
          "operations)\n",
          ps256);
