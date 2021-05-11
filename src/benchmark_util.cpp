@@ -149,9 +149,9 @@ void measure_and_print(void (*compute)()) {
   // On some systems, this number seems to be actually computed from a timer in
   // seconds then transformed into clock ticks using the variable CLOCKS_PER_SEC
   // Unfortunately, it appears that CLOCKS_PER_SEC is sometimes set improperly.
-  double c = c_clock(compute);
-  printf("C clock(): %lf cycles (%lf sec @ %lf MHz)\n", c, c / CLOCKS_PER_SEC,
-         (double)CLOCKS_PER_SEC / 1e6);
+  double c = c_clock(compute) * FREQUENCY / CLOCKS_PER_SEC;
+  printf("C clock(): %'lf cycles (%'lf sec @ %'lf MHz)\n", c, c / (FREQUENCY),
+         (FREQUENCY) / 1e6);
 
   double t = timeofday(compute);
   printf("C gettimeofday(): %lf sec\n\n", t);

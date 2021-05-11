@@ -1,6 +1,7 @@
 #include "benchmark_util.h"
 #include "hdbscan.h"
 #include "unistd.h"
+#include <locale.h>
 
 static char *dataset_path;
 static double *dataset;
@@ -40,24 +41,26 @@ int main(int argc, char **argv) {
   dataset_path = argv[1];
   load_dataset(dataset_path, &dataset, &labels, &n, &d);
 
+  setlocale(LC_NUMERIC, "");
+
   double r = rdtsc(&compute_hdbscan);
-  printf("RDTSC: %lf cycles (%lf sec @ %lf MHz)\n", r, r / (FREQUENCY),
+  printf("RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", r, r / (FREQUENCY),
          (FREQUENCY) / 1e6);
 
   // On some systems, this number seems to be actually computed from a timer in
   // seconds then transformed into clock ticks using the variable CLOCKS_PER_SEC
   // Unfortunately, it appears that CLOCKS_PER_SEC is sometimes set improperly.
-  double c = c_clock(&compute_hdbscan);
-  printf("C clock(): %lf cycles (%lf sec @ %lf MHz)\n", c, c / CLOCKS_PER_SEC,
-         (double)CLOCKS_PER_SEC / 1e6);
+  double c = c_clock(&compute_hdbscan) * FREQUENCY / CLOCKS_PER_SEC;
+  printf("C clock(): %'lf cycles (%'lf sec @ %'lf MHz)\n", c, c / (FREQUENCY),
+         (FREQUENCY) / 1e6);
 
   double t = timeofday(&compute_hdbscan);
-  printf("C gettimeofday(): %lf sec\n\n", t);
+  printf("C gettimeofday(): %'lf sec\n\n", t);
 
   int fd = start_perf_cycle_counter();
   compute_hdbscan();
   long long p = stop_perf_cycle_counter(fd);
-  printf("PERF cycles: %lld\n", p);
+  printf("PERF cycles: %'lld\n", p);
 
 #ifndef BENCHMARK_AMD
 
@@ -93,18 +96,18 @@ int main(int argc, char **argv) {
   long long ps128 = result[1];
   long long ps256 = result[2];
 
-  printf("FLOPS count scalar double: %lld\n", sd);
-  printf("FLOPS count scalar float: %lld\n", ss);
-  printf("FLOPS count 128 packed double: %lld (multiply by 2 to get scalar "
+  printf("FLOPS count scalar double: %'lld\n", sd);
+  printf("FLOPS count scalar float: %'lld\n", ss);
+  printf("FLOPS count 128 packed double: %'lld (multiply by 2 to get scalar "
          "operations)\n",
          pd128);
-  printf("FLOPS count 128 packed float: %lld (multiply by 4 to get scalar "
+  printf("FLOPS count 128 packed float: %'lld (multiply by 4 to get scalar "
          "operations)\n",
          ps128);
-  printf("FLOPS count 256 packed double: %lld (multiply by 4 to get scalar "
+  printf("FLOPS count 256 packed double: %'lld (multiply by 4 to get scalar "
          "operations)\n",
          pd256);
-  printf("FLOPS count 256 packed float: %lld (multiply by 8 to get scalar "
+  printf("FLOPS count 256 packed float: %'lld (multiply by 8 to get scalar "
          "operations)\n",
          ps256);
 
@@ -127,15 +130,15 @@ int main(int argc, char **argv) {
   }
 #else
   long long all_flops = measure_flops(ALL_FLOPS);
-  printf("FLOPS count overall: %lld\n", all_flops);
+  printf("FLOPS count overall: %'lld\n", all_flops);
   long long add_sub = measure_flops(ADD_SUB_FLOPS);
-  printf("FLOPS count add/sub: %lld\n", add_sub);
+  printf("FLOPS count add/sub: %'lld\n", add_sub);
   long long mult = measure_flops(MULT_FLOPS);
-  printf("FLOPS count mult: %lld\n", mult);
+  printf("FLOPS count mult: %'lld\n", mult);
   long long div_sqrt = measure_flops(DIV_SQRT_FLOPS);
-  printf("FLOPS count div/sqrt: %lld\n", div_sqrt);
+  printf("FLOPS count div/sqrt: %'lld\n", div_sqrt);
   long long mult_add = measure_flops(MULT_ADD_FLOPS);
-  printf("FLOPS count multiply-add: %lld\n", mult_add);
+  printf("FLOPS count multiply-add: %'lld\n", mult_add);
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
