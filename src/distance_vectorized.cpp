@@ -150,14 +150,90 @@ double euclidean_distance(double *p1, double *p2, int d) {
 }
 
 double manhattan_distance(double *p1, double *p2, int d) {
-  double sum = 0.0;
+  __m256d sum = _mm256_setzero_pd();
+  __m256d abs_mask =
+      _mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF));
 
-  for (int i = 0; i < d; i++) {
-    double diff = p1[i] - p2[i];
-    sum += fabs(diff);
+  // TODO: could load 4 at the same time to fully utilize the hadds.
+  int i = 0;
+  for (; i < d - 3; i += 4) {
+    __m256d p1_vec = _mm256_loadu_pd(p1 + i);
+    __m256d p2_vec = _mm256_loadu_pd(p2 + i);
+    __m256d diff = _mm256_sub_pd(p1_vec, p2_vec);
+    __m256d abs = _mm256_and_pd(diff, abs_mask);
+    sum = _mm256_add_pd(sum, abs);
   }
 
-  return sum;
+  __m256d add = _mm256_hadd_pd(sum, sum);
+  __m256d perm = _mm256_permute4x64_pd(add, 0b11011000);
+  double res = _mm256_cvtsd_f64(_mm256_hadd_pd(perm, perm));
+
+  for (; i < d; i++) {
+    double d = p1[i] - p2[i];
+    res += fabs(d);
+  }
+
+  return res;
+}
+
+void manhattan_distance_2(double *pa1, double *pa2, double *pb1, double *pb2,
+                          double *pc1, double *pc2, double *pd1, double *pd2,
+                          double *res) {
+  __m256d sum_ab;
+  __m256d sum_cd;
+  __m256d abs_mask =
+      _mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF));
+  {
+    __m256d ld1 = _mm256_loadu2_m128d(pa1, pc1);
+    __m256d ld2 = _mm256_loadu2_m128d(pa2, pc2);
+    __m256d diff = _mm256_sub_pd(ld1, ld2);
+    sum_ab = _mm256_and_pd(diff, abs_mask);
+  }
+  {
+    __m256d ld1 = _mm256_loadu2_m128d(pb1, pd1);
+    __m256d ld2 = _mm256_loadu2_m128d(pb2, pd2);
+    __m256d diff = _mm256_sub_pd(ld1, ld2);
+    sum_cd = _mm256_and_pd(diff, abs_mask);
+  }
+
+  __m256d add = _mm256_hadd_pd(sum_ab, sum_cd);
+
+  _mm256_store_pd(res, add);
+}
+
+void manhattan_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
+                          double *pc1, double *pc2, double *pd1, double *pd2,
+                          double *res) {
+  __m256d abs_mask =
+      _mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF));
+  __m256d pa1_vec = _mm256_load_pd(pa1);
+  __m256d pa2_vec = _mm256_load_pd(pa2);
+  __m256d diffa = _mm256_sub_pd(pa1_vec, pa2_vec);
+  __m256d absa = _mm256_and_pd(diffa, abs_mask);
+
+  __m256d pb1_vec = _mm256_load_pd(pb1);
+  __m256d pb2_vec = _mm256_load_pd(pb2);
+  __m256d diffb = _mm256_sub_pd(pb1_vec, pb2_vec);
+  __m256d absb = _mm256_and_pd(diffb, abs_mask);
+
+  __m256d pc1_vec = _mm256_load_pd(pc1);
+  __m256d pc2_vec = _mm256_load_pd(pc2);
+  __m256d diffc = _mm256_sub_pd(pc1_vec, pc2_vec);
+  __m256d absc = _mm256_and_pd(diffc, abs_mask);
+
+  __m256d pd1_vec = _mm256_load_pd(pd1);
+  __m256d pd2_vec = _mm256_load_pd(pd2);
+  __m256d diffd = _mm256_sub_pd(pd1_vec, pd2_vec);
+  __m256d absd = _mm256_and_pd(diffd, abs_mask);
+
+  __m256d add1 = _mm256_hadd_pd(absa, absb);
+  __m256d add2 = _mm256_hadd_pd(absc, absd);
+
+  __m256d perm1 = _mm256_permute4x64_pd(add1, 0b11011000);
+  __m256d perm2 = _mm256_permute4x64_pd(add2, 0b11011000);
+
+  __m256d add3 = _mm256_hadd_pd(perm1, perm2);
+  _mm256_store_pd(res, add3);
 }
 
 inline void swap(double *a, double *b) {
