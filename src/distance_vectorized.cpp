@@ -137,9 +137,10 @@ double euclidean_distance(double *p1, double *p2, int d) {
 
   double res = buff[0] + buff[1] + buff[2] + buff[3];
 
+  double d_rest;
   for (; i < d; i++) {
-    double d = p1[i] - p2[i];
-    res += d * d;
+    d_rest = p1[i] - p2[i];
+    res += d_rest * d_rest;
   }
 
 #ifdef HDBSCAN_INSTRUMENT
