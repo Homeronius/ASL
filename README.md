@@ -53,6 +53,8 @@ Note that all of these arguments are cached by CMake (i.e. need to be explicitly
 * `-DHDBSCAN_VERBOSE`: enable or disable (default) verbose mode by setting to 1 or 0; do not enable when benchmarking!
 * `-DHDBSCAN_DATA_DIR`: absolute path to folder with generated input files. Defaults to <project-dir>/data
 * `-DHDBSCAN_INSTRUMENT`: enable or disable (default) cost analysis instrumentation. Do not enable when benchmarking as it adds extra operations!
+* `-DCMAKE_CXX_COMPILER`: Choose your compiler (i.e. `g++`, `clang++`). Defaults to `g++`
+* `-DOPT_LEVEL`: Choose your compiler optimization level (i.e. `O0`, `O1`). Defaults to `O3`
 * `-BENCHMARK_AMD`: enable when using an AMD system for benchmarking (not fully verified correctness yet). See the comments in `benchmark_util.h`
 
 ### Arguments to determine algorithm version
