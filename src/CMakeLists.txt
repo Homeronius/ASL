@@ -9,7 +9,8 @@ add_library(hdbscan_lib
 
 option(
     OUTPUT_COMPILER_INFO
-    "Output compiler information when launching the main executable." ON)
+    "Output compiler information when launching the main executable." ON
+)
 
 configure_file (
     "${HDBSCAN_INCLUDE_DIR}/config.h.in"
