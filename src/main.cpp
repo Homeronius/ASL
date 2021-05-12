@@ -1,3 +1,4 @@
+#include "config.h"
 #include "hdbscan.h"
 
 typedef double float_t;
@@ -6,12 +7,24 @@ typedef double float_t;
 extern long hdbscan_sqrt_counter;
 #endif
 
+#ifdef OUTPUT_COMPILER_INFO
+void output_compiler_info() {
+  printf("Compiler name: %s\n", COMPILER_NAME);
+  printf("Compiler ID: %s\n", COMPILER_ID);
+  printf("Compiler version: %s\n", COMPILER_VERSION);
+}
+#endif
+
 int main(int argc, char **argv) {
 
   if (argc != 2) {
     printf("Usage: hdbscan <input-file-path>");
     return -1;
   }
+
+#ifdef OUTPUT_COMPILER_INFO
+  output_compiler_info();
+#endif
 
   const char *dataset_path = argv[1];
   const char *prediction_path = "../../data/blobs_0_prediction.csv";
