@@ -9,9 +9,11 @@ extern long hdbscan_sqrt_counter;
 
 #ifdef OUTPUT_COMPILER_INFO
 void output_compiler_info() {
-  printf("Compiler name: %s\n", COMPILER_NAME);
-  printf("Compiler ID: %s\n", COMPILER_ID);
-  printf("Compiler version: %s\n", COMPILER_VERSION);
+  printf("Compiled with\n");
+  printf("- Compiler ID:\t\t %s\n", COMPILER_ID);
+  printf("- Compiler version:\t %s\n", COMPILER_VERSION);
+  printf("- Compiler flags:\t %s\n", COMPILER_FLAGS);
+  // printf("Optimization flag: -%s\n", OPT_LEVEL);
 }
 #endif
 

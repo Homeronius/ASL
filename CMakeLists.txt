@@ -7,7 +7,14 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-set(CMAKE_CXX_FLAGS "-O3 -march=native")
+if(OPT_LEVEL)
+    # Default compiler flags with custom optimization level
+    message("Running with custom optimization level: -${OPT_LEVEL}")
+    set(CMAKE_CXX_FLAGS "-${OPT_LEVEL} -march=native")
+else()
+    # Default compiler flags
+    set(CMAKE_CXX_FLAGS "-O3 -march=native")
+endif()
 
 # Useful for debugging vectorized code without dealing with all kinds of
 # optimizations.
