@@ -19,18 +19,17 @@ void output_compiler_info() {
 
 int main(int argc, char **argv) {
 
-  if (argc != 2) {
-    printf("Usage: hdbscan <input-file-path>");
-    return -1;
-  }
-
 #ifdef OUTPUT_COMPILER_INFO
   output_compiler_info();
 #endif
 
+  if (argc < 2 || argc > 3) {
+    printf("Usage: hdbscan_benchmark <input_path> [<output-file>]\n");
+    return -1;
+  }
+
   const char *dataset_path = argv[1];
-  const char *prediction_path = "../../data/blobs_0_prediction.csv";
-  const char *condensed_cluster_tree_path = "../../data/blobs_0_tree.csv";
+  // const char *condensed_cluster_tree_path = "../../data/blobs_0_tree.csv";
 
   const int mpts = 4;
   const int minimum_cluster_size = 5;
@@ -50,9 +49,12 @@ int main(int argc, char **argv) {
 
   clusterer.extract_labels();
 
-  clusterer.store_predicted_labels(prediction_path);
+  if (argc == 3) {
+    const char *prediction_path = argv[2];
+    clusterer.store_predicted_labels(prediction_path);
+  }
 
-  clusterer.store_condensed_cluster_tree(condensed_cluster_tree_path);
+  // clusterer.store_condensed_cluster_tree(condensed_cluster_tree_path);
 
   free(dataset);
   free(labels);
