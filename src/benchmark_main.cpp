@@ -124,8 +124,12 @@ int main(int argc, char **argv) {
          "operations)\n",
          pd256);
   printf("FLOPS count 256 packed float: %'lld (multiply by 8 to get scalar "
-         "operations)\n",
+         "operations)\n\n",
          ps256);
+
+  long long scalar_flops = sd + 2 * pd128 + 4 * pd256;
+  printf("Performance (PERF) = %'f dflops/cycle\n", (double)scalar_flops / p);
+  printf("Performance (RDTSC) = %'f dflops/cycle\n", (double)scalar_flops / r);
 
   FILE *fptr;
   if (argc == 3) {
