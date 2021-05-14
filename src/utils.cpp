@@ -117,3 +117,17 @@ void condensed_tree_to_csv(std::vector<Cluster *> tree, const char *fname) {
   }
   delimited_file.close();
 }
+
+// Helper function for debugging
+void print_list(double *list, int left, int right) {
+  printf("list: [");
+  bool first = true;
+  for (int i = left; i < right; i++) {
+    if (!first) {
+      printf(", ");
+    }
+    printf("%f", list[i]);
+    first = false;
+  }
+  printf("]\n");
+}
