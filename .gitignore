@@ -56,3 +56,6 @@ helper_scripts/venv/
 
 #clangd
 .cache/
+
+# config
+include/config.h
