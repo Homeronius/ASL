@@ -170,8 +170,8 @@ double manhattan_distance(double *p1, double *p2, int d) {
   double res = _mm256_cvtsd_f64(_mm256_hadd_pd(perm, perm));
 
   for (; i < d; i++) {
-    double d = p1[i] - p2[i];
-    res += fabs(d);
+    double diff = p1[i] - p2[i];
+    res += fabs(diff);
   }
 
   return res;
@@ -513,8 +513,8 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
         break;
       }
 
-      __m256d d = _mm256_loadu_pd(tmp + k);
-      _mm256_storeu_pd(dist + i * n + k, d);
+      __m256d t = _mm256_loadu_pd(tmp + k);
+      _mm256_storeu_pd(dist + i * n + k, t);
     }
     for (; k < n; k++) {
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
