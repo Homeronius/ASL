@@ -1,7 +1,19 @@
 #include "benchmark_util.h"
+#include "config.h"
 #include "hdbscan.h"
 #include "unistd.h"
 #include <locale.h>
+
+#ifdef OUTPUT_COMPILER_INFO
+void output_compiler_info() {
+  printf("Compiled with\n");
+  printf("- Compiler ID:\t\t %s\n", COMPILER_ID);
+  printf("- Compiler version:\t %s\n", COMPILER_VERSION);
+  printf("- Compiler flags:\t %s\n", COMPILER_FLAGS);
+  // printf("Optimization flag: -%s\n", OPT_LEVEL);
+  printf("\n");
+}
+#endif
 
 static char *dataset_path;
 static double *dataset;
@@ -32,6 +44,10 @@ long long measure_flops(unsigned long config) {
 }
 
 int main(int argc, char **argv) {
+
+#ifdef OUTPUT_COMPILER_INFO
+  output_compiler_info();
+#endif
 
   if (argc < 2 || argc > 3) {
     printf("Usage: hdbscan_benchmark <input_path> [<output-file>]\n");
