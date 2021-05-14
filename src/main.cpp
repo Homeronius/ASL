@@ -56,9 +56,6 @@ int main(int argc, char **argv) {
 
   // clusterer.store_condensed_cluster_tree(condensed_cluster_tree_path);
 
-  free(dataset);
-  free(labels);
-
 #ifdef HDBSCAN_INSTRUMENT
   printf("Number of sqrts: %ld\n", hdbscan_sqrt_counter);
 #endif
