@@ -14,7 +14,7 @@ mkdir -p data/timings
 SUFFIX=$1
 BINARY="./build/bin/hdbscan_benchmark"
 OUTPUT_LOG="logs/timings_${SUFFIX}.out"
-OUTPUT_CSV="data/timings/timings_${SUFFIX}.csv"
+OUTPUT_CSV="data/timings/${SUFFIX}.csv"
 # Substring input the datasets have in common
 FILEBASE="data/perf_data"
 # Number of datasets to be processed
@@ -30,6 +30,7 @@ else
 fi
 
 for i in $(seq 0 ${N}); do
+    echo "running benchmark for ${FILEBASE}_${i}.csv ..."
     printf "======================\
             \nMeasurement for ${FILEBASE}_${i}.csv\
             \n======================\n" >>${OUTPUT_LOG}
