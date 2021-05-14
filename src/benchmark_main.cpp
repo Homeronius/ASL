@@ -80,9 +80,9 @@ int main(int argc, char **argv) {
 
 #ifndef BENCHMARK_AMD
 
-  int n = 3;
-  unsigned long ids[n];
-  unsigned long result[n];
+  int k = 3;
+  unsigned long ids[k];
+  unsigned long result[k];
 
   const unsigned long double_configs[] = {
       FP_ARITH_INST_RETIRED_SCALAR_DOUBLE,
@@ -91,9 +91,9 @@ int main(int argc, char **argv) {
 
   // Note: for some reason, monitoring multiple performance events only works
   // for up to 4 events.
-  fd = start_all_flops_counter(double_configs, ids, n);
+  fd = start_all_flops_counter(double_configs, ids, k);
   compute_hdbscan();
-  stop_all_flops_counter(fd, ids, result, n);
+  stop_all_flops_counter(fd, ids, result, k);
 
   long long sd = result[0];
   long long pd128 = result[1];
@@ -104,9 +104,9 @@ int main(int argc, char **argv) {
       FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE,
       FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE};
 
-  fd = start_all_flops_counter(single_configs, ids, n);
+  fd = start_all_flops_counter(single_configs, ids, k);
   compute_hdbscan();
-  stop_all_flops_counter(fd, ids, result, n);
+  stop_all_flops_counter(fd, ids, result, k);
 
   long long ss = result[0];
   long long ps128 = result[1];
@@ -149,17 +149,17 @@ int main(int argc, char **argv) {
     fclose(fptr);
   }
 #else
-  int n = 3;
-  unsigned long ids[n];
-  unsigned long result[n];
+  int k = 3;
+  unsigned long ids[k];
+  unsigned long result[k];
   const unsigned long amd_configs[] = {
       ADD_SUB_FLOPS, MULT_FLOPS, DIV_SQRT_FLOPS,
       // MULT_ADD_FLOPS
   };
 
-  fd = start_all_flops_counter(amd_configs, ids, n);
+  fd = start_all_flops_counter(amd_configs, ids, k);
   compute_hdbscan();
-  stop_all_flops_counter(fd, ids, result, n);
+  stop_all_flops_counter(fd, ids, result, k);
 
   long long add_sub = result[0];
   printf("FLOPS count add/sub: %'lld\n", add_sub);
