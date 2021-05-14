@@ -149,16 +149,34 @@ int main(int argc, char **argv) {
     fclose(fptr);
   }
 #else
-  long long all_flops = measure_flops(ALL_FLOPS);
-  printf("FLOPS count overall: %'lld\n", all_flops);
-  long long add_sub = measure_flops(ADD_SUB_FLOPS);
+  int n = 3;
+  unsigned long ids[n];
+  unsigned long result[n];
+  const unsigned long amd_configs[] = {
+      ADD_SUB_FLOPS, MULT_FLOPS, DIV_SQRT_FLOPS,
+      // MULT_ADD_FLOPS
+  };
+
+  fd = start_all_flops_counter(amd_configs, ids, n);
+  compute_hdbscan();
+  stop_all_flops_counter(fd, ids, result, n);
+
+  long long add_sub = result[0];
   printf("FLOPS count add/sub: %'lld\n", add_sub);
-  long long mult = measure_flops(MULT_FLOPS);
+  long long mult = result[1];
   printf("FLOPS count mult: %'lld\n", mult);
-  long long div_sqrt = measure_flops(DIV_SQRT_FLOPS);
+  long long div_sqrt = result[2];
   printf("FLOPS count div/sqrt: %'lld\n", div_sqrt);
+  // for some reason only n = 3 works to count
+  // multiple events at the same time, hence do mult_add individually
   long long mult_add = measure_flops(MULT_ADD_FLOPS);
   printf("FLOPS count multiply-add: %'lld\n", mult_add);
+  long long all_flops = add_sub + mult + div_sqrt + mult_add;
+  printf("FLOPS count overall: %'lld\n", all_flops);
+
+  printf("Performance (PERF) = %'f dflops/cycle\n", (double)all_flops / p);
+  printf("Performance (RDTSC) = %'f dflops/cycle\n", (double)all_flops / r);
+
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
