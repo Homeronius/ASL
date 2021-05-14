@@ -53,10 +53,10 @@ def main():
                 passed += 1
 
     print("====================")
-    print("{} / {} tests failed!".format(n_tests-passed, n_tests))
+    print("{} / {} tests passed!".format(passed, n_tests))
 
     # Remove temporary output dir
-    shutil.rmtree('output_tmp')
+    shutil.rmtree(out_dir)
 
 
 if __name__ == "__main__":
