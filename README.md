@@ -20,23 +20,22 @@
 - Should we only focus on the main bottleneck (i.e.  MST)? Or should we also consider cluster extraction (~4% of runtime)
 - Should algorithmic optimizations (e.g. memory complexity) be taken into consideration, or is the main focus on applying / testing optimizations shown in the lecture (e.g. vector intrinsics, loop unrolling, blocking, ...)?
 
-## Interfaces:
+## TODOs until next meeting:
 
-### Input (Tobia)
-N datapoints in a d-dimensional euclidean space. \
-`n x d` dimensional Matrix. Stored as c-array.
+### Tobia
+Optimize Prim with vector intrinsics. \
+Small fixes in Python / shell scripts.
 
-### Distances (Martin)
-Mutual reachability distance matrix: \
-`n x n` dimensional matrix. Stored as c-array.
+### Martin
+Create table of optimizations implemented so far, including their approximate resulting speedup. \
+Find cause of inconsistencies when using perf and Hotspot.
 
-### MST Creation (Alex)
-Minimum Spanning Tree: \
-`n x n` dimensional adjacency matrix. Stored as c-array.
+### Alex
+Memory optimization in distance matrix computation (only compute upper diagonal).
 
-### Cluster Selection (Tom)
-Cluster allocation: \
-`n` dimensional array containing the cluster id of each point. 0 = no cluster / noise. Stored as c-array.
+### Tom
+Take care of memory alignment (32 bytes) when reading in dataset. \
+Fix small bug in cluster extraction.
 
 ## Setting this up
 
