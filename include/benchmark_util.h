@@ -2,9 +2,9 @@
 #define _BENCHMARK_UTIL_H_
 
 #define NUM_RUNS 10
+#ifndef BENCHMARK_AMD
 #define FREQUENCY 2.6e9
 
-#ifndef BENCHMARK_AMD
 // Intel Skylake architecture performance events
 // CAUTION! Highly processor dependent!
 // See Intel 64 and IA-32 Architectures Software Developers's Manual
@@ -19,6 +19,9 @@
 #define FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE 0x20C7
 
 #else
+// base frequency of AMD Ryzen 7 4800H (alex' machine)
+#define FREQUENCY 2.9e9
+
 // AMD Family 17h Zen 2 performance events
 // for RETIRED_SSE_AVX_OPERATIONS.
 // Zen 2 does not seem to differ between single or double precision.
