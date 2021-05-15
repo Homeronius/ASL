@@ -2,24 +2,6 @@
 
 ![main algo](doc/main-algo.png "Main algo outline")
 
-## One-to-one meeting 07.05.20
-
-### Presentation of current progress
-
-- Algorithm and its constituents (Tom)
-- Codebase / organisation (Alex)
-- Performance benchmark results -> visualization with Hotspot (Martin)
-- Possible optimizations (Tobia):
-  - Intrinsics
-  - Memory alignment
-  - Ball-trees for distance calculations
-  - Dual-tree Boruvka
-
-### Open questions
-
-- Should we only focus on the main bottleneck (i.e.  MST)? Or should we also consider cluster extraction (~4% of runtime)
-- Should algorithmic optimizations (e.g. memory complexity) be taken into consideration, or is the main focus on applying / testing optimizations shown in the lecture (e.g. vector intrinsics, loop unrolling, blocking, ...)?
-
 ## TODOs until next meeting:
 
 ### Tobia
@@ -68,9 +50,7 @@ You can add further CMake variables in `config.h.in`. Custom CMake variables hav
 
 You might need to install the `perf` tool to run the benchmarks.
 Benchmarking is currently set up for the Intel Skylake architecture and AMD processor family 17h.
-Please see and modify the event and unmask values in `benchmark_util.h` if needed.
-
-To run the benchmarks: `ninja benchmark`
+Please see and modify the event and unmask values in `benchmark_util.h` if needed. To run the benchmark with the current build: `ninja benchmark`
 
 Note! If all flop counts stay at zero, it might be that your user does not have the permission to see kernel PMU events. To fix this, try
 ```
@@ -78,6 +58,20 @@ sudo sysctl -w kernel.perf_event_paranoid=-1
 ```
 This gives the user access to (almost) all events.
 Reference [here](https://www.kernel.org/doc/Documentation/sysctl/kernel.txt).
+
+### Scripts
+We have prepared the following scripts to run multiple benchmarks and plot the performance measurements:
+  * `benchmarks.sh` is the entrypoint to a specific comparison as well as **all** experiments. It should generate data, build the project with different flags, execute benchmarks and save plotted results (i.e. calls all scripts outlined below).
+    * Usage: `./benchmarks.sh [intel|amd] [baseline_flags|...|all]` (add new comparisons here).
+  * ```run_perf_measurements.sh``` is the script that is called by the above `benchmarks.sh`. It executes a specific binary with different csv inputs.
+    * Usage: `run_perf_measurements.sh <benchm_name> <binary_name> <filebase> <n>`. 
+  * `helper_scripts/generate_clusters.py` generates and stores data as `data/perf_data_d<x>_<n>.csv`, for example `perf_data_d2_7.csv` where `d` is number of feature dimensions. The sizes of inputs are roughly evenly spaced from 32 to 14436.
+    * Usage: `generate_clusters.py <relative_data_folder_path> <n_clusters> <d_dimensions>`
+  * `helper_scripts/plot_performance_alt.py` creates a nice performance plot close to what was given in the lecture guidelines on benchmarking.
+    * Usage: `plot_performance_alt.py --system [intel|amd] --data-path <data/timings/> --files <x1.csv> ... <xn.csv> --save-path <file>`
+  * Other useful scripts, e.g. plotting clusters: See [`helper_scripts/`](helper_scripts).
+
+Please see the outline and TODOs in `benchmarks.sh`.
 ## References
 
 [R. J. G. B. Campello, D. Moulavi, A. Zimek, and J. Sander, “Hierarchical density estimates for data clustering, visualization, and outlier detection”](https://dl.acm.org/doi/pdf/10.1145/2733381)
