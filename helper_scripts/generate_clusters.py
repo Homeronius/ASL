@@ -24,8 +24,10 @@ def blobs_dataset(n_samples, n_features, n_clusters, cluster_std, seed=None):
         seed for reproducible results
     """
 
-    X, y = make_blobs(n_samples, n_features, n_clusters, cluster_std, random_state=seed)
+    X, y = make_blobs(n_samples, n_features, n_clusters,
+                      cluster_std, random_state=seed)
     return {"data": X, "labels": y+1, "std": cluster_std}
+
 
 def save_datasets(datadir, basename, dataset_list):
     """Save list of datasets given as dict to location specified in basename.
@@ -45,7 +47,7 @@ def save_datasets(datadir, basename, dataset_list):
         n_samples, n_features = X.shape
         header = "{},{},{}".format(n_samples, n_features, std)
 
-        fname = "{}_{}.csv".format(basename, i)
+        fname = "{}_d{}_{}.csv".format(basename, n_features, i)
         np.savetxt(
             path.join(datadir, fname),
             np.concatenate((X, y[:, None]), axis=1, dtype=np.object_),
@@ -56,8 +58,8 @@ def save_datasets(datadir, basename, dataset_list):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: generate_clusters.py <relative_data_folder_path>")
+    if len(sys.argv) != 4:
+        print("Usage: generate_clusters.py <relative_data_folder_path> <n_clusters> <d_dimensions>")
         return
 
     # Set seed for reproducible outcomes
@@ -68,12 +70,18 @@ def main():
     datasets = []
 
     # Number of samples (n)
-    power_range = [5, 15]
-    n_samples = [2**i for i in  range(*power_range)]
+    pow_min = 5
+    pow_mid = 12
+    pow_max = 15
+    power_range = [pow_min, pow_mid]
+    n_samples = [2**i for i in range(*power_range)]
+    n_samples += [2 ** pow_mid + i * (2 ** (pow_mid - 1))
+                  for i in range(pow_max - pow_mid + 3)]
+
     # Dimension of each data point (d)
-    n_features = 2
+    n_features = int(sys.argv[3])
     # Number of clusters
-    n_centers = 3
+    n_centers = int(sys.argv[2])
 
     # Define standard deviations of the clusters
     std_range = [1.0, 1.0]
@@ -95,7 +103,8 @@ def main():
 
     save_datasets(datadir, basename, datasets)
 
-    print("Generated {} datasets with sizes {}.".format(n_datasets*len(n_samples)*len(std_range), n_samples))
+    print("Generated {} datasets with sizes {}.".format(
+        n_datasets*len(n_samples)*len(std_range), n_samples))
 
 
 if __name__ == "__main__":
