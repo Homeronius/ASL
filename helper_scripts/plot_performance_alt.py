@@ -6,7 +6,6 @@ import seaborn as sns
 from sklearn.metrics import adjusted_rand_score
 from matplotlib.colors import ListedColormap
 
-
 def read_dataset(path, system='intel'):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
     if system == 'intel':
@@ -14,27 +13,29 @@ def read_dataset(path, system='intel'):
     else:
         return data[:, 0], data[:, 6], data[:, 2], data[:, 3]
 
+
 def main(args):
     sns.set_theme()
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_title('Preliminary performance plot (flops/cycle)')
+    ax.set_title(r"$\bf{Preliminary\ performance\ plot}$" + "\n [flops/cycle]",
+                 loc='left')
 
     for file in args.data[0]:
         N, flops, cycles, time = read_dataset(file, args.system)
         # flops *= 1e-9
         y = np.divide(flops, cycles)
-        line, = ax.plot(N, y)
+        line, = ax.plot(N, y, linestyle='-', marker='o')
         line.set_label(file)
-    
-    ax.set_xlabel('dataset size')
-    ax.set_ylabel('flops/cycle')
+
+    ax.set_xlabel('n')
+    # ax.set_ylabel('flops/cycle')
     ax.legend()
 
     plt.show()
 
-    fig.savefig('test_amd.png')
+    fig.savefig(args.save_path)
 
 
 if __name__ == "__main__":
@@ -52,6 +53,12 @@ if __name__ == "__main__":
         required=True,
         action='append',
         help='path to one or more .csv performance measurements'
+    )
+    parser.add_argument(
+        "--save-path",
+        type=str,
+        default='plot.png',
+        help='path/filename to store plot to'
     )
 
     args = parser.parse_args()
