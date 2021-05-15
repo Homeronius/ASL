@@ -1,7 +1,7 @@
 #ifndef _BENCHMARK_UTIL_H_
 #define _BENCHMARK_UTIL_H_
 
-#define NUM_RUNS 10
+#define NUM_RUNS 3
 #ifndef BENCHMARK_AMD
 #define FREQUENCY 2.6e9
 
