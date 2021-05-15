@@ -1,10 +1,9 @@
-import sys
+from os import path
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import adjusted_rand_score
-from matplotlib.colors import ListedColormap
+
 
 def read_dataset(path, system='intel'):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
@@ -15,6 +14,10 @@ def read_dataset(path, system='intel'):
 
 
 def main(args):
+    datadir = path.relpath(args.data_path)
+    if not path.exists(datadir):
+        raise Exception("directory {} does not exist".format(datadir))
+
     sns.set_theme()
 
     fig = plt.figure()
@@ -22,8 +25,9 @@ def main(args):
     ax.set_title(r"$\bf{Preliminary\ performance\ plot}$" + "\n [flops/cycle]",
                  loc='left')
 
-    for file in args.data[0]:
-        N, flops, cycles, time = read_dataset(file, args.system)
+    for file in args.files[0]:
+        fpath = path.join(datadir, file)
+        N, flops, cycles, time = read_dataset(fpath, args.system)
         # flops *= 1e-9
         y = np.divide(flops, cycles)
         line, = ax.plot(N, y, linestyle='-', marker='o')
@@ -47,18 +51,24 @@ if __name__ == "__main__":
         choices=['intel', 'amd']
     )
     parser.add_argument(
-        "--data",
+        "--data-path",
+        type=str,
+        default='data/timings/',
+        help='relative path to where timings are stored'
+    )
+    parser.add_argument(
+        "--files",
         type=str,
         nargs='+',
         required=True,
         action='append',
-        help='path to one or more .csv performance measurements'
+        help='name of one or more .csv performance measurements'
     )
     parser.add_argument(
         "--save-path",
         type=str,
         default='plot.png',
-        help='path/filename to store plot to'
+        help='path or filename to store plot to'
     )
 
     args = parser.parse_args()
