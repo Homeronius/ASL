@@ -51,7 +51,7 @@ if [ $2 = "baseline_flags" ] || [ $2 = "all" ]; then
             -DBENCHMARK_AMD=${AMD} &&
             ninja benchmark &&
             cd ..
-        ./run_perf_measurements.sh O${i}_primadvanced_test hdbscan_benchmark 12
+        ./run_perf_measurements.sh O${i}_primadvanced_test hdbscan_benchmark perf_data_d2 12
     done
 
     printf "creating plot...\n"
