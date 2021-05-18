@@ -40,7 +40,7 @@ int Union_find::find(int p) {
   return root;
 }
 
-void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
+void Union_find::merge_clusters(int root1, int root2, float_t distance) {
 
 #ifdef HDBSCAN_VERBOSE
   printf("Merging Cluster: %04d-%04d\tsizes: %04d,%04d\t", root1, root2,
@@ -72,7 +72,7 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
       root_id = root1;
     }
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root1 || id[i] == root2) {
+      if (find(i) == root1 || find(i) == root2) {
         components.push_back(i);
       }
     }
@@ -89,7 +89,7 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
 
     std::vector<int> components;
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root1) {
+      if (find(i) == root1) {
         components.push_back(i);
 
 #ifdef HDBSCAN_VERBOSE
@@ -151,123 +151,6 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
   }
 }
 
-void Union_find::merge_clusters(int root1, int root2, float_t distance) {
-#ifdef HDBSCAN_VERBOSE
-  printf("Merging Cluster: %04d-%04d\tsizes: %04d,%04d\t", root1, root2,
-         sz[root1], sz[root2]);
-#endif
-
-  float_t lambda = 1 / distance;
-
-  // CASE 1: root1 & root2 are both not clusters.
-  if (sz[root1] < minimum_cluster_size && sz[root2] < minimum_cluster_size) {
-#ifdef HDBSCAN_VERBOSE
-    printf("Case 1\n");
-#endif
-    // create new cluster from root1 and root2
-    std::vector<int> components;
-    int root_id;
-    if (sz[root1] < sz[root2]) {
-      root_id = root2;
-    } else {
-      root_id = root1;
-    }
-    for (size_t i = 0; i < number_of_components; i++) {
-      if (find(i) == root1 || find(i) == root2) {
-        components.push_back(i);
-      }
-    }
-    open_clusters.push_back(new Cluster(lambda, root_id, components));
-    return;
-  }
-
-  Cluster *c1;
-  Cluster *c2;
-  for (auto &&c : open_clusters) {
-    if (c->root_id == root1) {
-      c1 = c;
-    } else if (c->root_id == root2) {
-      c2 = c;
-    }
-  }
-
-  // CASE 2: one root is a cluster, the other a single leaf.
-  if (sz[root1] == 1) { // add single node to cluster2
-    if (c2->root_id == root2) {
-      c2->add_leaf(root1, lambda);
-
-#ifdef HDBSCAN_VERBOSE
-      printf("Case 2, size: %zu\n", c2->get_components().size());
-#endif
-
-      return;
-    }
-
-  } else if (sz[root2] == 1) { // add single node to cluster1
-    if (c1->root_id == root1) {
-      c1->add_leaf(root2, lambda);
-
-#ifdef HDBSCAN_VERBOSE
-      printf("Case 2, size: %zu\n", c1->get_components().size());
-#endif
-
-      return;
-    }
-  }
-
-  // CASE 3: one root is a cluster, the other a group of leafs (< min cluster
-  // size)
-  if (sz[root1] < minimum_cluster_size) {
-#ifdef HDBSCAN_VERBOSE
-    printf("Case 3\n");
-#endif
-    // add root1 to cluster 2
-    std::vector<int> components;
-    for (size_t i = 0; i < number_of_components; i++) {
-      if (find(i) == root1) {
-        components.push_back(i);
-      }
-      c2->add_leaf(components, lambda);
-      return;
-    }
-    assert(false && "case 3 root not found");
-  } else if (sz[root2] < minimum_cluster_size) {
-#ifdef HDBSCAN_VERBOSE
-    printf("Case 3\n");
-#endif
-    // add root2 to cluster 1
-    std::vector<int> components;
-    for (size_t i = 0; i < number_of_components; i++) {
-      if (find(i) == root2) {
-        components.push_back(i);
-      }
-      c1->add_leaf(components, lambda);
-      return;
-    }
-    assert(false && "case 3 root not found");
-  }
-
-  // CASE 4: both roots are clusters
-#ifdef HDBSCAN_VERBOSE
-  printf("Case 4\n");
-#endif
-
-  Cluster *c_new = new Cluster(c1, c2, lambda);
-
-  c1->finalize(c_new, lambda);
-  c2->finalize(c_new, lambda);
-  finished_clusters.push_back(c1);
-  finished_clusters.push_back(c2);
-  open_clusters.remove(c1);
-  open_clusters.remove(c2);
-  open_clusters.push_back(c_new);
-
-  for (auto &&c : open_clusters) {
-    assert(c1 != c);
-    assert(c2 != c);
-  }
-}
-
 void Union_find::unify(int p, int q, float_t distance) {
 
   if (connected(p, q))
@@ -278,7 +161,7 @@ void Union_find::unify(int p, int q, float_t distance) {
 
   if (sz[root1] + sz[root2] >=
       minimum_cluster_size) { // union will be valid cluster
-    merge_clusters2(root1, root2, distance);
+    merge_clusters(root1, root2, distance);
   }
 
   if (sz[root1] < sz[root2]) {

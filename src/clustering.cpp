@@ -49,36 +49,20 @@ void get_preorder(std::vector<Cluster *> &ordered_clusters, Cluster *c) {
 std::vector<Cluster *>
 extract_clusters(std::vector<Cluster *> ordered_clusters) {
   std::vector<Cluster *> selected_clusters;
-
-  for (int i = ordered_clusters.size() - 1; i >= 0; i--) {
+  for (int i =  0; i < ordered_clusters.size(); i++) {
     if (ordered_clusters[i]->selected) {
       Cluster *parent = ordered_clusters[i]->parent;
       if (parent != nullptr) {
         double current_weight = parent->get_cluster_weight();
         double children_weight = parent->get_children_cluster_weight();
-        if (current_weight > children_weight) {
+        if (current_weight >= children_weight) {
           parent->selected = true;
           parent->unselect_children();
         }
       }
     }
   }
-
-  // for (auto &&c : clusters){
-  //     if (c.selected){
-  //         Cluster* parent = c.parent;
-
-  //         if (parent != nullptr ){
-  //             double current_weight = parent->get_cluster_weight();
-  //             double children_weight = parent->get_children_cluster_weight();
-  //             if(current_weight > children_weight){
-  //                 parent->selected = true;
-  //                 parent->child1->selected = false;#include <string>
-
-  //         }
-  //     }
-  // }
-  for (auto &&c : ordered_clusters) {
+  for (auto &&c : ordered_clusters) { 
     if (c->selected) {
       selected_clusters.push_back(c);
     }
