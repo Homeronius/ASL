@@ -112,7 +112,7 @@ void Union_find::merge_clusters2(int root1, int root2, float_t distance) {
 
     std::vector<int> components;
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root2) {
+      if (find(i) == root2) {
         components.push_back(i);
       }
     }
@@ -173,7 +173,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance) {
       root_id = root1;
     }
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root1 || id[i] == root2) {
+      if (find(i) == root1 || find(i) == root2) {
         components.push_back(i);
       }
     }
@@ -224,7 +224,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance) {
     // add root1 to cluster 2
     std::vector<int> components;
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root1) {
+      if (find(i) == root1) {
         components.push_back(i);
       }
       c2->add_leaf(components, lambda);
@@ -238,7 +238,7 @@ void Union_find::merge_clusters(int root1, int root2, float_t distance) {
     // add root2 to cluster 1
     std::vector<int> components;
     for (size_t i = 0; i < number_of_components; i++) {
-      if (id[i] == root2) {
+      if (find(i) == root2) {
         components.push_back(i);
       }
       c1->add_leaf(components, lambda);
