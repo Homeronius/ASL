@@ -13,7 +13,7 @@ if(OPT_LEVEL)
     set(CMAKE_CXX_FLAGS "-${OPT_LEVEL} -march=native")
 else()
     # Default compiler flags
-    set(CMAKE_CXX_FLAGS "-O3 -march=native")
+    set(CMAKE_CXX_FLAGS "-O3 -g -march=native -ffast-math -W -Wall -pedantic")
 endif()
 
 # Useful for debugging vectorized code without dealing with all kinds of
@@ -55,6 +55,16 @@ ENDIF()
 
 enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+add_custom_target(build_bench
+  DEPENDS
+    hdbscan_benchmark_lib
+    hdbscan_benchmark
+)
+add_custom_target(build_bench_vec
+  DEPENDS
+    hdbscan_benchmark_lib
+    hdbscan_benchmark
+)
 add_custom_target(benchmark
   COMMAND
     # TODO: hardcoding input file is not nice
