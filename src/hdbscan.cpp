@@ -15,9 +15,6 @@ HDBSCAN::~HDBSCAN() {
   free(predicted_labels);
   free(mst);
   free(core_dist);
-#ifdef HDBSCAN_PRECOMPUTE_DIST
-  free(dist);
-#endif
   for (size_t i = 0; i < condensed_cluster_tree.size(); i++) {
     delete condensed_cluster_tree[i];
   }
@@ -64,8 +61,6 @@ void HDBSCAN::build_mst() {
 
   // 1. Compute core distances
   core_dist = static_cast<float_t *>(malloc(n * sizeof(float_t)));
-
-#ifndef HDBSCAN_PRECOMPUTE_DIST
   compute_core_distances(dataset, core_dist, mpts, n, d);
 
 #ifdef HDBSCAN_VERBOSE
@@ -75,20 +70,6 @@ void HDBSCAN::build_mst() {
   // 2. Compute the MST -> mutual reachability graph
   mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
   prim_advanced(dataset, core_dist, mst, n, d);
-
-#else
-  dist = static_cast<float_t *>(malloc(n * n * sizeof(float_t)));
-  compute_distance_matrix(dataset, core_dist, dist, mpts, n, d);
-
-#ifdef HDBSCAN_VERBOSE
-  printf("Full distance and core matrix computed.\n");
-#endif
-
-  // 2. Compute the MST -> mutual reachability graph
-  mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
-  prim(dist, mst, n);
-
-#endif
 
 #ifdef HDBSCAN_VERBOSE
   printf("Minimum-Spanning-Tree constructed.\n");
