@@ -76,6 +76,44 @@ TEST(distance, distance_matrix_mpts3) {
   EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
 }
 
+TEST(distance, distance_matrix_diagonal_mpts3) {
+  const int d = 4;
+  const int n = 3;
+  const int mpts = 3;
+  double input[n * d] = {
+      1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
+  };
+  double dist[n * (n + 1) / 2];
+  double core_dist[n];
+
+  compute_distance_matrix_diagonal(input, core_dist, dist, mpts, n, d);
+
+  const double expected_dist[n * (n + 1) / 2] = {4.0, 4.0, 4.0, 2.0, 4.0, 4.0};
+  const double expected_core_dist[n] = {4.0, 2.0, 4.0};
+
+  EXPECT_PRED3(compare_arrays, dist, expected_dist, n * (n + 1) / 2);
+  EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
+}
+
+TEST(distance, distance_matrix_diagonal_mpts2) {
+  const int d = 4;
+  const int n = 3;
+  const int mpts = 2;
+  double input[n * d] = {
+      1.0, 2.0, 3.0, 4.0, 2.0, 3.0, 4.0, 5.0, 3.0, 4.0, 5.0, 6.0,
+  };
+  double dist[n * (n + 1) / 2];
+  double core_dist[n];
+
+  compute_distance_matrix_diagonal(input, core_dist, dist, mpts, n, d);
+
+  const double expected_dist[n * (n + 1) / 2] = {2.0, 2.0, 4.0, 2.0, 2.0, 2.0};
+  const double expected_core_dist[n] = {2.0, 2.0, 2.0};
+
+  EXPECT_PRED3(compare_arrays, dist, expected_dist, n * (n + 1) / 2);
+  EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
+}
+
 TEST(distance, quickselect1) {
   const int n = 4;
   double input[n] = {1.0, 2.0, 3.0, 4.0};
