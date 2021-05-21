@@ -131,17 +131,17 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
   }
 }
 
-void compute_distance_matrix_diagonal(double *input, double *core_dist,
+void compute_distance_matrix_triang(double *input, double *core_dist,
                                       double *dist, int mpts, int n, int d) {
   double tmp[n];
-  // idea: dist matrix is of size (n*1)*n / 2 (upper diagonal)
+  // idea: dist matrix is of size (n*1)*n / 2 (upper triangular)
   // - the translation then is
   //   pairwise_dist[i][k] = dist[(n * i - (i * (i + 1)/2)) + k]
   // - invariant: i <= k
   // !! verify this yourself !!
   for (int i = 0; i < n; i++) {
     int k;
-    /* comment: this here seems to be the reason why the diagonal
+    /* comment: this here seems to be the reason why the triangular
        version is much slower than the naive full one.
        most of these reads end up being cache misses and take down
        the performance by a lot

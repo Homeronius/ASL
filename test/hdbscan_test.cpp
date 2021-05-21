@@ -76,7 +76,7 @@ TEST(distance, distance_matrix_mpts3) {
   EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
 }
 
-TEST(distance, distance_matrix_diagonal_mpts3) {
+TEST(distance, distance_matrix_triang_mpts3) {
   const int d = 4;
   const int n = 3;
   const int mpts = 3;
@@ -86,7 +86,7 @@ TEST(distance, distance_matrix_diagonal_mpts3) {
   double dist[n * (n + 1) / 2];
   double core_dist[n];
 
-  compute_distance_matrix_diagonal(input, core_dist, dist, mpts, n, d);
+  compute_distance_matrix_triang(input, core_dist, dist, mpts, n, d);
 
   const double expected_dist[n * (n + 1) / 2] = {4.0, 4.0, 4.0, 2.0, 4.0, 4.0};
   const double expected_core_dist[n] = {4.0, 2.0, 4.0};
@@ -95,7 +95,7 @@ TEST(distance, distance_matrix_diagonal_mpts3) {
   EXPECT_PRED3(compare_arrays, core_dist, expected_core_dist, n);
 }
 
-TEST(distance, distance_matrix_diagonal_mpts2) {
+TEST(distance, distance_matrix_triang_mpts2) {
   const int d = 4;
   const int n = 3;
   const int mpts = 2;
@@ -105,7 +105,7 @@ TEST(distance, distance_matrix_diagonal_mpts2) {
   double dist[n * (n + 1) / 2];
   double core_dist[n];
 
-  compute_distance_matrix_diagonal(input, core_dist, dist, mpts, n, d);
+  compute_distance_matrix_triang(input, core_dist, dist, mpts, n, d);
 
   const double expected_dist[n * (n + 1) / 2] = {2.0, 2.0, 4.0, 2.0, 2.0, 2.0};
   const double expected_core_dist[n] = {2.0, 2.0, 2.0};
