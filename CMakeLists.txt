@@ -48,8 +48,8 @@ IF(BENCHMARK_AMD MATCHES "1")
   ADD_DEFINITIONS(-D BENCHMARK_AMD)
 ENDIF()
 
-IF(HDBSCAN_PRECOMPUTE_DIST MATCHES "1")
-  ADD_DEFINITIONS(-D HDBSCAN_PRECOMPUTE_DIST)
+IF(HDBSCAN_PRECOMPUTE_DIST_TRIANG MATCHES "1")
+  ADD_DEFINITIONS(-D HDBSCAN_PRECOMPUTE_DIST_TRIANG)
 ENDIF()
 
 
@@ -59,6 +59,8 @@ add_custom_target(build_bench
   DEPENDS
     hdbscan_benchmark_lib
     hdbscan_benchmark
+    hdbscan_basic_benchmark_lib
+    hdbscan_basic_benchmark
 )
 add_custom_target(build_bench_vec
   DEPENDS
