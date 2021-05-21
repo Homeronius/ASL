@@ -21,6 +21,18 @@ double euclidean_distance(double *p1, double *p2, int d) {
   return sqrt(sum);
 }
 
+inline double euclidean_distance_2(double *p1, double *p2, int d) {
+  double sum = 0.0;
+
+  for (int i = 0; i < d; i++) {
+    double diff = p1[i] - p2[i];
+    sum += diff * diff;
+  }
+
+  return sum;
+}
+
+
 double manhattan_distance(double *p1, double *p2, int d) {
   double sum = 0.0;
 
@@ -163,6 +175,54 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
       dist[(n * i - (i * (i + 1) / 2)) + k] =
           fmax(fmax(core_dist[i], core_dist[k]),
                dist[(n * i - (i * (i + 1) / 2)) + k]);
+    }
+  }
+}
+
+void compute_distance_matrix_blocked(double *input, double *core_dist,
+                                      double *dist, int mpts, int n, int d) {
+  int CACHE_SIZE = 4096; //size in double. assume cache size 32KiB
+  int block_size = floor(sqrt(4*d*d - 4 * CACHE_SIZE)/2 - d); //blcok*2 + 2*d*block - Cache = 0
+
+  int i_block = 0;
+  int k_block = 0;
+
+  for(; i_block < n - block_size; i_block+=block_size){
+    for(k_block = 0; k_block < n - block_size; k_block+=block_size){
+      for (int i = i_block; i < i_block + block_size; i++) {
+        for (int k = k_block; k < k_block + block_size; k++) {
+          dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+        }
+      }
+    }
+    for (int i = i_block; i < i_block + block_size; i++) {
+      for (int k = k_block; k < n; k++) {
+        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+      }
+    }
+  }
+  for(k_block = 0; k_block < n - block_size; k_block+=block_size){
+    for(int i = i_block; i < n; i++){
+      for (int k = k_block; k < k_block + block_size; k++) {
+        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+      }
+    }
+  }
+  for(int i = i_block; i < n; i++){
+      for (int k = k_block; k < n; k++) {
+        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+    }
+  }
+  
+  double tmp[n];
+  for (int i = 0; i < n; i++) {
+    for (int k = 0; k < n; k++) {
+      dist[i * n + k] = sqrt(dist[i * n + k]);
+      tmp[i * n + k] = dist[i * n + k];
+    }
+    core_dist[i] = iterative_quickselect(tmp, 0, n - 1, mpts - 1);
+    for (int k = 0; k < i; k++) {
+      dist[i * n + k] = fmax(fmax(core_dist[i], core_dist[k]), dist[i * n + k]);
     }
   }
 }
