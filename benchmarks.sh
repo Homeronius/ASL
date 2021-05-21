@@ -28,7 +28,6 @@ fi
 # data creation here first
 python helper_scripts/generate_clusters_alt.py data 3 2
 
-
 # create build dir
 mkdir -p build
 
@@ -44,12 +43,11 @@ if [ $2 = "baseline_flags" ] || [ $2 = "all" ]; then
     for i in $(seq 0 ${N}); do
         printf "building and running for O${i}...\n"
         cd build && cmake -G Ninja .. \
-            -DHDBSCAN_PRECOMPUTE_DIST=0 \
             -DCMAKE_C_COMPILER=clang-11 \
             -DCMAKE_CXX_COMPILER=clang++-11 \
             -DOPT_LEVEL=O${i} \
             -DBENCHMARK_AMD=${AMD} &&
-            ninja benchmark &&
+            ninja build_bench &&
             cd ..
         ./run_perf_measurements.sh O${i}_primadvanced_test hdbscan_benchmark perf_data_d2 12
     done
