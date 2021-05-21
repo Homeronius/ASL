@@ -58,6 +58,68 @@ void prim(double *adjacency, edge *result, int n) {
 }
 
 /**
+ * @brief Compute the minimum spanning tree (MST) of a given
+ *        graph based on its __upper triangular__
+ *        adjacency matrix with corresponding
+ *        edge weights. The graph is assumed to be undirected.
+ *
+ * @param adjacency the upper triangular of the adjacency matrix of the graph, size n*(n+1)/2
+ *                  access translation is: Matrix[i][j] -> adjacency[(n * i - (i * (i + 1) / 2)) + j]
+ * @param result pointer to store result into
+ * @param n number of nodes in the graph
+ *
+ */
+void prim_diag(double *adjacency, edge *result, int n) {
+  // represent tree via each node's parent?
+  int parent[n];
+  // cheapest cost of edge to node
+  double cost[n];
+  // nodes contained in tree
+  bool contained[n];
+
+  // start from vertex 0
+  cost[0] = 0.0;
+  parent[0] = -1;
+  contained[0] = true;
+
+  // all other costs initialized to dist to 0
+  for (int i = 1; i < n; i++) {
+    cost[i] = adjacency[i];
+    contained[i] = false;
+    parent[i] = 0;
+  }
+
+  for (int iter = 0; iter < n - 1; iter++) {
+    // i is the node we want to add
+    int i, j;
+
+    // search for best node to add that
+    // is not yet included in MST
+    double min = __DBL_MAX__;
+    for (j = 0; j < n; j++)
+      if (contained[j] == false && cost[j] < min)
+        min = cost[j], i = j;
+
+    // add i to MST
+    contained[i] = true;
+    result[iter] = {min, parent[i], i};
+    // update the cost values of the nodes that
+    // are not yet in MST with possible lower distance to i
+    for (j = 0; j < n; j++) {
+      int u, v;
+      // use smaller index as u to only access upper triangular
+      if (i < j)
+        u = i, v = j;
+      else
+        u = j, v = i;
+      if (contained[j] == false &&
+          adjacency[(n * u - (u * (u + 1) / 2)) + v] < cost[j])
+        parent[j] = i, cost[j] = adjacency[(n * u - (u * (u + 1) / 2)) + v];
+    }
+  }
+}
+
+/**
  * @brief Compute the minimum spanning tree (MST) of the
  *        mutual reachabilty graph, given implicitly by the
  *        datapoints and the core distances.
