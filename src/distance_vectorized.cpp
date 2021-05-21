@@ -538,3 +538,35 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
     }
   }
 }
+
+
+void compute_distance_matrix_triang(double *input, double *core_dist,
+                                      double *dist, int mpts, int n, int d) {
+  double tmp[n];
+  // idea: dist matrix is of size (n*1)*n / 2 (upper triangular)
+  // - the translation then is
+  //   pairwise_dist[i][k] = dist[(n * i - (i * (i + 1)/2)) + k]
+  // - invariant: i <= k
+  // !! verify this yourself !!
+  for (int i = 0; i < n; i++) {
+    int k;
+    for (k = 0; k < i; k++)
+      tmp[k] = dist[(n * k - (k * (k + 1) / 2)) + i];
+    // dist to self is zero
+    dist[(n * i - (i * (i + 1) / 2)) + i] = 0;
+    tmp[i] = 0;
+    for (k = i + 1; k < n; k++) {
+      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+      dist[(n * i - (i * (i + 1) / 2)) + k] = tmp[k];
+    }
+    core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+  }
+
+  for (int i = 0; i < n; i++) {
+    for (int k = i; k < n; k++) {
+      dist[(n * i - (i * (i + 1) / 2)) + k] =
+          fmax(fmax(core_dist[i], core_dist[k]),
+               dist[(n * i - (i * (i + 1) / 2)) + k]);
+    }
+  }
+}
