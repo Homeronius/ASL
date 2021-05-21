@@ -60,5 +60,7 @@ int main(int argc, char **argv) {
   printf("Number of sqrts: %ld\n", hdbscan_sqrt_counter);
 #endif
 
+  free(dataset);
+  free(labels);
   return 0;
 }
