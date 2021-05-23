@@ -429,7 +429,31 @@ void partition_vec2(double *list, double *lower, int *idx_lower,
   *idx_lower = store_idx_lower;
 }
 
-double iterative_quickselect(double *list, int n, int k) {
+double iterative_quickselect(double *list, int left, int right, int k) {
+  while (true) {
+    if (left == right) {
+      return list[left];
+    }
+
+    // Random pivot
+    // int pivot_idx = left + rand() % (right - left + 1);
+
+    // Take element in the middle as pivot
+    int pivot_idx = left + (right - left) / 2;
+
+    pivot_idx = partition(list, left, right, pivot_idx);
+
+    if (k == pivot_idx) {
+      return list[k];
+    } else if (k < pivot_idx) {
+      right = pivot_idx - 1;
+    } else {
+      left = pivot_idx + 1;
+    }
+  }
+}
+
+double iterative_quickselect_vec(double *list, int n, int k) {
   double lo[n];
   double *lower = lo;
   int pivot_idx = n / 2;
@@ -489,7 +513,7 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
       distances[i] = euclidean_distance(input + i * d, input + k * d, d);
     }
 
-    core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
+    core_dist[k] = iterative_quickselect(distances, 0, n - 1, mpts - 1);;
   }
 }
 
@@ -520,7 +544,7 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[i * n + k] = tmp[k];
     }
-    core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+    core_dist[i] = iterative_quickselect(tmp, 0, n - 1, mpts - 1);
   }
 
   for (int i = 0; i < n; i++) {
@@ -559,7 +583,7 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[(n * i - (i * (i + 1) / 2)) + k] = tmp[k];
     }
-    core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+    core_dist[i] = iterative_quickselect(tmp, 0, n - 1, mpts - 1);
   }
 
   for (int i = 0; i < n; i++) {
