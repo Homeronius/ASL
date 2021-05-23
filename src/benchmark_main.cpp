@@ -128,22 +128,22 @@ int main(int argc, char **argv) {
          ps256);
 
   long long scalar_flops = sd + 2 * pd128 + 4 * pd256;
-  printf("Performance (PERF) = %'f dflops/cycle\n", (double)scalar_flops / p);
-  printf("Performance (RDTSC) = %'f dflops/cycle\n", (double)scalar_flops / r);
+  printf("Performance (PERF) = %'f dflops/cycle (only counting add, mul, sub)\n", (double)scalar_flops / p);
+  printf("Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, sub)\n", (double)scalar_flops / r);
 
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
     if (access(argv[2], F_OK) == 0) { // exists -> append
       fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
-              r, c, t, p, sd, ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
+              r, c, t, p, scalar_flops, sd, ss, pd128, ps128, pd256, ps256);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(argv[2], "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
-              r, c, t, p, sd, ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
+              r, c, t, p, scalar_flops, sd, ss, pd128, ps128, pd256, ps256);
     }
 
     fclose(fptr);

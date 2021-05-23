@@ -8,7 +8,7 @@ import seaborn as sns
 def read_dataset(path, system='intel'):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
     if system == 'intel':
-        return data[:, 0], data[:, 1], data[:, 2], data[:, 3]
+        return data[:, 0], data[:, 6], data[:, 2], data[:, 3]
     else:
         return data[:, 0], data[:, 6], data[:, 2], data[:, 3]
 
