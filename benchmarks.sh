@@ -25,6 +25,7 @@ if [ $1 = "amd" ]; then
     AMD=1
 fi
 
+TIME=$(date +%Y%m%d_%H%M%S)
 # data creation here first
 python helper_scripts/generate_clusters.py data 3 2
 
@@ -49,11 +50,10 @@ if [ $2 = "baseline_flags" ] || [ $2 = "all" ]; then
             -DBENCHMARK_AMD=${AMD} &&
             ninja build_bench &&
             cd ..
-        ./run_perf_measurements.sh O${i}_primadvanced_test hdbscan_benchmark perf_data_d2 12
+        ./run_perf_measurements.sh O${i}_primadvanced_test hdbscan_benchmark perf_data_d2 12 ${TIME}
     done
     printf "building and running for O3, vectorized version...\n"
     cd build && cmake -G Ninja .. \
-        -DHDBSCAN_PRECOMPUTE_DIST=0 \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
         -DOPT_LEVEL=O3 \
@@ -65,6 +65,7 @@ if [ $2 = "baseline_flags" ] || [ $2 = "all" ]; then
     printf "creating plot...\n"
 
     python helper_scripts/plot_performance_alt.py --system $1 \
+        --data-path data/timings/${TIME}
         --files O0_primadvanced_test.csv O1_primadvanced_test.csv O2_primadvanced_test.csv O3_primadvanced_test.csv O3_primadvanced_test_vec.csv \
         --save-path $1_flags_comparison.png
 
