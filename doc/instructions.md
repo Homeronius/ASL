@@ -11,7 +11,7 @@
 | _mm256_set_epi32         | multi-instruction |             |               |           |
 | _mm256_castps_pd         | not compiled      |             |               |           |
 | _mm256_castpd_ps         | not compiled      |             |               |           |
-| _mm256_permutevar8x32_ps | 3                 | 1           | 3/8           | 2         |
+| _mm256_permutevar8x32_ps | 3                 | 1           | 3 or 8           | 2         |
 | _mm256_castsi256_pd      | not compiled      |             |               |           |
 | _mm256_castpd_si256      | not compiled      |             |               |           |
 | _mm256_maskstore_pd      | 6                 | 1           | 23 / 4        | 12 / 6    |
