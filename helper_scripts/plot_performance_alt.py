@@ -30,7 +30,8 @@ def main(args):
         N, flops, cycles, time = read_dataset(fpath, args.system)
         # flops *= 1e-9
         y = np.divide(flops, cycles)
-        line, = ax.plot(N, y, linestyle='-', marker='o')
+        # line, = ax.plot(N, y, linestyle='-', marker='o')
+        line, = ax.semilogx(N, y, linestyle='-', marker='o', base=2)
         line.set_label(file)
 
     ax.set_xlabel('n')
