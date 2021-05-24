@@ -114,7 +114,9 @@ void prim(double *adjacency, edge *result, int n) {
 
 void prim_advanced(double *X, double *core_distances, edge *result, int n,
                    int d) {
+#ifdef HDBSCAN_VERBOSE
   printf("Calling vectorized version\n");
+#endif
   // represent tree via each node's parent?
   int parent[n];
   // current minimal distance found to node
