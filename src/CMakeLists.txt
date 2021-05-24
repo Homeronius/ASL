@@ -46,7 +46,7 @@ add_library(hdbscan_lib_vec
   union_find.cpp
   clustering.cpp
   utils.cpp
-  prim.cpp
+  prim_vectorized.cpp
   hdbscan.cpp
 )
 target_include_directories(hdbscan_lib_vec PUBLIC ${HDBSCAN_INCLUDE_DIR})
