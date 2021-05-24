@@ -45,6 +45,7 @@ def plot_dataset2D(X, y, y_true, score=None, labels=False):
     plt.axis('square')
 
     plt.show()
+    plt.savefig(sys.argv[1][:-4]+'_prediction.png')
 
 
 
