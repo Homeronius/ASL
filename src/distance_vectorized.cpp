@@ -105,7 +105,7 @@ void euclidean_distance_4_opt(double *base, double *p1, double *p2, double *p3,
     __m256d diff4 = _mm256_sub_pd(base_vec, p4_vec);
     __m256d sum4 = _mm256_mul_pd(diff4, diff4);
 
-    __m256d partial_sum2 = _mm256_hadd_pd(sum3, sum4);
+    partial_sum2 = _mm256_hadd_pd(sum3, sum4);
   }
 
   __m256d perm1 = _mm256_permute4x64_pd(partial_sum1, 0b11011000);
@@ -539,9 +539,8 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
   }
 }
 
-
 void compute_distance_matrix_triang(double *input, double *core_dist,
-                                      double *dist, int mpts, int n, int d) {
+                                    double *dist, int mpts, int n, int d) {
   double tmp[n];
   // idea: dist matrix is of size (n*1)*n / 2 (upper triangular)
   // - the translation then is
