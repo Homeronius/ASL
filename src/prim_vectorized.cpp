@@ -20,23 +20,30 @@
  */
 void prim(double *adjacency, edge *result, int n) {
   // represent tree via each node's parent?
-  int parent[n];
+  int parent[n] __attribute__((aligned(32)));
   // cheapest cost of edge to node
-  double cost[n];
+  double cost[n] __attribute__((aligned(32)));
   // nodes contained in tree
-  int contained[n];
+  int contained[n] __attribute__((aligned(32)));
+
+  // all other costs initialized to dist to 0
+  int k;
+  for (k = 0; k < n; k += 4) {
+    _mm256_store_pd(cost + k, _mm256_loadu_pd(adjacency + k));
+    _mm256_store_si256((__m256i *)(contained + k), _mm256_setzero_si256());
+    _mm256_store_si256((__m256i *)(parent + k), _mm256_setzero_si256());
+  }
+  // Finish last initializations sequentially
+  for (; k < n; ++k) {
+    cost[k] = adjacency[k];
+    contained[k] = false;
+    parent[k] = 0;
+  }
 
   // start from vertex 0
   cost[0] = 0.0;
   parent[0] = -1;
   contained[0] = true;
-
-  // all other costs initialized to dist to 0
-  for (int i = 1; i < n; i++) {
-    cost[i] = adjacency[i];
-    contained[i] = false;
-    parent[i] = 0;
-  }
 
   for (int iter = 0; iter < n - 1; iter++) {
     // i is the node we want to add
@@ -51,8 +58,8 @@ void prim(double *adjacency, edge *result, int n) {
     __m256i step_idx_vec = _mm256_set1_epi64x(1);
 
     for (j = 0; j < n; j += 4) {
-      __m256i contained_vec = _mm256_load_si256((__m256i *)(contained + j));
-      __m256d cost_j_vec = _mm256_load_pd(cost + j);
+      __m256i contained_vec = _mm256_loadu_si256((__m256i *)(contained + j));
+      __m256d cost_j_vec = _mm256_loadu_pd(cost + j);
       __m256d cost_mask =
           _mm256_cmp_pd(cost_j_vec, min_cost_reduction, _CMP_LT_OS);
       __m256i condition =
@@ -67,24 +74,24 @@ void prim(double *adjacency, edge *result, int n) {
       _mm256_add_epi64(curr_idx_vec, step_idx_vec);
     }
 
-    // Finish up the loop
+    // Sequentially determine min and argmin of vectorized reduction
     double min = __DBL_MAX__;
-    for (j = (n & ~0x3); j < n; ++j) {
-      if (contained[j] == false && cost[j] < min)
-        min = cost[j], i = j;
-    }
-
-    // Sequentially determine min and argmin
     int min_cost_idx_local[4] __attribute__((aligned(32)));
     double min_cost_reduction_local[4] __attribute__((aligned(32)));
     _mm256_store_si256((__m256i *)(min_cost_idx_local), min_cost_idx);
     _mm256_store_pd(min_cost_reduction_local, min_cost_reduction);
 
-    for (int k = 0; k < 4; ++k) {
-      if (min_cost_reduction_local[k] < min) {
-        min = min_cost_reduction_local[k];
-        i = min_cost_idx_local[k];
+    for (int o = 0; o < 4; ++o) {
+      if (min_cost_reduction_local[o] < min) {
+        min = min_cost_reduction_local[o];
+        i = min_cost_idx_local[o];
       }
+    }
+
+    // Finish up the loop
+    for (; j < n; ++j) {
+      if (contained[j] == false && cost[j] < min)
+        min = cost[j], i = j;
     }
 
     // add i to mst
@@ -94,19 +101,21 @@ void prim(double *adjacency, edge *result, int n) {
     // are not yet in mst with possible lower distance to i
 
     // Determine if element should be updated or not
-    __m256i contained_vec = _mm256_load_si256((__m256i *)(contained + j));
-    __m256d adj_vec = _mm256_load_pd(adjacency + i * n + j);
-    __m256d cost_j_vec = _mm256_load_pd(cost + j);
-    __m256d cost_mask = _mm256_cmp_pd(adj_vec, cost_j_vec, _CMP_LT_OS);
-    __m256i condition =
-        _mm256_andnot_si256(contained_vec, _mm256_castpd_si256(cost_mask));
+    for (j = 0; j < n; j += 4) {
+      __m256i contained_vec = _mm256_loadu_si256((__m256i *)(contained + j));
+      __m256d adj_vec = _mm256_loadu_pd(adjacency + i * n + j);
+      __m256d cost_j_vec = _mm256_loadu_pd(cost + j);
+      __m256d cost_mask = _mm256_cmp_pd(adj_vec, cost_j_vec, _CMP_LT_OS);
+      __m256i condition =
+          _mm256_andnot_si256(contained_vec, _mm256_castpd_si256(cost_mask));
 
-    // Update corresponding values
-    _mm256_maskstore_epi32(parent + j, condition, _mm256_set1_epi32(i));
-    _mm256_maskstore_pd((cost + j), condition, adj_vec);
+      // Update corresponding values
+      _mm256_maskstore_epi32(parent + j, condition, _mm256_set1_epi32(i));
+      _mm256_maskstore_pd((cost + j), condition, adj_vec);
+    }
 
     // Finish up the loop
-    for (j = (n & ~0x3); j < n; j++)
+    for (; j < n; j++)
       if (contained[j] == false && adjacency[i * n + j] < cost[j])
         parent[j] = i, cost[j] = adjacency[i * n + j];
   }
