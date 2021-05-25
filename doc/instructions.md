@@ -15,11 +15,11 @@
 | _mm256_castsi256_pd      | not compiled                   |                 |             |               |           |
 | _mm256_castpd_si256      | not compiled                   |                 |             |               |           |
 | _mm256_maskstore_pd      | `vmaskmovpd m256, ymm, ymm`    | 6               | 1           | 23 / 4        | 12 / 6    |
-| _mm256_add_pd            | `vaddpd ymm, ymm, ymm`         | 4               | 0.5         |               |           |
-| _mm256_hadd_pd           | `vhaddpd ymm, ymm, ymm`        | 7               | 2           |               |           |
-| _mm256_permute_pd        | `vpermilpd ymm, ymm, imm8`     | 1               | 1           |               |           |
-| _mm256_permute4x64_pd    | `vpermpd ymm, ymm, imm8`       | 3               | 1           |               |           |
-| _mm256_blend_pd          | `vblendpd ymm, ymm, ymm, imm8` | 1               | 0.33        |               |           |
+| _mm256_add_pd            | `vaddpd ymm, ymm, ymm`         | 4               | 0.5         | 3             | 0.5       |
+| _mm256_hadd_pd           | `vhaddpd ymm, ymm, ymm`        | 7               | 2           | 7 / 6         | 2         |
+| _mm256_permute_pd        | `vpermilpd ymm, ymm, imm8`     | 1               | 1           | 1 / 3         | 0.5       |
+| _mm256_permute4x64_pd    | `vpermpd ymm, ymm, imm8`       | 3               | 1           | 6             | 1 / 1.27  |
+| _mm256_blend_pd          | `vblendpd ymm, ymm, ymm, imm8` | 1               | 0.33        | 1             | 0.5       |
 
 Information for Skylake was taken from the [Intel intrinsics guide](https://software.intel.com/sites/landingpage/IntrinsicsGuide/)
 
