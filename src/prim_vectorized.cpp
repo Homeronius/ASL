@@ -213,14 +213,27 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
         core_dist_j_vec = _mm256_load_pd(core_dist_j_local);
 
         if (d == 2) {
-          euclidean_distance_2(X + i * d, X + idx_j_local[0] * d, X + i * d,
-                               X + idx_j_local[1] * d, X + i * d,
-                               X + idx_j_local[2] * d, X + i * d,
-                               X + idx_j_local[3] * d, dist_between_local);
+          /*
+           *euclidean_distance_2(X + i * d, X + idx_j_local[0] * d, X + i * d,
+           *X + idx_j_local[1] * d, X + i * d,
+           *X + idx_j_local[2] * d, X + i * d,
+           *X + idx_j_local[3] * d, dist_between_local);
+           */
+          euclidean_distance_2(X + i * d, X + idx_j_local[2] * d, X + i * d,
+                               X + idx_j_local[3] * d, X + i * d,
+                               X + idx_j_local[0] * d, X + i * d,
+                               X + idx_j_local[1] * d, dist_between_local);
         } else if (d == 4) {
+          /*
+           *euclidean_distance_4_opt(X + i * d, X + idx_j_local[0] * d,
+           *                         X + idx_j_local[1] * d,
+           *                         X + idx_j_local[2] * d,
+           *                         X + idx_j_local[3] * d,
+           *dist_between_local);
+           */
           euclidean_distance_4_opt(X + i * d, X + idx_j_local[0] * d,
-                                   X + idx_j_local[1] * d,
                                    X + idx_j_local[2] * d,
+                                   X + idx_j_local[1] * d,
                                    X + idx_j_local[3] * d, dist_between_local);
         } else {
           for (k = 0; k < 4; ++k) {
