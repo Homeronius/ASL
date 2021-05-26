@@ -65,7 +65,7 @@ if [ $2 = "baseline_flags" ] || [ $2 = "all" ]; then
     printf "creating plot...\n"
 
     python helper_scripts/plot_performance_alt.py --system $1 \
-        --data-path data/timings/${TIME}
+        --data-path data/timings/${TIME} \
         --files O0_primadvanced_test.csv O1_primadvanced_test.csv O2_primadvanced_test.csv O3_primadvanced_test.csv O3_primadvanced_test_vec.csv \
         --save-path $1_flags_comparison.png
 
