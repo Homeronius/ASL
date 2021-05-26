@@ -1,12 +1,7 @@
 #include "distance.h"
 #include <immintrin.h>
 #include <math.h>
-#include <stdlib.h>
 #include <stdint.h>
-
-#include <string.h>
-
-#include <stdio.h>
 
 #ifdef HDBSCAN_INSTRUMENT
 extern long hdbscan_sqrt_counter;
@@ -408,36 +403,38 @@ int partition_vec(double *list, int left, int right, int pivot) {
 uint8_t g_pack_left_table_u8x3[256 * 3 + 1];
 
 uint32_t get_nth_bits(int a) {
-    uint32_t out = 0;
-    int c = 0;
-    for (int i = 0; i < 8; ++i) {
-        auto set = (a >> i) & 1;
-        if (set) {
-            out |= (i << (c * 3));
-            c++;
-        }
+  uint32_t out = 0;
+  int c = 0;
+  for (int i = 0; i < 8; ++i) {
+    auto set = (a >> i) & 1;
+    if (set) {
+      out |= (i << (c * 3));
+      c++;
     }
-    return out;
+  }
+  return out;
 }
 
 void BuildPackMask() {
   for (int i = 0; i < 256; ++i) {
-        *reinterpret_cast<uint32_t*>(&g_pack_left_table_u8x3[i * 3]) = get_nth_bits(i);
+    *reinterpret_cast<uint32_t *>(&g_pack_left_table_u8x3[i * 3]) =
+        get_nth_bits(i);
   }
 }
 
 // Generate Move mask via: _mm256_movemask_ps(_mm256_castsi256_ps(mask)); etc
 __m256i MoveMaskToIndices(uint32_t moveMask) {
-    uint8_t *adr = g_pack_left_table_u8x3 + moveMask * 3;
-    __m256i indices = _mm256_set1_epi32(*reinterpret_cast<uint32_t*>(adr));//lower 24 bits has our LUT
-    __m256i shufmask = _mm256_srlv_epi32 (indices, _mm256_setr_epi32(0, 3, 6, 9, 12, 15, 18, 21));
-    return shufmask;
+  uint8_t *adr = g_pack_left_table_u8x3 + moveMask * 3;
+  __m256i indices = _mm256_set1_epi32(
+      *reinterpret_cast<uint32_t *>(adr)); // lower 24 bits has our LUT
+  __m256i shufmask =
+      _mm256_srlv_epi32(indices, _mm256_setr_epi32(0, 3, 6, 9, 12, 15, 18, 21));
+  return shufmask;
 }
 
 void partition_vec_lut(double *list, double *lower, int *idx_lower,
-                    int *idx_higher, int n, int pivot) {
-  
-  
+                       int *idx_higher, int n, int pivot) {
+
   double pivot_val = list[pivot];
   int store_idx_lower = 0;
   int store_idx_higher = 0;
@@ -484,7 +481,7 @@ void partition_vec_lut(double *list, double *lower, int *idx_lower,
       _mm256_maskstore_pd(list + store_idx_higher, sm, res);
       store_idx_higher += count;
     }
-  } 
+  }
   for (; i < n - 1; i++) {
     if (list[i] <= pivot_val) {
       lower[store_idx_lower] = list[i];
@@ -613,7 +610,7 @@ double iterative_quickselect(double *list, int n, int k) {
                    pivot_idx);
 #else
     partition_vec_lut(list, lower, &store_idx_lower, &store_idx_higher, n,
-                   pivot_idx);
+                      pivot_idx);
 #endif
 
     if (store_idx_lower == k) {
