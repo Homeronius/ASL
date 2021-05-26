@@ -1,5 +1,6 @@
 #include "prim.h"
 
+#include <cstdint>
 #include <float.h>
 #include <immintrin.h>
 #include <math.h>
@@ -101,8 +102,10 @@ void prim(double *adjacency, edge *result, int n) {
 
     // Finish up the loop
     for (int k = 0; k < n_remain; ++k) {
-      if (contained_remain[k] == false && cost_remain[k] < min)
-        min = cost_remain[k], i = k + 4 * n_div4;
+      if (contained_remain[k] == false && cost_remain[k] < min) {
+        min = cost_remain[k];
+        i = k + 4 * n_div4;
+      }
     }
 
     // add i to mst
@@ -110,11 +113,13 @@ void prim(double *adjacency, edge *result, int n) {
     uint64_t rel_pos = i % 4;
     if (offset < n_div4) { // should be stored in instrinsics vector
       // TODO store could be improved with _mm256_maskstore_xx instructions
-      contained[offset][rel_pos] = 1;
-      result[iter] = {min, parent[offset][rel_pos], int(i)};
+      // TODO remove narrowing conversion to int by setting attributes in edge
+      //      struct to uint64_t
+      contained[offset][rel_pos] = 0xFFFFFFFFFFFFFFFF;
+      result[iter] = {min, int(parent[offset][rel_pos]), int(i)};
     } else { // contained in remainder array
-      contained_remain[rel_pos] = 1;
-      result[iter] = {min, parent_remain[rel_pos], int(i)};
+      contained_remain[rel_pos] = true;
+      result[iter] = {min, int(parent_remain[rel_pos]), int(i)};
     }
     // update the cost values of the nodes that
     // are not yet in mst with possible lower distance to i
@@ -138,7 +143,7 @@ void prim(double *adjacency, edge *result, int n) {
     for (int j = 0; j < n_remain; j++)
       if (contained_remain[j] == false &&
           adjacency[i * n + (4 * n_div4 + j)] < cost_remain[j]) {
-        parent_remain[j] = i,
+        parent_remain[j] = int(i);
         cost_remain[j] = adjacency[i * n + (4 * n_div4 + j)];
       }
   }
