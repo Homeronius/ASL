@@ -237,34 +237,38 @@ N=1
 if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     printf "Running amd-v-intel benchmarks. Creating data...\n"
     # First with the version where `pext` and `pdep` are used
-    python helper_scripts/generate_clusters.py data 6 128
+    python helper_scripts/generate_clusters.py data 6 8
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
         -DOPT_LEVEL=O3 \
         -DPACKLEFT_WLOOKUP=0 \
         -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
         ninja build_bench_vec &&
         cd ..
 
     printf "Running amd-v-intel benchmarks. Run benchmark with pext/pdep partitioning...\n"
     # Best performing 
-    ./run_perf_measurements.sh $1_pext_partition hdbscan_benchmark_distvec_quickvec perf_data_d128 ${N} ${TIME}
+    ./run_perf_measurements.sh $1_pext_partition hdbscan_benchmark_distvec_quickvec perf_data_d8 ${N} ${TIME}
 
     # Then the optimized version for AMD, using a lookup table
-    python helper_scripts/generate_clusters.py data 6 128
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
         -DOPT_LEVEL=O3 \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
         ninja build_bench_vec &&
         cd ..
 
     printf "Running amd-v-intel benchmarks. Run benchmark with LUT partitioning...\n"
     # Best performing 
-    ./run_perf_measurements.sh $1_lut_partition hdbscan_benchmark_distvec_quickvec perf_data_d128 ${N} ${TIME}
+    ./run_perf_measurements.sh $1_lut_partition hdbscan_benchmark_distvec_quickvec perf_data_d8 ${N} ${TIME}
+
+    printf "Running amd-v-intel benchmarks. Run benchmark without vectorization...\n"
+    ./run_perf_measurements.sh $1_no_vec hdbscan_benchmark perf_data_d8 ${N} ${TIME}
 
     # Plot like this here (should be done with second machine, i.e.
     # benchmarks have been copied) 
@@ -279,9 +283,8 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         --x-scale=linear
     '
     # Remove data used for this experiment
-    rm ./data/perf_data_d128_*
+    rm ./data/perf_data_d8_*
 fi
-
 
 
 #######################################################################################
