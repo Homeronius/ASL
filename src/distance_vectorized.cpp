@@ -254,6 +254,35 @@ void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
 }
 
 // 12+6 double flops per distance without rest computations and sqrt for d=4
+// double euclidean_distance(double *p1, double *p2, int d) {
+//   __m256d sum = _mm256_setzero_pd();
+
+//   int i = 0;
+//   for (; i < d - 3; i += 4) {
+//     __m256d pv1 = _mm256_loadu_pd(p1 + i);
+//     __m256d pv2 = _mm256_loadu_pd(p2 + i);
+//     __m256d diff = _mm256_sub_pd(pv1, pv2);
+//     sum = _mm256_fmadd_pd(diff, diff, sum);
+//   }
+
+//   double buff[4];
+//   _mm256_storeu_pd(buff, sum);
+
+//   double res = buff[0] + buff[1] + buff[2] + buff[3];
+
+//   double d_rest;
+//   for (; i < d; i++) {
+//     d_rest = p1[i] - p2[i];
+//     res += d_rest * d_rest;
+//   }
+
+// #ifdef HDBSCAN_INSTRUMENT
+//   hdbscan_sqrt_counter++;
+// #endif
+
+//   return sqrt(res);
+// }
+
 double euclidean_distance(double *p1, double *p2, int d) {
   __m256d sum = _mm256_setzero_pd();
 
@@ -265,22 +294,23 @@ double euclidean_distance(double *p1, double *p2, int d) {
     sum = _mm256_fmadd_pd(diff, diff, sum);
   }
 
-  double buff[4];
-  _mm256_storeu_pd(buff, sum);
+  __m128d lower = _mm256_castpd256_pd128(sum);
+  __m128d upper = _mm256_extractf128_pd(sum, 1);
 
-  double res = buff[0] + buff[1] + buff[2] + buff[3];
+  __m128d s = _mm_add_pd(lower, upper);
+  __m128d p = _mm_permute_pd(s, 0b01);
+  __m128d res = _mm_add_sd(s,p);
 
-  double d_rest;
   for (; i < d; i++) {
-    d_rest = p1[i] - p2[i];
-    res += d_rest * d_rest;
+    __m128d d_rest = _mm_sub_sd(_mm_load_sd(p1+i), _mm_load_sd(p2+i));
+    res = _mm_fmadd_sd(d_rest, d_rest, res);
   }
 
 #ifdef HDBSCAN_INSTRUMENT
   hdbscan_sqrt_counter++;
 #endif
 
-  return sqrt(res);
+  return _mm_cvtsd_f64(_mm_sqrt_sd(_mm_setzero_pd(), res));
 }
 
 // WORK-IN-PROGRESS!!!
