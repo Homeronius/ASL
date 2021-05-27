@@ -109,10 +109,31 @@ if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "all" ]; then
     python helper_scripts/generate_clusters.py data 6 20
 fi
 
+##########################################################
+######## Baseline    ##########
+##########################################################
 cd build && cmake -G Ninja .. \
     -DCMAKE_C_COMPILER=clang-11 \
     -DCMAKE_CXX_COMPILER=clang++-11 \
-    -DOPT_LEVEL=O3 \
+    -DCMAKE_CXX_FLAGS="-O3" \
+    -DPACKLEFT_WLOOKUP=1 \
+    -DBENCHMARK_AMD=${AMD} &&
+    ninja &&
+    ninja build_bench &&
+    ninja build_bench_vec &&
+    cd ..
+
+
+if [ $2 = "basic" ] || [ $2 = "all" ]; then
+    # No optimizations
+    ./run_perf_measurements.sh basic_O3 hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
+
+fi
+
+cd build && cmake -G Ninja .. \
+    -DCMAKE_C_COMPILER=clang-11 \
+    -DCMAKE_CXX_COMPILER=clang++-11 \
+    -DCMAKE_CXX_FLAGS="-O3 -march=native" \
     -DPACKLEFT_WLOOKUP=1 \
     -DBENCHMARK_AMD=${AMD} &&
     ninja &&
@@ -137,7 +158,8 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
     # Plot result
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
-        --files basic.csv \
+        --files basic_O3.csv \
+                basic.csv \
                 basic_distvec.csv \
                 basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
@@ -241,7 +263,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DOPT_LEVEL=O3 \
+        -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
@@ -256,7 +278,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DOPT_LEVEL=O3 \
+        -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
@@ -299,7 +321,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DOPT_LEVEL=O3 \
+        -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
@@ -315,7 +337,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DOPT_LEVEL=O3 \
+        -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=1 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
@@ -331,7 +353,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DOPT_LEVEL=O3 \
+        -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=1 \
