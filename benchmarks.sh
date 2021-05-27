@@ -103,7 +103,7 @@ mkdir -p build
 ##########################################################
 
 # Total Comparison flops/cycles d=20
-N=9
+N=12
 
 # Basic everything
 python helper_scripts/generate_clusters.py data 6 20
@@ -116,6 +116,7 @@ cd build && cmake -G Ninja .. \
     ninja build_bench &&
     ninja build_bench_vec &&
     cd ..
+
 
 ##########################################################
 ######## Algorithm with basic prim algorithm    ##########
@@ -139,7 +140,7 @@ python helper_scripts/plot_performance_alt.py  \
             basic_distvec_quickvec_primvec.csv  \
     --save-path plots/performance_basic.png
 
-# Algorithm with advanced prim algorithm
+
 ##########################################################
 ######## Algorithm with advanced prim algorithm ##########
 ##########################################################
@@ -176,7 +177,8 @@ python helper_scripts/plot_performance_alt.py  \
             basic_distvec_quickvec.csv \
             basic_distvec_quickvec_primvec.csv  \
     --save-path plots/cycles_basic.png \
-    --metric=cycles
+    --metric=cycles \
+    --x-scale=linear
 
 # Plot advprim
 python helper_scripts/plot_performance_alt.py  \
@@ -186,7 +188,8 @@ python helper_scripts/plot_performance_alt.py  \
             advprim_distvec_quickvec.csv \
             advprim_distvec_quickvec_primvec.csv  \
     --save-path plots/cycles_advprim.png \
-    --metric=cycles
+    --metric=cycles \
+    --x-scale=linear
 
 # Clean up datasets used for this part
 rm ./data/perf_data_d20_*
