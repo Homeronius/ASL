@@ -21,7 +21,7 @@ double euclidean_distance(double *p1, double *p2, int d) {
   return sqrt(sum);
 }
 
-inline double euclidean_distance_2(double *p1, double *p2, int d) {
+inline double euclidean_distance_squared(double *p1, double *p2, int d) {
   double sum = 0.0;
 
   for (int i = 0; i < d; i++) {
@@ -191,26 +191,26 @@ void compute_distance_matrix_blocked(double *input, double *core_dist,
     for(k_block = 0; k_block < n - block_size; k_block+=block_size){
       for (int i = i_block; i < i_block + block_size; i++) {
         for (int k = k_block; k < k_block + block_size; k++) {
-          dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+          dist[i * n + k] += euclidean_distance_squared(input + i*d, input + k*d,d);
         }
       }
     }
     for (int i = i_block; i < i_block + block_size; i++) {
       for (int k = k_block; k < n; k++) {
-        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+        dist[i * n + k] += euclidean_distance_squared(input + i*d, input + k*d,d);
       }
     }
   }
   for(k_block = 0; k_block < n - block_size; k_block+=block_size){
     for(int i = i_block; i < n; i++){
       for (int k = k_block; k < k_block + block_size; k++) {
-        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+        dist[i * n + k] += euclidean_distance_squared(input + i*d, input + k*d,d);
       }
     }
   }
   for(int i = i_block; i < n; i++){
       for (int k = k_block; k < n; k++) {
-        dist[i * n + k] += euclidean_distance_2(input + i*d, input + k*d,d);
+        dist[i * n + k] += euclidean_distance_squared(input + i*d, input + k*d,d);
     }
   }
   
