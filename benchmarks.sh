@@ -1,22 +1,22 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
     exit 1
 fi
 
 # extend here with different test names
-if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "amd-v-intel" ] && [ $2 != "all" ]; then
+if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
     exit 1
 fi
 
@@ -102,7 +102,7 @@ mkdir -p build
 ##########################################################
 
 # Total Comparison flops/cycles d=20
-N=12
+N=1
 
 # Basic everything
 if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "all" ]; then
@@ -232,7 +232,7 @@ fi
 ##########################################################
 
 # Total Comparison flops/cycles d=128
-N=12
+N=1
 
 if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     printf "Running amd-v-intel benchmarks. Creating data...\n"
@@ -278,6 +278,77 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         --metric=cycles
         --x-scale=linear
     '
+    # Remove data used for this experiment
+    rm ./data/perf_data_d128_*
+fi
+
+
+
+#######################################################################################
+######## Comparison between basic, triangular and blocked distance computation ########
+#######################################################################################
+# Total Comparison flops/cycles d=128
+N=7
+
+if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
+    printf "Running blocked-v-triangular benchmarks. Creating data...\n"
+    python helper_scripts/generate_clusters.py data 6 128
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DOPT_LEVEL=O3 \
+        -DPACKLEFT_WLOOKUP=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        cd ..
+
+    printf "Running blocked-v-triangular benchmarks. Run benchmark basic version...\n"
+    # Basic
+    ./run_perf_measurements.sh distance_matrix_basic hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+
+    python helper_scripts/generate_clusters.py data 6 128
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DOPT_LEVEL=O3 \
+        -DPACKLEFT_WLOOKUP=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=1 \
+        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        cd ..
+
+    printf "Running blocked-v-triangular benchmarks. Run benchmark triangular matrix version...\n"
+    # Triangular
+    ./run_perf_measurements.sh distance_matrix_triangular hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+    
+    python helper_scripts/generate_clusters.py data 6 128
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DOPT_LEVEL=O3 \
+        -DPACKLEFT_WLOOKUP=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=1 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        cd ..
+
+    printf "Running blocked-v-triangular benchmarks. Run benchmark blocked matrix version...\n"
+    # Triangular
+    ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+
+    python helper_scripts/plot_performance_alt.py --system $1  \
+        --data-path data/timings/${TIME} \
+        --files distance_matrix_basic.csv \
+                distance_matrix_triangular.csv \
+                distance_matrix_blocked.csv \
+        --save-path plots/triangular_v_blocked.png \
+        --metric=cycles \
+        --x-scale=linear
+
     # Remove data used for this experiment
     rm ./data/perf_data_d128_*
 fi
