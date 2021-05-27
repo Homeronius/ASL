@@ -76,7 +76,13 @@ We have prepared the following scripts to run multiple benchmarks and plot the p
   * `helper_scripts/generate_clusters.py` generates and stores data as `data/perf_data_d<x>_<n>.csv`, for example `perf_data_d2_7.csv` where `d` is number of feature dimensions. The sizes of inputs are roughly evenly spaced from 32 to 14436.
     * Usage: `generate_clusters.py <relative_data_folder_path> <n_clusters> <d_dimensions>`
   * `helper_scripts/plot_performance_alt.py` creates a nice performance plot close to what was given in the lecture guidelines on benchmarking.
-    * Usage: `plot_performance_alt.py --system [intel|amd] --data-path <data/timings/> --files <x1.csv> ... <xn.csv> --save-path <file>`
+    * Arguments: 
+      * `--system [intel|amd]`
+      * `--data-path <data/timings/>`
+      * `--files <x1.csv> ... <xn.csv>`
+      * `--save-path <file>`
+      * `--metric ['fp/c', 'cycles', 'time']`
+      * `--x-scale ['log', 'linear']`
   * Other useful scripts, e.g. plotting clusters: See [`helper_scripts/`](helper_scripts).
 
 Please see the outline and TODOs in `benchmarks.sh`.

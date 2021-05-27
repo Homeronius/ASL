@@ -35,11 +35,11 @@ def plot_dataset2D(X, y, y_true, score=None, labels=False):
         ax.set_title(f'Adjusted Rand Index : {score:.4f}')
 
     ax.scatter(X[:, 0], X[:, 1], marker="o", c=y, s=20, edgecolor="k", cmap=my_cmap)
-    ax.legend(y)
 
     if labels:
         for i in range(X.shape[0]):
             ax.annotate(f"{int(y_true[i])}:{int(y[i])}", (X[i, 0]+.1, X[i, 1]+.1))
+        ax.legend(y)
 
     # plt.axis('equal')
     plt.axis('square')

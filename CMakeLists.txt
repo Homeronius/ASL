@@ -28,6 +28,8 @@ set(HEADER_FILES
     ${HDBSCAN_INCLUDE_DIR}/cluster.h
     ${HDBSCAN_INCLUDE_DIR}/utils.h
     ${HDBSCAN_INCLUDE_DIR}/hdbscan.h
+    ${HDBSCAN_INCLUDE_DIR}/quickselect.h
+    ${HDBSCAN_INCLUDE_DIR}/distance.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -52,6 +54,10 @@ IF(HDBSCAN_PRECOMPUTE_DIST_TRIANG MATCHES "1")
   ADD_DEFINITIONS(-D HDBSCAN_PRECOMPUTE_DIST_TRIANG)
 ENDIF()
 
+IF(PACKLEFT_WLOOKUP MATCHES "1")
+  ADD_DEFINITIONS(-D PACKLEFT_WLOOKUP)
+ENDIF()
+
 
 enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
@@ -65,7 +71,12 @@ add_custom_target(build_bench
 add_custom_target(build_bench_vec
   DEPENDS
     hdbscan_benchmark_lib
-    hdbscan_benchmark_vec
+    hdbscan_benchmark_distvec
+    hdbscan_benchmark_distvec_quickvec
+    hdbscan_benchmark_distvec_quickvec_primvec
+    hdbscan_basic_benchmark_distvec
+    hdbscan_basic_benchmark_distvec_quickvec
+    hdbscan_basic_benchmark_distvec_quickvec_primvec
 )
 add_custom_target(benchmark
   COMMAND

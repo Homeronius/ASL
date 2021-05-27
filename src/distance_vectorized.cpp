@@ -1,9 +1,8 @@
 #include "distance.h"
+#include "quickselect.h"
 #include <immintrin.h>
 #include <math.h>
-#include <stdlib.h>
-
-#include <stdio.h>
+#include <stdint.h>
 
 #ifdef HDBSCAN_INSTRUMENT
 extern long hdbscan_sqrt_counter;
@@ -15,14 +14,14 @@ void euclidean_distance_2(double *pa1, double *pa2, double *pb1, double *pb2,
   __m256d sum_ab;
   __m256d sum_cd;
   {
-    __m256d ld1 = _mm256_loadu2_m128d(pa1, pc1);
-    __m256d ld2 = _mm256_loadu2_m128d(pa2, pc2);
+    __m256d ld1 = _mm256_loadu2_m128d(pc1, pa1);
+    __m256d ld2 = _mm256_loadu2_m128d(pc2, pa2);
     __m256d diff = _mm256_sub_pd(ld1, ld2);
     sum_ab = _mm256_mul_pd(diff, diff);
   }
   {
-    __m256d ld1 = _mm256_loadu2_m128d(pb1, pd1);
-    __m256d ld2 = _mm256_loadu2_m128d(pb2, pd2);
+    __m256d ld1 = _mm256_loadu2_m128d(pd1, pb1);
+    __m256d ld2 = _mm256_loadu2_m128d(pd2, pb2);
     __m256d diff = _mm256_sub_pd(ld1, ld2);
     sum_cd = _mm256_mul_pd(diff, diff);
   }
@@ -37,6 +36,36 @@ void euclidean_distance_2(double *pa1, double *pa2, double *pb1, double *pb2,
 #ifdef HDBSCAN_INSTRUMENT
   hdbscan_sqrt_counter += 4;
 #endif
+}
+
+// Same function as above but avoiding a storeu by returning SIMD vector
+// directly
+__m256d euclidean_distance_2_ret_simd(double *pa1, double *pa2, double *pb1,
+                                      double *pb2, double *pc1, double *pc2,
+                                      double *pd1, double *pd2) {
+  __m256d sum_ab;
+  __m256d sum_cd;
+  {
+    __m256d ld1 = _mm256_loadu2_m128d(pc1, pa1);
+    __m256d ld2 = _mm256_loadu2_m128d(pc2, pa2);
+    __m256d diff = _mm256_sub_pd(ld1, ld2);
+    sum_ab = _mm256_mul_pd(diff, diff);
+  }
+  {
+    __m256d ld1 = _mm256_loadu2_m128d(pd1, pb1);
+    __m256d ld2 = _mm256_loadu2_m128d(pd2, pb2);
+    __m256d diff = _mm256_sub_pd(ld1, ld2);
+    sum_cd = _mm256_mul_pd(diff, diff);
+  }
+
+  __m256d add1 = _mm256_hadd_pd(sum_ab, sum_cd);
+
+#ifdef HDBSCAN_INSTRUMENT
+  hdbscan_sqrt_counter += 4;
+#endif
+
+  // sqrt = | sqrt(a) | sqrt(b) | sqrt(c) | sqrt(d) |
+  return _mm256_sqrt_pd(add1);
 }
 
 void euclidean_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
@@ -62,14 +91,15 @@ void euclidean_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
   __m256d diffd = _mm256_sub_pd(pvd1, pvd2);
   __m256d sumd = _mm256_mul_pd(diffd, diffd);
 
-  __m256d add1 = _mm256_hadd_pd(suma, sumb);
-  __m256d add2 = _mm256_hadd_pd(sumc, sumd);
+  __m256d add1 = _mm256_hadd_pd(suma, sumc);
+  __m256d add2 = _mm256_hadd_pd(sumb, sumd);
 
   __m256d perm1 = _mm256_permute4x64_pd(add1, 0b11011000);
   __m256d perm2 = _mm256_permute4x64_pd(add2, 0b11011000);
 
   __m256d add3 = _mm256_hadd_pd(perm1, perm2);
 
+  // sqrt = | sqrt(a) | sqrt(b) | sqrt(c) | sqrt(d) |
   __m256d sqrt = _mm256_sqrt_pd(add3);
   _mm256_storeu_pd(res, sqrt);
 
@@ -90,15 +120,15 @@ void euclidean_distance_4_opt(double *base, double *p1, double *p2, double *p3,
     __m256d diff1 = _mm256_sub_pd(base_vec, p1_vec);
     __m256d sum1 = _mm256_mul_pd(diff1, diff1);
 
-    __m256d pvb2 = _mm256_loadu_pd(p2);
-    __m256d diff2 = _mm256_sub_pd(base_vec, pvb2);
+    __m256d p3_vec = _mm256_loadu_pd(p3);
+    __m256d diff2 = _mm256_sub_pd(base_vec, p3_vec);
     __m256d sum2 = _mm256_mul_pd(diff2, diff2);
 
     partial_sum1 = _mm256_hadd_pd(sum1, sum2);
   }
   {
-    __m256d p3_vec = _mm256_loadu_pd(p3);
-    __m256d diff3 = _mm256_sub_pd(base_vec, p3_vec);
+    __m256d p2_vec = _mm256_loadu_pd(p2);
+    __m256d diff3 = _mm256_sub_pd(base_vec, p2_vec);
     __m256d sum3 = _mm256_mul_pd(diff3, diff3);
 
     __m256d p4_vec = _mm256_loadu_pd(p4);
@@ -113,12 +143,58 @@ void euclidean_distance_4_opt(double *base, double *p1, double *p2, double *p3,
 
   __m256d sum = _mm256_hadd_pd(perm1, perm2);
 
+  // sqrt = | sqrt(p1) | sqrt(p2) | sqrt(p3) | sqrt(p4) |
   __m256d sqrt = _mm256_sqrt_pd(sum);
   _mm256_storeu_pd(res, sqrt);
 
 #ifdef HDBSCAN_INSTRUMENT
   hdbscan_sqrt_counter += 4;
 #endif
+}
+
+// Same function as above but avoiding a storeu by returning SIMD vector
+// directly
+__m256d euclidean_distance_4_opt_ret_simd(double *base, double *p1, double *p2,
+                                          double *p3, double *p4) {
+  __m256d base_vec = _mm256_loadu_pd(base);
+
+  __m256d partial_sum1;
+  __m256d partial_sum2;
+
+  {
+    __m256d p1_vec = _mm256_loadu_pd(p1);
+    __m256d diff1 = _mm256_sub_pd(base_vec, p1_vec);
+    __m256d sum1 = _mm256_mul_pd(diff1, diff1);
+
+    __m256d p3_vec = _mm256_loadu_pd(p3);
+    __m256d diff2 = _mm256_sub_pd(base_vec, p3_vec);
+    __m256d sum2 = _mm256_mul_pd(diff2, diff2);
+
+    partial_sum1 = _mm256_hadd_pd(sum1, sum2);
+  }
+  {
+    __m256d p2_vec = _mm256_loadu_pd(p2);
+    __m256d diff3 = _mm256_sub_pd(base_vec, p2_vec);
+    __m256d sum3 = _mm256_mul_pd(diff3, diff3);
+
+    __m256d p4_vec = _mm256_loadu_pd(p4);
+    __m256d diff4 = _mm256_sub_pd(base_vec, p4_vec);
+    __m256d sum4 = _mm256_mul_pd(diff4, diff4);
+
+    partial_sum2 = _mm256_hadd_pd(sum3, sum4);
+  }
+
+  __m256d perm1 = _mm256_permute4x64_pd(partial_sum1, 0b11011000);
+  __m256d perm2 = _mm256_permute4x64_pd(partial_sum2, 0b11011000);
+
+  __m256d sum = _mm256_hadd_pd(perm1, perm2);
+
+#ifdef HDBSCAN_INSTRUMENT
+  hdbscan_sqrt_counter += 4;
+#endif
+
+  // sqrt = | sqrt(p1) | sqrt(p2) | sqrt(p3) | sqrt(p4) |
+  return _mm256_sqrt_pd(sum);
 }
 
 // 44 double flops per 4 distances
@@ -134,7 +210,7 @@ void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
     __m256d diff1 = _mm256_sub_pd(base_vec, p1_vec);
     __m256d sum1 = _mm256_mul_pd(diff1, diff1);
 
-    __m256d pvb2 = _mm256_loadu_pd(p2);
+    __m256d pvb2 = _mm256_loadu_pd(p3);
     __m256d diff2 = _mm256_sub_pd(base_vec, pvb2);
     __m256d sum2 = _mm256_mul_pd(diff2, diff2);
 
@@ -145,7 +221,7 @@ void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
     partial_sum1 = _mm256_add_pd(b1, b2);
   }
   {
-    __m256d p3_vec = _mm256_loadu_pd(p3);
+    __m256d p3_vec = _mm256_loadu_pd(p2);
     __m256d diff3 = _mm256_sub_pd(base_vec, p3_vec);
     __m256d sum3 = _mm256_mul_pd(diff3, diff3);
 
@@ -207,6 +283,150 @@ double euclidean_distance(double *p1, double *p2, int d) {
   return sqrt(res);
 }
 
+// WORK-IN-PROGRESS!!!
+double euclidean_distance_alt(double *p1, double *p2, int d) {
+
+  int i = 0;
+  __m256d sum1 = _mm256_setzero_pd();
+  __m256d sum2 = _mm256_setzero_pd();
+  __m256d sum3 = _mm256_setzero_pd();
+  __m256d sum4 = _mm256_setzero_pd();
+  // __m256d sum1;
+  // __m256d sum2;
+  // __m256d sum3;
+  // __m256d sum4;
+  // __m256d sum5;
+  // __m256d sum6;
+  // __m256d sum7;
+  // __m256d sum8;
+
+  // // if (d >= 32) {
+  // if (false) {
+  //   __m256d pv1 = _mm256_loadu_pd(p1);
+  //   __m256d pv2 = _mm256_loadu_pd(p2);
+  //   __m256d pv3 = _mm256_loadu_pd(p1 + 4);
+  //   __m256d pv4 = _mm256_loadu_pd(p2 + 4);
+  //   __m256d pv5 = _mm256_loadu_pd(p1 + 8);
+  //   __m256d pv6 = _mm256_loadu_pd(p2 + 8);
+  //   __m256d pv7 = _mm256_loadu_pd(p1 + 12);
+  //   __m256d pv8 = _mm256_loadu_pd(p2 + 12);
+  //   __m256d diff1 = _mm256_sub_pd(pv1, pv2);
+  //   __m256d diff2 = _mm256_sub_pd(pv3, pv4);
+  //   __m256d diff3 = _mm256_sub_pd(pv5, pv6);
+  //   __m256d diff4 = _mm256_sub_pd(pv7, pv8);
+  //   sum1 = _mm256_mul_pd(diff1, diff1);
+  //   sum2 = _mm256_mul_pd(diff2, diff2);
+  //   sum3 = _mm256_mul_pd(diff3, diff3);
+  //   sum4 = _mm256_mul_pd(diff4, diff4);
+  //   __m256d pw1 = _mm256_loadu_pd(p1 + 16);
+  //   __m256d pw2 = _mm256_loadu_pd(p2 + 16);
+  //   __m256d pw3 = _mm256_loadu_pd(p1 + 20);
+  //   __m256d pw4 = _mm256_loadu_pd(p2 + 20);
+  //   __m256d pw5 = _mm256_loadu_pd(p1 + 24);
+  //   __m256d pw6 = _mm256_loadu_pd(p2 + 24);
+  //   __m256d pw7 = _mm256_loadu_pd(p1 + 28);
+  //   __m256d pw8 = _mm256_loadu_pd(p2 + 28);
+  //   __m256d diff1a = _mm256_sub_pd(pw1, pw2);
+  //   __m256d diff2a = _mm256_sub_pd(pw3, pw4);
+  //   __m256d diff3a = _mm256_sub_pd(pw5, pw6);
+  //   __m256d diff4a = _mm256_sub_pd(pw7, pw8);
+  //   sum5 = _mm256_mul_pd(diff1a, diff1a);
+  //   sum6 = _mm256_mul_pd(diff2a, diff2a);
+  //   sum7 = _mm256_mul_pd(diff3a, diff3a);
+  //   sum8 = _mm256_mul_pd(diff4a, diff4a);
+  //   i=32;
+  // } else {
+  // sum1 = _mm256_setzero_pd();
+  // sum2 = _mm256_setzero_pd();
+  // sum3 = _mm256_setzero_pd();
+  // sum4 = _mm256_setzero_pd();
+  // sum5 = _mm256_setzero_pd();
+  // sum6 = _mm256_setzero_pd();
+  // sum7 = _mm256_setzero_pd();
+  // sum8 = _mm256_setzero_pd();
+  // }
+
+  for (; i < d - 31; i += 32) {
+    __m256d pv1 = _mm256_loadu_pd(p1 + i);
+    __m256d pv2 = _mm256_loadu_pd(p2 + i);
+    __m256d pv3 = _mm256_loadu_pd(p1 + i + 4);
+    __m256d pv4 = _mm256_loadu_pd(p2 + i + 4);
+    __m256d pv5 = _mm256_loadu_pd(p1 + i + 8);
+    __m256d pv6 = _mm256_loadu_pd(p2 + i + 8);
+    __m256d pv7 = _mm256_loadu_pd(p1 + i + 12);
+    __m256d pv8 = _mm256_loadu_pd(p2 + i + 12);
+    __m256d diff1 = _mm256_sub_pd(pv1, pv2);
+    __m256d diff2 = _mm256_sub_pd(pv3, pv4);
+    __m256d diff3 = _mm256_sub_pd(pv5, pv6);
+    __m256d diff4 = _mm256_sub_pd(pv7, pv8);
+    __m256d sum5 = _mm256_fmadd_pd(diff1, diff1, sum1);
+    __m256d sum6 = _mm256_fmadd_pd(diff2, diff2, sum2);
+    __m256d sum7 = _mm256_fmadd_pd(diff3, diff3, sum3);
+    __m256d sum8 = _mm256_fmadd_pd(diff4, diff4, sum4);
+    __m256d pw1 = _mm256_loadu_pd(p1 + i + 16);
+    __m256d pw2 = _mm256_loadu_pd(p2 + i + 16);
+    __m256d pw3 = _mm256_loadu_pd(p1 + i + 20);
+    __m256d pw4 = _mm256_loadu_pd(p2 + i + 20);
+    __m256d pw5 = _mm256_loadu_pd(p1 + i + 24);
+    __m256d pw6 = _mm256_loadu_pd(p2 + i + 24);
+    __m256d pw7 = _mm256_loadu_pd(p1 + i + 28);
+    __m256d pw8 = _mm256_loadu_pd(p2 + i + 28);
+    __m256d diff1a = _mm256_sub_pd(pw1, pw2);
+    __m256d diff2a = _mm256_sub_pd(pw3, pw4);
+    __m256d diff3a = _mm256_sub_pd(pw5, pw6);
+    __m256d diff4a = _mm256_sub_pd(pw7, pw8);
+    sum1 = _mm256_fmadd_pd(diff1a, diff1a, sum5);
+    sum2 = _mm256_fmadd_pd(diff2a, diff2a, sum6);
+    sum3 = _mm256_fmadd_pd(diff3a, diff3a, sum7);
+    sum4 = _mm256_fmadd_pd(diff4a, diff4a, sum8);
+  }
+
+  if (i < d - 15) {
+    __m256d pv1 = _mm256_loadu_pd(p1 + i);
+    __m256d pv2 = _mm256_loadu_pd(p2 + i);
+    __m256d pv3 = _mm256_loadu_pd(p1 + i + 4);
+    __m256d pv4 = _mm256_loadu_pd(p2 + i + 4);
+    __m256d pv5 = _mm256_loadu_pd(p1 + i + 8);
+    __m256d pv6 = _mm256_loadu_pd(p2 + i + 8);
+    __m256d pv7 = _mm256_loadu_pd(p1 + i + 12);
+    __m256d pv8 = _mm256_loadu_pd(p2 + i + 12);
+    __m256d diff1 = _mm256_sub_pd(pv1, pv2);
+    __m256d diff2 = _mm256_sub_pd(pv3, pv4);
+    __m256d diff3 = _mm256_sub_pd(pv5, pv6);
+    __m256d diff4 = _mm256_sub_pd(pv7, pv8);
+    sum1 = _mm256_fmadd_pd(diff1, diff1, sum1);
+    sum2 = _mm256_fmadd_pd(diff2, diff2, sum2);
+    sum3 = _mm256_fmadd_pd(diff3, diff3, sum3);
+    sum4 = _mm256_fmadd_pd(diff4, diff4, sum4);
+  }
+
+  __m256d suma = _mm256_add_pd(sum1, sum2);
+  __m256d sumb = _mm256_add_pd(sum3, sum4);
+  // __m256d sumc = _mm256_add_pd(sum5, sum6);
+  // __m256d sumd = _mm256_add_pd(sum7, sum8);
+  __m256d sum = _mm256_add_pd(suma, sumb);
+  // __m256d sumf = _mm256_add_pd(sumc, sumd);
+  // __m256d sum = _mm256_add_pd(sume, sumf);
+
+  __m128d lower = _mm256_castpd256_pd128(sum);
+  __m128d upper = _mm256_extractf128_pd(sum, 1);
+
+  __m128d s = _mm_add_pd(lower, upper);
+  __m128d p = _mm_permute_pd(s, 0b01);
+  double res = _mm_cvtsd_f64(_mm_add_pd(s, p));
+
+  // for (; i < d; i++) {
+  //   double d_rest = p1[i] - p2[i];
+  //   res += d_rest * d_rest;
+  // }
+
+#ifdef HDBSCAN_INSTRUMENT
+  hdbscan_sqrt_counter++;
+#endif
+
+  return sqrt(res);
+}
+
 double manhattan_distance(double *p1, double *p2, int d) {
   __m256d sum = _mm256_setzero_pd();
   __m256d abs_mask =
@@ -222,9 +442,12 @@ double manhattan_distance(double *p1, double *p2, int d) {
     sum = _mm256_add_pd(sum, abs);
   }
 
-  __m256d add = _mm256_hadd_pd(sum, sum);
-  __m256d perm = _mm256_permute4x64_pd(add, 0b11011000);
-  double res = _mm256_cvtsd_f64(_mm256_hadd_pd(perm, perm));
+  __m128d lower = _mm256_castpd256_pd128(sum);
+  __m128d upper = _mm256_extractf128_pd(sum, 1);
+
+  __m128d s = _mm_add_pd(lower, upper);
+  __m128d p = _mm_permute_pd(s, 0b01);
+  double res = _mm_cvtsd_f64(_mm_add_pd(s, p));
 
   for (; i < d; i++) {
     double diff = p1[i] - p2[i];
@@ -242,14 +465,14 @@ void manhattan_distance_2(double *pa1, double *pa2, double *pb1, double *pb2,
   __m256d abs_mask =
       _mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF));
   {
-    __m256d ld1 = _mm256_loadu2_m128d(pa1, pc1);
-    __m256d ld2 = _mm256_loadu2_m128d(pa2, pc2);
+    __m256d ld1 = _mm256_loadu2_m128d(pc1, pa1);
+    __m256d ld2 = _mm256_loadu2_m128d(pc2, pa2);
     __m256d diff = _mm256_sub_pd(ld1, ld2);
     sum_ab = _mm256_and_pd(diff, abs_mask);
   }
   {
-    __m256d ld1 = _mm256_loadu2_m128d(pb1, pd1);
-    __m256d ld2 = _mm256_loadu2_m128d(pb2, pd2);
+    __m256d ld1 = _mm256_loadu2_m128d(pd1, pb1);
+    __m256d ld2 = _mm256_loadu2_m128d(pd2, pb2);
     __m256d diff = _mm256_sub_pd(ld1, ld2);
     sum_cd = _mm256_and_pd(diff, abs_mask);
   }
@@ -284,8 +507,8 @@ void manhattan_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
   __m256d diffd = _mm256_sub_pd(pd1_vec, pd2_vec);
   __m256d absd = _mm256_and_pd(diffd, abs_mask);
 
-  __m256d add1 = _mm256_hadd_pd(absa, absb);
-  __m256d add2 = _mm256_hadd_pd(absc, absd);
+  __m256d add1 = _mm256_hadd_pd(absa, absc);
+  __m256d add2 = _mm256_hadd_pd(absb, absd);
 
   __m256d perm1 = _mm256_permute4x64_pd(add1, 0b11011000);
   __m256d perm2 = _mm256_permute4x64_pd(add2, 0b11011000);
@@ -294,238 +517,10 @@ void manhattan_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
   _mm256_storeu_pd(res, add3);
 }
 
-inline void swap(double *a, double *b) {
-  double tmp = *b;
-  *b = *a;
-  *a = tmp;
-}
-
-int partition(double *list, int left, int right, int pivot) {
-  double pivot_val = list[pivot];
-  swap(list + pivot, list + right);
-
-  int store_idx = left;
-
-  for (int i = left; i < right; i++) {
-    if (list[i] < pivot_val) {
-      swap(list + store_idx, list + i);
-      store_idx++;
-    }
-  }
-
-  swap(list + right, list + store_idx);
-
-  return store_idx;
-}
-
-// WARNING: this version is not entirely correct right now
-int partition_vec(double *list, int left, int right, int pivot) {
-  double pivot_val = list[pivot];
-  swap(list + pivot, list + right);
-
-  int store_idx = left;
-  int i = left;
-
-  __m256d pivotvec = _mm256_set1_pd(pivot_val);
-
-  for (; i < store_idx + 4 && i < right; i++) {
-    if (list[i] < pivot_val) {
-      swap(list + store_idx, list + i);
-      store_idx++;
-    }
-  }
-
-  for (; i < right - 4; i += 4) {
-    __m256d listvec = _mm256_loadu_pd(list + i);
-    __m256d less = _mm256_cmp_pd(listvec, pivotvec, _CMP_LT_OQ);
-
-    int mask = _mm256_movemask_pd(less);
-
-    int count = __builtin_popcount(mask);
-
-    // Unpack each bit to a byte
-    unsigned int expanded_mask = _pdep_u32(mask, 0x01010101);
-    // Replicate bit to fill entire byte
-    expanded_mask *= 0xFF;
-
-    const unsigned int identity_indices = 0x76543210;
-    unsigned int wanted_indices = _pext_u32(identity_indices, expanded_mask);
-
-    // TODO: is there a more elegant way to do this?
-    __m256i shufmask = _mm256_set_epi32(
-        (wanted_indices >> 28) & 0xF, (wanted_indices >> 24) & 0xF,
-        (wanted_indices >> 20) & 0xF, (wanted_indices >> 16) & 0xF,
-        (wanted_indices >> 12) & 0xF, (wanted_indices >> 8) & 0xF,
-        (wanted_indices >> 4) & 0xF, wanted_indices & 0xF);
-
-    // Unfortunately, there is no intrinsic in AVX2 to do double permutevar
-    __m256d res = _mm256_castps_pd(
-        _mm256_permutevar8x32_ps(_mm256_castpd_ps(listvec), shufmask));
-
-    __m256i sm = _mm256_castpd_si256(_mm256_cmp_pd(
-        _mm256_castsi256_pd(shufmask), _mm256_set1_pd(0), _CMP_NEQ_OQ));
-
-    __m256d toswap = _mm256_maskload_pd(list + store_idx, sm);
-    _mm256_maskstore_pd(list + store_idx, sm, res);
-
-    unsigned int reverse_indices = _pdep_u32(identity_indices, expanded_mask);
-    __m256i shufmask_rev = _mm256_set_epi32(
-        (reverse_indices >> 28) & 0xF, (reverse_indices >> 24) & 0xF,
-        (reverse_indices >> 20) & 0xF, (reverse_indices >> 16) & 0xF,
-        (reverse_indices >> 12) & 0xF, (reverse_indices >> 8) & 0xF,
-        (reverse_indices >> 4) & 0xF, reverse_indices & 0xF);
-
-    __m256d rev = _mm256_castps_pd(
-        _mm256_permutevar8x32_ps(_mm256_castpd_ps(toswap), shufmask_rev));
-
-    _mm256_maskstore_pd(list + i, _mm256_castpd_si256(less), rev);
-
-    store_idx += count;
-  }
-
-  for (; i < right; i++) {
-    if (list[i] < pivot_val) {
-      swap(list + store_idx, list + i);
-      store_idx++;
-    }
-  }
-
-  swap(list + right, list + store_idx);
-
-  return store_idx;
-}
-
-void partition_vec2(double *list, double *lower, int *idx_lower,
-                    int *idx_higher, int n, int pivot) {
-  double pivot_val = list[pivot];
-  int store_idx_lower = 0;
-  int store_idx_higher = 0;
-  int i = 0;
-
-  swap(list + pivot, list + n - 1);
-
-  __m256d pivotvec = _mm256_set1_pd(pivot_val);
-
-  for (; i < n - 4; i += 4) {
-    __m256d listvec = _mm256_loadu_pd(list + i);
-    {
-      __m256d less_mask = _mm256_cmp_pd(listvec, pivotvec, _CMP_LE_OQ);
-      int mask = _mm256_movemask_pd(less_mask);
-      int count = __builtin_popcount(mask);
-
-      // Unpack each bit to a byte
-      unsigned int expanded_mask = _pdep_u32(mask, 0x01010101);
-      // Replicate bit to fill entire byte
-      expanded_mask *= 0xFF;
-
-      const unsigned int identity_indices = 0x76543210;
-      unsigned int wanted_indices = _pext_u32(identity_indices, expanded_mask);
-
-      // TODO: is there a more elegant way to do this?
-      __m256i shufmask = _mm256_set_epi32(
-          (wanted_indices >> 28) & 0xF, (wanted_indices >> 24) & 0xF,
-          (wanted_indices >> 20) & 0xF, (wanted_indices >> 16) & 0xF,
-          (wanted_indices >> 12) & 0xF, (wanted_indices >> 8) & 0xF,
-          (wanted_indices >> 4) & 0xF, wanted_indices & 0xF);
-
-      // Unfortunately, there is no intrinsic in AVX2 to do double permutevar
-      __m256d res = _mm256_castps_pd(
-          _mm256_permutevar8x32_ps(_mm256_castpd_ps(listvec), shufmask));
-
-      __m256i sm = _mm256_castpd_si256(_mm256_cmp_pd(
-          _mm256_castsi256_pd(shufmask), _mm256_set1_pd(0), _CMP_NEQ_OQ));
-
-      _mm256_maskstore_pd(lower + store_idx_lower, sm, res);
-
-      store_idx_lower += count;
-    }
-    {
-      __m256d less_mask = _mm256_cmp_pd(listvec, pivotvec, _CMP_GT_OQ);
-      int mask = _mm256_movemask_pd(less_mask);
-      int count = __builtin_popcount(mask);
-
-      // Unpack each bit to a byte
-      unsigned int expanded_mask = _pdep_u32(mask, 0x01010101);
-      // Replicate bit to fill entire byte
-      expanded_mask *= 0xFF;
-
-      const unsigned int identity_indices = 0x76543210;
-      unsigned int wanted_indices = _pext_u32(identity_indices, expanded_mask);
-
-      // TODO: is there a more elegant way to do this?
-      __m256i shufmask = _mm256_set_epi32(
-          (wanted_indices >> 28) & 0xF, (wanted_indices >> 24) & 0xF,
-          (wanted_indices >> 20) & 0xF, (wanted_indices >> 16) & 0xF,
-          (wanted_indices >> 12) & 0xF, (wanted_indices >> 8) & 0xF,
-          (wanted_indices >> 4) & 0xF, wanted_indices & 0xF);
-
-      // Unfortunately, there is no intrinsic in AVX2 to do double permutevar
-      __m256d res = _mm256_castps_pd(
-          _mm256_permutevar8x32_ps(_mm256_castpd_ps(listvec), shufmask));
-
-      __m256i sm = _mm256_castpd_si256(_mm256_cmp_pd(
-          _mm256_castsi256_pd(shufmask), _mm256_set1_pd(0), _CMP_NEQ_OQ));
-
-      _mm256_maskstore_pd(list + store_idx_higher, sm, res);
-      store_idx_higher += count;
-    }
-  }
-
-  for (; i < n - 1; i++) {
-    if (list[i] <= pivot_val) {
-      lower[store_idx_lower] = list[i];
-      store_idx_lower++;
-    }
-    if (list[i] > pivot_val) {
-      list[store_idx_higher] = list[i];
-      store_idx_higher++;
-    }
-  }
-
-  *idx_higher = store_idx_higher;
-  *idx_lower = store_idx_lower;
-}
-
-double iterative_quickselect(double *list, int n, int k) {
-  double lo[n];
-  double *lower = lo;
-  int pivot_idx = n / 2;
-
-  if (k >= n) {
-    return NAN;
-  }
-
-  while (true) {
-    if (n == 1) {
-      return list[0];
-    }
-
-    // Take element in the middle as pivot
-    double pivot_val = list[pivot_idx];
-    int store_idx_lower;
-    int store_idx_higher;
-    partition_vec2(list, lower, &store_idx_lower, &store_idx_higher, n,
-                   pivot_idx);
-
-    if (store_idx_lower == k) {
-      return pivot_val;
-    } else if (store_idx_lower > k) {
-      double *tmp = list;
-      list = lower;
-      lower = tmp;
-      n = store_idx_lower;
-    } else {
-      k -= store_idx_lower + 1;
-      n = store_idx_higher;
-    }
-    pivot_idx = n / 2;
-  }
-}
-
 void compute_core_distances(double *input, double *core_dist, int mpts, int n,
                             int d) {
   double distances[n];
-
+  BuildPackMask();
   for (int k = 0; k < n; k++) {
     int i = 0;
     for (; i < n - 3; i += 4) {

@@ -20,6 +20,7 @@
 | _mm256_permute_pd        | `vpermilpd ymm, ymm, imm8`     | 1               | 1           | 1 / 3         | 0.5       |
 | _mm256_permute4x64_pd    | `vpermpd ymm, ymm, imm8`       | 3               | 1           | 6             | 1 / 1.27  |
 | _mm256_blend_pd          | `vblendpd ymm, ymm, ymm, imm8` | 1               | 0.33        | 1             | 0.5       |
+| _mm256_srlv_epi32        | `vpsrlvd ymm, ymm, ymm`        | 1               | 0.5         | 3             | 2         |
 
 Information for Skylake was taken from the [Intel intrinsics guide](https://software.intel.com/sites/landingpage/IntrinsicsGuide/)
 
