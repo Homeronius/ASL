@@ -103,7 +103,7 @@ mkdir -p build
 ##########################################################
 
 # Total Comparison flops/cycles d=20
-N=12
+N=9
 
 # Basic everything
 python helper_scripts/generate_clusters.py data 6 20
@@ -136,7 +136,6 @@ python helper_scripts/plot_performance_alt.py  \
     --files basic.csv \
             basic_distvec.csv \
             basic_distvec_quickvec.csv \
-            basic_distvec_quickvec.csv \
             basic_distvec_quickvec_primvec.csv  \
     --save-path plots/performance_basic.png
 
@@ -160,7 +159,6 @@ python helper_scripts/plot_performance_alt.py  \
     --files advprim.csv \
             advprim_distvec.csv \
             advprim_distvec_quickvec.csv \
-            advprim_distvec_quickvec.csv \
             advprim_distvec_quickvec_primvec.csv  \
     --save-path plots/performance_advprim.png
 
@@ -176,7 +174,6 @@ python helper_scripts/plot_performance_alt.py  \
     --files basic.csv \
             basic_distvec.csv \
             basic_distvec_quickvec.csv \
-            basic_distvec_quickvec.csv \
             basic_distvec_quickvec_primvec.csv  \
     --save-path plots/cycles_basic.png \
     --metric=cycles
@@ -186,7 +183,6 @@ python helper_scripts/plot_performance_alt.py  \
     --data-path data/timings/${TIME} \
     --files advprim.csv \
             advprim_distvec.csv \
-            advprim_distvec_quickvec.csv \
             advprim_distvec_quickvec.csv \
             advprim_distvec_quickvec_primvec.csv  \
     --save-path plots/cycles_advprim.png \
