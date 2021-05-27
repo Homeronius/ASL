@@ -218,7 +218,7 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
                                X + idx_j_local[2] * d, X + i * d,
                                X + idx_j_local[3] * d, dist_between_local);
         } else if (d == 4) {
-          euclidean_distance_4_opt(X + i * d, X + idx_j_local[0] * d,
+          euclidean_distance_4_opt_alt(X + i * d, X + idx_j_local[0] * d,
                                    X + idx_j_local[1] * d,
                                    X + idx_j_local[2] * d,
                                    X + idx_j_local[3] * d, dist_between_local);
