@@ -30,7 +30,7 @@ def main(args):
     elif args.metric == "time":
         title += "\n [seconds]"
     elif args.metric == "cycles":
-        title += "\n [" + r"$10^9$" + " cycles]"
+        title += "\n [" + r"$\times 10^9$" + " cycles]"
     ax.set_title(title, loc="left")
 
     freq = 2.6e9 if args.system == "intel" else 2.9e9
