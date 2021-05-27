@@ -1,7 +1,7 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-
+#include "quickselect.h"
 #include "distance.h"
 #include "prim.h"
 #include "gtest/gtest.h"
@@ -136,7 +136,7 @@ TEST(distance, iterative_quickselect1) {
   const int n = 4;
   double input[n] = {1.0, 2.0, 3.0, 4.0};
 
-  double result = iterative_quickselect(input, 0, n - 1, 2);
+  double result = iterative_quickselect(input, n, 2);
 
   EXPECT_DOUBLE_EQ(result, 3.0);
 }
@@ -145,7 +145,7 @@ TEST(distance, iterative_quickselect2) {
   const int n = 6;
   double input[n] = {7., 4., 6., 3., 9., 1.};
 
-  double result = iterative_quickselect(input, 0, n - 1, 2);
+  double result = iterative_quickselect(input, n, 2);
 
   EXPECT_DOUBLE_EQ(result, 4.0);
 }

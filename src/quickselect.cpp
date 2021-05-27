@@ -62,7 +62,7 @@ double iterative_quickselect(double *list, int n, int k) {
     // int pivot_idx = left + rand() % (right - left + 1);
 
     // Take element in the middle as pivot
-    int pivot_idx = left + n / 2;
+    int pivot_idx = (left + right) / 2;
 
     pivot_idx = partition(list, left, right, pivot_idx);
 
