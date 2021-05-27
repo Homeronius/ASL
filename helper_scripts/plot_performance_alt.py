@@ -54,7 +54,7 @@ def main(args):
         else:
             raise TypeError("unsupported scale for x-axis")
         
-        line.set_label(file)
+        line.set_label(path.splitext(file)[0])
 
     ax.set_xlabel('n')
     # ax.set_ylabel('flops/cycle')
