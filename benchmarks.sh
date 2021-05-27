@@ -260,7 +260,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DCMAKE_CXX_FLAGS="-O3" \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
