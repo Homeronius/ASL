@@ -99,51 +99,55 @@ int main(int argc, char **argv) {
   long long pd128 = result[1];
   long long pd256 = result[2];
 
-  const unsigned long single_configs[] = {
-      FP_ARITH_INST_RETIRED_SCALAR_SINGLE,
-      FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE,
-      FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE};
+  // const unsigned long single_configs[] = {
+  // FP_ARITH_INST_RETIRED_SCALAR_SINGLE,
+  // FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE,
+  // FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE};
 
-  fd = start_all_flops_counter(single_configs, ids, k);
-  compute_hdbscan();
-  stop_all_flops_counter(fd, ids, result, k);
+  // fd = start_all_flops_counter(single_configs, ids, k);
+  // compute_hdbscan();
+  // stop_all_flops_counter(fd, ids, result, k);
 
-  long long ss = result[0];
-  long long ps128 = result[1];
-  long long ps256 = result[2];
+  // long long ss = result[0];
+  // long long ps128 = result[1];
+  // long long ps256 = result[2];
 
   printf("FLOPS count scalar double: %'lld\n", sd);
-  printf("FLOPS count scalar float: %'lld\n", ss);
+  // printf("FLOPS count scalar float: %'lld\n", ss);
   printf("FLOPS count 128 packed double: %'lld (multiply by 2 to get scalar "
          "operations)\n",
          pd128);
-  printf("FLOPS count 128 packed float: %'lld (multiply by 4 to get scalar "
-         "operations)\n",
-         ps128);
+  // printf("FLOPS count 128 packed float: %'lld (multiply by 4 to get scalar "
+  //"operations)\n",
+  // ps128);
   printf("FLOPS count 256 packed double: %'lld (multiply by 4 to get scalar "
          "operations)\n",
          pd256);
-  printf("FLOPS count 256 packed float: %'lld (multiply by 8 to get scalar "
-         "operations)\n\n",
-         ps256);
+  // printf("FLOPS count 256 packed float: %'lld (multiply by 8 to get scalar "
+  //"operations)\n\n",
+  // ps256);
 
   long long scalar_flops = sd + 2 * pd128 + 4 * pd256;
-  printf("Performance (PERF) = %'f dflops/cycle (only counting add, mul, sub)\n", (double)scalar_flops / p);
-  printf("Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, sub)\n", (double)scalar_flops / r);
+  printf(
+      "Performance (PERF) = %'f dflops/cycle (only counting add, mul, sub)\n",
+      (double)scalar_flops / p);
+  printf(
+      "Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, sub)\n",
+      (double)scalar_flops / r);
 
   FILE *fptr;
   if (argc == 3) {
     // Check if file already exists
     if (access(argv[2], F_OK) == 0) { // exists -> append
       fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
-              r, c, t, p, scalar_flops, sd, ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld\n", n, d, r, c, t,
+              p, scalar_flops, sd, pd128, pd256);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(argv[2], "w");
       // Header
-      fprintf(fptr, "n,d,r,c,t,p,sd,ss,pd128,ps128,pd256,ps256\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d,
-              r, c, t, p, scalar_flops, sd, ss, pd128, ps128, pd256, ps256);
+      fprintf(fptr, "n,d,r,c,t,p,sd,pd128,pd256\n");
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld\n", n, d, r, c, t,
+              p, scalar_flops, sd, pd128, pd256);
     }
 
     fclose(fptr);
