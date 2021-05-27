@@ -105,7 +105,7 @@ mkdir -p build
 N=12
 
 # Basic everything
-if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 = "all" ]; then
     python helper_scripts/generate_clusters.py data 6 20
 fi
 
@@ -118,9 +118,7 @@ cd build && cmake -G Ninja .. \
     -DCMAKE_CXX_FLAGS="-O3" \
     -DPACKLEFT_WLOOKUP=1 \
     -DBENCHMARK_AMD=${AMD} &&
-    ninja &&
     ninja build_bench &&
-    ninja build_bench_vec &&
     cd ..
 
 
@@ -136,7 +134,6 @@ cd build && cmake -G Ninja .. \
     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
     -DPACKLEFT_WLOOKUP=1 \
     -DBENCHMARK_AMD=${AMD} &&
-    ninja &&
     ninja build_bench &&
     ninja build_bench_vec &&
     cd ..
