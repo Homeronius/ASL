@@ -102,7 +102,7 @@ mkdir -p build
 ##########################################################
 
 # Total Comparison flops/cycles d=20
-N=1
+N=12
 
 # Basic everything
 if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "all" ]; then
@@ -232,7 +232,7 @@ fi
 ##########################################################
 
 # Total Comparison flops/cycles d=128
-N=1
+N=12
 
 if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     printf "Running amd-v-intel benchmarks. Creating data...\n"
@@ -288,7 +288,7 @@ fi
 ######## Comparison between basic, triangular and blocked distance computation ########
 #######################################################################################
 # Total Comparison flops/cycles d=128
-N=7
+N=12
 
 if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     printf "Running blocked-v-triangular benchmarks. Creating data...\n"
