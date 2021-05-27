@@ -57,13 +57,12 @@ void prim(double *adjacency, edge *result, int n) {
   // start from vertex 0 (there might be a better way?)
   cost[0][0] = 0.0;
   parent[0][0] = int(-1);
-  contained[0][0] = uint(1);
+  contained[0][0] = 0xFFFFFFFFFFFFFFFF;
 
   for (int iter = 0; iter < n - 1; iter++) {
     // i is the node we want to add
     uint64_t i;
 
-    // TODO adapt idx to correct type
     // search for best node to add that
     // is not yet included in MST
     __m256d min_cost_reduction = _mm256_set1_pd(__DBL_MAX__);
@@ -132,11 +131,9 @@ void prim(double *adjacency, edge *result, int n) {
           _mm256_andnot_si256(contained[j], _mm256_castpd_si256(cost_mask));
 
       // Update corresponding values
-      //_mm256_maskstore_epi32(parent + j, condition, _mm256_set1_epi32(i));
-      parent[j] = blendvpd_si256(_mm256_set1_epi64x(i), parent[j], condition);
-      //_mm256_maskstore_pd((cost + j), condition, adj_vec);
+      parent[j] = blendvpd_si256(parent[j], _mm256_set1_epi64x(i), condition);
       cost[j] =
-          _mm256_blendv_pd(adj_vec, cost[j], _mm256_castsi256_pd(condition));
+          _mm256_blendv_pd(cost[j], adj_vec, _mm256_castsi256_pd(condition));
     }
 
     // Finish up the loop
