@@ -113,6 +113,7 @@ cd build && cmake -G Ninja .. \
     -DCMAKE_C_COMPILER=clang-11 \
     -DCMAKE_CXX_COMPILER=clang++-11 \
     -DOPT_LEVEL=O3 \
+    -DPACKLEFT_WLOOKUP=1 \
     -DBENCHMARK_AMD=${AMD} &&
     ninja &&
     ninja build_bench &&
@@ -134,7 +135,7 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
     ./run_perf_measurements.sh basic_distvec_quickvec_primvec hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
 
     # Plot result
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec.csv \
@@ -157,7 +158,7 @@ if [ $2 = "advanced" ] || [ $2 = "all" ]; then
     ./run_perf_measurements.sh advprim_distvec_quickvec_primvec hdbscan_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
 
     # Plot result
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files advprim.csv \
                 advprim_distvec.csv \
@@ -172,7 +173,7 @@ fi
 ##########################################################
 if [ $2 = "basic" ] || [ $2 = "all" ]; then
     # Plot basic 
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec.csv \
@@ -185,7 +186,7 @@ fi
 
 if [ $2 = "advanced" ] || [ $2 = "all" ]; then
     # Plot advprim
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files advprim.csv \
                 advprim_distvec.csv \
@@ -198,7 +199,7 @@ fi
 
 if [ $2 = "all" ]; then
     # Plot basic vs advprim
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec_quickvec.csv \
@@ -206,7 +207,7 @@ if [ $2 = "all" ]; then
                 advprim_distvec_quickvec.csv  \
         --save-path plots/perf_basic_vs_advanced.png \
 
-    python helper_scripts/plot_performance_alt.py  \
+    python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec_quickvec.csv \
@@ -267,7 +268,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
 
     # Plot like this here (should be done with second machine, i.e.
     # benchmarks have been copied) 
-    : ' python helper_scripts/plot_performance_alt.py  \
+    : ' python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files amd_pext_partition.csv \
                 amd_lut_partition.csv \
