@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [baseline_flags|all]"
+    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [baseline_flags|all]"
+    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
     exit 1
 fi
 
@@ -16,7 +16,7 @@ fi
 if [ ! -z $2 ] && [ $2 != "baseline_flags" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [baseline_flags|all]"
+    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
     exit 1
 fi
 
@@ -27,7 +27,6 @@ fi
 
 TIME=$(date +%Y%m%d_%H%M%S)
 # data creation here first
-python helper_scripts/generate_clusters.py data 3 2
 
 # create build dir
 mkdir -p build
@@ -195,3 +194,60 @@ python helper_scripts/plot_performance_alt.py  \
 rm ./data/perf_data_d20_*
 
 
+
+##########################################################
+######## Comparison between Intel and AMD         ########
+######## with focus on the vectorization          ########
+######## of the partition function                ########
+##########################################################
+
+# Total Comparison flops/cycles d=128
+N=12
+
+if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
+    printf "Running amd-v-intel benchmarks. Creating data...\n"
+    # First with the version where `pext` and `pdep` are used
+    python helper_scripts/generate_clusters.py data 6 128
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DOPT_LEVEL=O3 \
+        -DPACKLEFT_WLOOKUP=0
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench_vec &&
+        cd ..
+
+    printf "Running amd-v-intel benchmarks. Run benchmark with pext/pdep partitioning...\n"
+    # Best performing 
+    ./run_perf_measurements.sh $1_pext_partition hdbscan_benchmark_distvec_quickvec perf_data_d128 ${N} ${TIME}
+
+    # Then the optimized version for AMD, using a lookup table
+    python helper_scripts/generate_clusters.py data 6 128
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DOPT_LEVEL=O3 \
+        -DPACKLEFT_WLOOKUP=1
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench_vec &&
+        cd ..
+
+    printf "Running amd-v-intel benchmarks. Run benchmark with LUT partitioning...\n"
+    # Best performing 
+    ./run_perf_measurements.sh $1_lut_partition hdbscan_benchmark_distvec_quickvec perf_data_d128 ${N} ${TIME}
+
+    # Plot like this here (should be done with second machine, i.e.
+    # benchmarks have been copied) 
+    : ' python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files amd_pext_partition.csv \
+                amd_lut_partition.csv \
+                intel_pext_partition.csv \
+                intel_lut_partition.csv \
+        --save-path plots/perf_amd_vs_intel.png \
+        --metric=cycles
+        --x-scale=linear
+    '
+    # Remove data used for this experiment
+    rm ./data/perf_data_d128_*
+fi
