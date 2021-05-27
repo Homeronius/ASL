@@ -70,6 +70,9 @@ add_custom_target(build_bench_vec
   DEPENDS
     hdbscan_benchmark_lib
     hdbscan_benchmark_vec
+    hdbscan_benchmark_vec_primvec
+    hdbscan_basic_benchmark_vec
+    hdbscan_basic_benchmark_vec_primvec
 )
 add_custom_target(benchmark
   COMMAND
