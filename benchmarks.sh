@@ -1,22 +1,22 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
     exit 1
 fi
 
 # extend here with different test names
-if [ ! -z $2 ] && [ $2 != "baseline_flags" ] && [ $2 != "all" ]; then
+if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "amd-v-intel" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [amd-v-intel|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|all]"
     exit 1
 fi
 
@@ -105,7 +105,10 @@ mkdir -p build
 N=12
 
 # Basic everything
-python helper_scripts/generate_clusters.py data 6 20
+if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "all" ]; then
+    python helper_scripts/generate_clusters.py data 6 20
+fi
+
 cd build && cmake -G Ninja .. \
     -DCMAKE_C_COMPILER=clang-11 \
     -DCMAKE_CXX_COMPILER=clang++-11 \
@@ -120,78 +123,104 @@ cd build && cmake -G Ninja .. \
 ##########################################################
 ######## Algorithm with basic prim algorithm    ##########
 ##########################################################
+if [ $2 = "basic" ] || [ $2 = "all" ]; then
+    # No optimizations
+    ./run_perf_measurements.sh basic hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
+    # Adding optimized distance computations (computation of adjacency matrix)
+    ./run_perf_measurements.sh basic_distvec hdbscan_basic_benchmark_distvec perf_data_d20 ${N} ${TIME}
+    # Adding optimized quickselect algorithm
+    ./run_perf_measurements.sh basic_distvec_quickvec hdbscan_basic_benchmark_distvec_quickvec perf_data_d20 ${N} ${TIME}
+    # Adding optimized prim algorithm
+    ./run_perf_measurements.sh basic_distvec_quickvec_primvec hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
 
-# No optimizations
-./run_perf_measurements.sh basic hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
-# Adding optimized distance computations (computation of adjacency matrix)
-./run_perf_measurements.sh basic_distvec hdbscan_basic_benchmark_distvec perf_data_d20 ${N} ${TIME}
-# Adding optimized quickselect algorithm
-./run_perf_measurements.sh basic_distvec_quickvec hdbscan_basic_benchmark_distvec_quickvec perf_data_d20 ${N} ${TIME}
-# Adding optimized prim algorithm
-./run_perf_measurements.sh basic_distvec_quickvec_primvec hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
-
-# Plot result
-python helper_scripts/plot_performance_alt.py  \
-    --data-path data/timings/${TIME} \
-    --files basic.csv \
-            basic_distvec.csv \
-            basic_distvec_quickvec.csv \
-            basic_distvec_quickvec_primvec.csv  \
-    --save-path plots/performance_basic.png
-
+    # Plot result
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files basic.csv \
+                basic_distvec.csv \
+                basic_distvec_quickvec.csv \
+                basic_distvec_quickvec_primvec.csv  \
+        --save-path plots/performance_basic.png
+fi
 
 ##########################################################
 ######## Algorithm with advanced prim algorithm ##########
 ##########################################################
+if [ $2 = "advanced" ] || [ $2 = "all" ]; then
+    # No optimizations
+    ./run_perf_measurements.sh advprim hdbscan_benchmark perf_data_d20 ${N} ${TIME}
+    # Adding optimized distance computation (computation of core_distances)
+    ./run_perf_measurements.sh advprim_distvec hdbscan_benchmark_distvec perf_data_d20 ${N} ${TIME}
+    # Adding optimized quickselect algorithm
+    ./run_perf_measurements.sh advprim_distvec_quickvec hdbscan_benchmark_distvec_quickvec perf_data_d20 ${N} ${TIME}
+    # Adding optimized prim algorithm
+    ./run_perf_measurements.sh advprim_distvec_quickvec_primvec hdbscan_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
 
-# No optimizations
-./run_perf_measurements.sh advprim hdbscan_benchmark perf_data_d20 ${N} ${TIME}
-# Adding optimized distance computation (computation of core_distances)
-./run_perf_measurements.sh advprim_distvec hdbscan_benchmark_distvec perf_data_d20 ${N} ${TIME}
-# Adding optimized quickselect algorithm
-./run_perf_measurements.sh advprim_distvec_quickvec hdbscan_benchmark_distvec_quickvec perf_data_d20 ${N} ${TIME}
-# Adding optimized prim algorithm
-./run_perf_measurements.sh advprim_distvec_quickvec_primvec hdbscan_benchmark_distvec_quickvec_primvec perf_data_d20 ${N} ${TIME}
-
-# Plot result
-python helper_scripts/plot_performance_alt.py  \
-    --data-path data/timings/${TIME} \
-    --files advprim.csv \
-            advprim_distvec.csv \
-            advprim_distvec_quickvec.csv \
-            advprim_distvec_quickvec_primvec.csv  \
-    --save-path plots/performance_advprim.png
-
+    # Plot result
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files advprim.csv \
+                advprim_distvec.csv \
+                advprim_distvec_quickvec.csv \
+                advprim_distvec_quickvec_primvec.csv  \
+        --save-path plots/performance_advprim.png
+fi
 
 ##########################################################
 ######## Plots showing cycles of each binary \  ##########
 ######## for basic & advanced prim              ##########
 ##########################################################
+if [ $2 = "basic" ] || [ $2 = "all" ]; then
+    # Plot basic 
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files basic.csv \
+                basic_distvec.csv \
+                basic_distvec_quickvec.csv \
+                basic_distvec_quickvec_primvec.csv  \
+        --save-path plots/cycles_basic.png \
+        --metric=cycles
+        --x-scale=linear
+fi
 
-# Plot basic 
-python helper_scripts/plot_performance_alt.py  \
-    --data-path data/timings/${TIME} \
-    --files basic.csv \
-            basic_distvec.csv \
-            basic_distvec_quickvec.csv \
-            basic_distvec_quickvec_primvec.csv  \
-    --save-path plots/cycles_basic.png \
-    --metric=cycles \
-    --x-scale=linear
+if [ $2 = "advanced" ] || [ $2 = "all" ]; then
+    # Plot advprim
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files advprim.csv \
+                advprim_distvec.csv \
+                advprim_distvec_quickvec.csv \
+                advprim_distvec_quickvec_primvec.csv  \
+        --save-path plots/cycles_advprim.png \
+        --metric=cycles \
+        --x-scale=linear
+fi
 
-# Plot advprim
-python helper_scripts/plot_performance_alt.py  \
-    --data-path data/timings/${TIME} \
-    --files advprim.csv \
-            advprim_distvec.csv \
-            advprim_distvec_quickvec.csv \
-            advprim_distvec_quickvec_primvec.csv  \
-    --save-path plots/cycles_advprim.png \
-    --metric=cycles \
-    --x-scale=linear
+if [ $2 = "all" ]; then
+    # Plot basic vs advprim
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files basic.csv \
+                basic_distvec_quickvec.csv \
+                advprim.csv \
+                advprim_distvec_quickvec.csv  \
+        --save-path plots/perf_basic_vs_advanced.png \
 
-# Clean up datasets used for this part
-rm ./data/perf_data_d20_*
+    python helper_scripts/plot_performance_alt.py  \
+        --data-path data/timings/${TIME} \
+        --files basic.csv \
+                basic_distvec_quickvec.csv \
+                advprim.csv \
+                advprim_distvec_quickvec.csv  \
+        --save-path plots/cycles_basic_vs_advanced.png \
+        --metric=cycles
+        --x-scale=linear
+fi
+
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 = "all" ]; then
+    # Clean up datasets used for this part
+    rm ./data/perf_data_d20_*
+fi
 
 
 
@@ -212,7 +241,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
         -DOPT_LEVEL=O3 \
-        -DPACKLEFT_WLOOKUP=0
+        -DPACKLEFT_WLOOKUP=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench_vec &&
         cd ..
@@ -227,7 +256,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
         -DOPT_LEVEL=O3 \
-        -DPACKLEFT_WLOOKUP=1
+        -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench_vec &&
         cd ..
