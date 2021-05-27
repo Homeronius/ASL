@@ -105,7 +105,7 @@ mkdir -p build
 N=12
 
 # Basic everything
-if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "all" ]; then
     python helper_scripts/generate_clusters.py data 6 20
 fi
 
