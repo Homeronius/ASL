@@ -213,27 +213,20 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
         core_dist_j_vec = _mm256_load_pd(core_dist_j_local);
 
         if (d == 2) {
-          euclidean_distance_2(X + i * d, X + idx_j_local[0] * d, X + i * d,
-                               X + idx_j_local[1] * d, X + i * d,
-                               X + idx_j_local[2] * d, X + i * d,
-                               X + idx_j_local[3] * d, dist_between_local);
+          dist_between_vec = euclidean_distance_2_ret_simd(
+              X + i * d, X + idx_j_local[0] * d, X + i * d,
+              X + idx_j_local[1] * d, X + i * d, X + idx_j_local[2] * d,
+              X + i * d, X + idx_j_local[3] * d);
         } else if (d == 4) {
-          euclidean_distance_4_opt_alt(X + i * d, X + idx_j_local[0] * d,
-                                   X + idx_j_local[1] * d,
-                                   X + idx_j_local[2] * d,
-                                   X + idx_j_local[3] * d, dist_between_local);
+          dist_between_vec = euclidean_distance_4_opt_ret_simd(
+              X + i * d, X + idx_j_local[0] * d, X + idx_j_local[1] * d,
+              X + idx_j_local[2] * d, X + idx_j_local[3] * d);
         } else {
           for (k = 0; k < 4; ++k) {
             dist_between_local[k] =
                 euclidean_distance(X + i * d, X + idx_j_local[k] * d, d);
           }
         }
-        // for (k = 0; k < 4; ++k) {
-        // dist_between_local[k] =
-        // euclidean_distance(X + i * d, X + idx_j_local[k] * d, d);
-        //}
-
-        dist_between_vec = _mm256_load_pd(dist_between_local);
 
         mutual_reach_dist_vec = _mm256_max_pd(
             core_dist_i_vec, _mm256_max_pd(core_dist_j_vec, dist_between_vec));
