@@ -2,6 +2,20 @@
 
 ![main algo](doc/main-algo.png "Main algo outline")
 
+### Meeting 28.05.20
+### Questions
+
+- Check with supervisor if current plots / comparisons are reasonable?
+- Should we also directly compare different compilers / compiler-flags (of the current best versions)?
+- Is it already known when the presentations are scheduled?
+
+### TODO until presentation:
+
+- Test performance for different datasets (not only blobs?)
+- Roofline plot
+- Compare evolution of performance for different 'd' (number of features)
+- Comprare performance to a reference implementation of the algorithm (see chapter References)
+
 ## TODOs until next meeting:
 
 ### Tobia
