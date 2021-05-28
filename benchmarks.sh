@@ -199,7 +199,7 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
                 basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
         --save-path plots/cycles_basic.png \
-        --metric=cycles
+        --metric=cycles \
         --x-scale=linear
 fi
 
@@ -233,7 +233,7 @@ if [ $2 = "all" ]; then
                 advprim.csv \
                 advprim_distvec_quickvec.csv  \
         --save-path plots/cycles_basic_vs_advanced.png \
-        --metric=cycles
+        --metric=cycles \
         --x-scale=linear
 fi
 
