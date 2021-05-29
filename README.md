@@ -2,36 +2,33 @@
 
 ![main algo](doc/main-algo.png "Main algo outline")
 
-### Meeting 28.05.20
-### Questions
+### Meeting debrief 28.05.20
+#### What has to be analyzed
 
-- Check with supervisor if current plots / comparisons are reasonable?
-- Should we also directly compare different compilers / compiler-flags (of the current best versions)?
-- Is it already known when the presentations are scheduled?
+* Reason why were able to get much better speedup for the basic variant
+* Compare Perf. and Cycles plots next to each other (taking into account). Reason about common features
+* Some comments about our findings explaining the discrepancy of using different bit shifting / extraction intrinsics on AMD vs. Intel
+* State assumptions on why with large 'd' performance increases significantly (memory bottlenecks?)
 
-### TODO until presentation:
 
-- Test performance for different datasets (not only blobs?)
-- Roofline plot
-- Compare evolution of performance for different 'd' (number of features)
-- Comprare performance to a reference implementation of the algorithm (see chapter References)
+
+#### What not to forget to mention in the report
+
+* How the data was generated (not on-the-fly during the benchmark but beforehand)
+* Specifications of AMD and Intel processor used as well as mentioning the different clock-rates they have
+* Comment on that data variance is to be expected (due to data and quickselect)
+* State all assumptions we made over the course of the project
 
 ## TODOs until next meeting:
 
-### Tobia
-Optimize Prim with vector intrinsics. \
-Small fixes in Python / shell scripts.
-
-### Martin
-Create table of optimizations implemented so far, including their approximate resulting speedup. \
-Find cause of inconsistencies when using perf and Hotspot.
-
-### Alex
-Memory optimization in distance matrix computation (only compute upper diagonal).
-
-### Tom
-Take care of memory alignment (32 bytes) when reading in dataset. \
-Fix small bug in cluster extraction.
+* Roofline plot of containing the OI's of all possible optimizations considered
+* Explore impact of altering structure of the datasets on performance measurements
+* Prepare reference implementation and compute performance thereof
+* Setting up preliminary structure of presentation slides
+* Do cache miss-rate analysis of the optimizations (using cachegrind). LL cache might not be enough to reason about the miss-rate. Check out lower level caches as well. Check out how fast each processor can load / store into each cache (what might be the bottleneck)
+* Change plot title for cycles plots
+* Make plots more readable (e.g. put legend outside of plot might be a good idea)
+* Create one plot of the best approaches comparing GNU gcc and clang
 
 ## Setting this up
 
