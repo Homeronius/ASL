@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+AMD = r" $\bf{AMD\ Ryzen\ 7\ 4800H\ (Zen\ 2),\ 2.9GHz}$"
+INTEL = r" $\bf{Intel\ i5-7300U\ (Kaby\ Lake),\ 2.6GHz}$"
 
 def read_dataset(path, system="intel"):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
@@ -23,8 +25,11 @@ def main(args):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
+    system_name = INTEL if args.system == "intel" else AMD
+    title = r"$\bf{Performance\ on}$" if args.metric == "fp/c" \
+        else r"$\bf{Runtime\ on}$"
 
-    title = r"$\bf{Preliminary\ performance\ plot}$"
+    title += system_name
     if args.metric == "fp/c":
         title += "\n [flops/cycle]"
     elif args.metric == "time":
