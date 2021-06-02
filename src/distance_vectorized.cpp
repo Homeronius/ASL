@@ -547,6 +547,33 @@ void manhattan_distance_4(double *pa1, double *pa2, double *pb1, double *pb2,
   _mm256_storeu_pd(res, add3);
 }
 
+double get_kth_neighbor(double *input, int n, int k) {
+  if (k <= 0) {
+    return 0;
+  }
+  double knn_vals[k]; // Sorted nearest distances found so far
+  for (int i = 0; i < k; i++) {
+    knn_vals[i] = __DBL_MAX__;
+  }
+  for (int j = 0; j < n; j++) {
+    double val = input[j];
+    int neighborIndex = k;
+    // Check at which position in the nearest distances the current distance
+    // would fit:
+    while (neighborIndex >= 1 && val < knn_vals[neighborIndex - 1]) {
+      neighborIndex--;
+    }
+    // Shift elements in the array to make room for the current distance:
+    if (neighborIndex < k) {
+      for (int shiftIndex = k - 1; shiftIndex > neighborIndex; shiftIndex--) {
+        knn_vals[shiftIndex] = knn_vals[shiftIndex - 1];
+      }
+      knn_vals[neighborIndex] = val;
+    }
+  }
+  return knn_vals[k - 1];
+}
+
 void compute_core_distances(double *input, double *core_dist, int mpts, int n,
                             int d) {
   double distances[n];
@@ -570,8 +597,13 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
     for (; i < n; i++) {
       distances[i] = euclidean_distance(input + i * d, input + k * d, d);
     }
-
-    core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
+    // this is a hardcoded case distinction,
+    // which nicely improved performance based on some testing
+    if (mpts < 70) {
+      core_dist[k] = get_kth_neighbor(distances, n, mpts);
+    } else {
+      core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
+    }
   }
 }
 
@@ -602,7 +634,13 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[i * n + k] = tmp[k];
     }
-    core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+    // this is a hardcoded case distinction,
+    // which nicely improved performance based on some testing
+    if (mpts < 70) {
+      core_dist[i] = get_kth_neighbor(tmp, n, mpts);
+    } else {
+      core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+    }
   }
 
   for (int i = 0; i < n; i++) {
