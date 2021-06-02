@@ -1,22 +1,24 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
     exit 1
 fi
 
 # extend here with different test names
-if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && [ $2 != "all" ]; then
+if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
+   [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
+   [ $2 != "reference" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
     exit 1
 fi
 
@@ -105,13 +107,29 @@ mkdir -p build
 N=12
 
 # Basic everything
-if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 = "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "all" ]; then
     python helper_scripts/generate_clusters.py data 6 20
+fi
+
+##########################################################
+######## Reference    ##########
+##########################################################
+if [ $2 = "reference" ] || [ $2 = "all" ]; then
+    cd references/hdbscan-cpp && make clean
+    if [ $1 = "amd" ]; then
+        make CXX=clang++-11 CPPFLAGS=-DBENCHMARK_AMD
+    else
+        make CXX=clang++-11
+    fi
+    cd ../..
+    # a bit hacky, but our script assumes binary is in build
+    ./run_perf_measurements.sh reference_hdbscan ../../references/hdbscan-cpp/main perf_data_d20 ${N} ${TIME}
 fi
 
 ##########################################################
 ######## Baseline    ##########
 ##########################################################
+
 cd build && cmake -G Ninja .. \
     -DCMAKE_C_COMPILER=clang-11 \
     -DCMAKE_CXX_COMPILER=clang++-11 \
@@ -237,7 +255,7 @@ if [ $2 = "all" ]; then
         --x-scale=linear
 fi
 
-if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 = "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "reference" ] || [ $2 = "all" ]; then
     # Clean up datasets used for this part
     rm ./data/perf_data_d20_*
 fi
