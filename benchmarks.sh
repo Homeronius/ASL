@@ -117,9 +117,9 @@ fi
 if [ $2 = "reference" ] || [ $2 = "all" ]; then
     cd references/hdbscan-cpp && make clean
     if [ $1 = "amd" ]; then
-        make CXX=clang++-11 CPPFLAGS=-DBENCHMARK_AMD
+        make CXX=clang++-11 CPPFLAGS="-DBENCHMARK_AMD -march=native"
     else
-        make CXX=clang++-11
+        make CXX=clang++-11 CPPFLAGS="march=native"
     fi
     cd ../..
     # a bit hacky, but our script assumes binary is in build
