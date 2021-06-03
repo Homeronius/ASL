@@ -63,7 +63,7 @@ def main(args):
 
     ax.set_xlabel("n")
     # ax.set_ylabel('flops/cycle')
-    ax.legend(bbox_to_anchor=(1.05,1))
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
     if args.save_path is None:
         plt.show()
