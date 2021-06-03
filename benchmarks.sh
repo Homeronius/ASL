@@ -1,24 +1,24 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
     exit 1
 fi
 
 # extend here with different test names
 if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
    [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
-   [ $2 != "reference" ] && [ $2 != "all" ]; then
+   [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
     exit 1
 fi
 
@@ -341,3 +341,61 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     # Remove data used for this experiment
     rm -f ./data/perf_data_d20_*
 fi
+
+########################################################################
+######## Comparison of gcc vs. clang on most optimized versions ########
+########################################################################
+
+if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
+    N=12
+    D=4
+    # Generate data
+    python helper_scripts/generate_clusters.py data 6 ${D}
+
+    # clang-11
+
+    ./run_perf_measurements.sh clang_basic_best hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d4 ${N} ${TIME}
+    ./run_perf_measurements.sh clang_advprim_best hdbscan_benchmark_distvec_quickvec perf_data_d4 ${N} ${TIME}
+
+
+    # gcc
+    # Needed, otherwise problems with compiling with new compiler
+    rm -rf build
+    mkdir -p build
+
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=cc \
+        -DCMAKE_CXX_COMPILER=c++ \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        ninja build_bench_vec &&
+        cd ..
+
+    ./run_perf_measurements.sh gcc_basic_best hdbscan_basic_benchmark_distvec_quickvec_primvec  perf_data_d4 ${N} ${TIME}
+    ./run_perf_measurements.sh gcc_advprim_best hdbscan_benchmark_distvec_quickvec  perf_data_d4 ${N} ${TIME}
+
+    # Plotting
+    python helper_scripts/plot_performance_alt.py --system $1  \
+        --data-path data/timings/${TIME} \
+        --files gcc_basic_best.csv \
+                gcc_advprim_best.csv \
+                clang_basic_best.csv \
+                clang_advprim_best.csv  \
+        --save-path plots/${TIME}/gcc_v_clang.png
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
