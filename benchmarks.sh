@@ -332,7 +332,7 @@ N=12
 
 if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     printf "Running blocked-v-triangular benchmarks. Creating data...\n"
-    python helper_scripts/generate_clusters.py data 6 128
+    python helper_scripts/generate_clusters.py data 6 20
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
@@ -340,45 +340,50 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
+        -DHDBSCAN_VERBOSE=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
 
     printf "Running blocked-v-triangular benchmarks. Run benchmark basic version...\n"
     # Basic
-    ./run_perf_measurements.sh distance_matrix_basic hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+    ./run_perf_measurements.sh distance_matrix_basic hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
 
-    python helper_scripts/generate_clusters.py data 6 128
-    cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-        -DPACKLEFT_WLOOKUP=0 \
-        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=1 \
-        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
-        -DBENCHMARK_AMD=${AMD} &&
-        ninja build_bench &&
-        cd ..
+    ./run_perf_measurements.sh distance_matrix_triangular hdbscan_basic_benchmark_triang perf_data_d20 ${N} ${TIME}
 
-    printf "Running blocked-v-triangular benchmarks. Run benchmark triangular matrix version...\n"
-    # Triangular
-    ./run_perf_measurements.sh distance_matrix_triangular hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+    ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark_blocked perf_data_d20 ${N} ${TIME}
+
+    # python helper_scripts/generate_clusters.py data 6 20
+    # cd build && cmake -G Ninja .. \
+    #     -DCMAKE_C_COMPILER=clang-11 \
+    #     -DCMAKE_CXX_COMPILER=clang++-11 \
+    #     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+    #     -DPACKLEFT_WLOOKUP=0 \
+    #     -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=1 \
+    #     -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
+    #     -DBENCHMARK_AMD=${AMD} &&
+    #     ninja build_bench &&
+    #     cd ..
+
+    # printf "Running blocked-v-triangular benchmarks. Run benchmark triangular matrix version...\n"
+    # # Triangular
+    # ./run_perf_measurements.sh distance_matrix_triangular hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
     
-    python helper_scripts/generate_clusters.py data 6 128
-    cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-        -DPACKLEFT_WLOOKUP=0 \
-        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
-        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=1 \
-        -DBENCHMARK_AMD=${AMD} &&
-        ninja build_bench &&
-        cd ..
+    # python helper_scripts/generate_clusters.py data 6 20
+    # cd build && cmake -G Ninja .. \
+    #     -DCMAKE_C_COMPILER=clang-11 \
+    #     -DCMAKE_CXX_COMPILER=clang++-11 \
+    #     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+    #     -DPACKLEFT_WLOOKUP=0 \
+    #     -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
+    #     -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=1 \
+    #     -DBENCHMARK_AMD=${AMD} &&
+    #     ninja build_bench &&
+    #     cd ..
 
-    printf "Running blocked-v-triangular benchmarks. Run benchmark blocked matrix version...\n"
-    # Triangular
-    ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark perf_data_d128 ${N} ${TIME}
+    # printf "Running blocked-v-triangular benchmarks. Run benchmark blocked matrix version...\n"
+    # # Triangular
+    # ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
 
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
@@ -390,5 +395,5 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         --x-scale=linear
 
     # Remove data used for this experiment
-    rm ./data/perf_data_d128_*
+    rm -f ./data/perf_data_d20_*
 fi

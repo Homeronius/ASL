@@ -55,6 +55,10 @@ IF(HDBSCAN_PRECOMPUTE_DIST_TRIANG MATCHES "1")
   ADD_DEFINITIONS(-D HDBSCAN_PRECOMPUTE_DIST_TRIANG)
 ENDIF()
 
+IF(HDBSCAN_PRECOMPUTE_DIST_BLOCKED MATCHES "1")
+  ADD_DEFINITIONS(-D HDBSCAN_PRECOMPUTE_DIST_BLOCKED)
+ENDIF()
+
 IF(PACKLEFT_WLOOKUP MATCHES "1")
   ADD_DEFINITIONS(-D PACKLEFT_WLOOKUP)
 ENDIF()
@@ -68,6 +72,8 @@ add_custom_target(build_bench
     hdbscan_benchmark
     hdbscan_basic_benchmark_lib
     hdbscan_basic_benchmark
+    hdbscan_basic_benchmark_triang
+    hdbscan_basic_benchmark_blocked
 )
 add_custom_target(build_bench_vec
   DEPENDS

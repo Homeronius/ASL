@@ -149,6 +149,57 @@ target_link_libraries(hdbscan_basic_benchmark PRIVATE
   hdbscan_basic_benchmark_lib
 )
 
+####################################
+#### TRIANGULAR DISTANCE MATRIX ####
+####################################
+
+add_library(hdbscan_basic_lib_triang
+  distance.cpp
+  union_find.cpp
+  clustering.cpp
+  utils.cpp
+  prim.cpp
+  hdbscan_basic_triangular.cpp
+  quickselect.cpp
+)
+
+target_include_directories(hdbscan_basic_lib_triang PUBLIC ${HDBSCAN_INCLUDE_DIR})
+set_target_properties(hdbscan_basic_lib_triang PROPERTIES COMPILE_FLAGS "-save-temps")
+add_executable(hdbscan_basic_benchmark_triang EXCLUDE_FROM_ALL
+  benchmark_main.cpp
+)
+target_link_libraries(hdbscan_basic_benchmark_triang PRIVATE
+  hdbscan_basic_lib_triang
+  hdbscan_basic_benchmark_lib
+)
+add_executable(hdbscan_basic_triang main.cpp)
+target_link_libraries(hdbscan_basic_triang PRIVATE hdbscan_basic_lib_triang)
+
+#################################
+#### BLOCKED DISTANCE MATRIX ####
+#################################
+
+add_library(hdbscan_basic_lib_blocked
+  distance.cpp
+  union_find.cpp
+  clustering.cpp
+  utils.cpp
+  prim.cpp
+  hdbscan_basic_blocked.cpp
+  quickselect.cpp
+)
+
+target_include_directories(hdbscan_basic_lib_blocked PUBLIC ${HDBSCAN_INCLUDE_DIR})
+set_target_properties(hdbscan_basic_lib_blocked PROPERTIES COMPILE_FLAGS "-save-temps")
+add_executable(hdbscan_basic_benchmark_blocked EXCLUDE_FROM_ALL
+  benchmark_main.cpp
+)
+target_link_libraries(hdbscan_basic_benchmark_blocked PRIVATE
+  hdbscan_basic_lib_blocked
+  hdbscan_basic_benchmark_lib
+)
+add_executable(hdbscan_basic_blocked main.cpp)
+target_link_libraries(hdbscan_basic_blocked PRIVATE hdbscan_basic_lib_blocked)
 
 #############################
 #### VECTORIZED DISTANCE ####

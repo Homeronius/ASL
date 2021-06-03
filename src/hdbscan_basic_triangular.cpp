@@ -67,30 +67,14 @@ void HDBSCAN::build_mst() {
 #endif
 
   
-#ifndef HDBSCAN_PRECOMPUTE_DIST_TRIANG
-  dist = static_cast<float_t *>(malloc(n * n * sizeof(float_t)));
-#ifndef HDBSCAN_PRECOMPUTE_DIST_BLOCKED
-  compute_distance_matrix(dataset, core_dist, dist, mpts, n, d);
-#else
-  compute_distance_matrix_blocked(dataset, core_dist, dist, mpts, n, d);
-#endif
-#ifdef HDBSCAN_VERBOSE
-  printf("Full distance and core matrix computed.\n");
-#endif
-  // 2. Compute the MST -> mutual reachability graph
-  mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
-  prim(dist, mst, n);
-#else
   dist = static_cast<float_t *>(malloc(n * (n + 1) / 2 * sizeof(float_t)));
   compute_distance_matrix_triang(dataset, core_dist, dist, mpts, n, d);
-  // compute_distance_matrix_blocked(dataset, core_dist, dist, mpts, n, d);
 #ifdef HDBSCAN_VERBOSE
   printf("Triangular distance and core matrix computed.\n");
 #endif
   // 2. Compute the MST -> mutual reachability graph
   mst = static_cast<edge *>(malloc(n_ext * sizeof(edge)));
   prim_diag(dist, mst, n);
-#endif
 
 #ifdef HDBSCAN_VERBOSE
   printf("Minimum-Spanning-Tree constructed.\n");

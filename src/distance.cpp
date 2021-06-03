@@ -114,12 +114,12 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
 void compute_distance_matrix_blocked(double *input, double *core_dist,
                                      double *dist, int mpts, int n, int d) {
   int CACHE_SIZE = 4096; // size in double. assume cache size 32KiB
-  int block_size = floor(sqrt(4 * d * d - 4 * CACHE_SIZE) / 2 -
-                         d); // blcok*2 + 2*d*block - Cache = 0
 
+  int block_size = (int)(sqrt( d * d + CACHE_SIZE) - d); // blcok*2 + 2*d*block - Cache = 0
+
+  // printf("Running Blocked Computation: Cache = %d, dim = %d, Blocksize = %d, n=%d\n", CACHE_SIZE, d, block_size, n);
   int i_block = 0;
   int k_block = 0;
-
   for (; i_block < n - block_size; i_block += block_size) {
     for (k_block = 0; k_block < n - block_size; k_block += block_size) {
       for (int i = i_block; i < i_block + block_size; i++) {
@@ -149,8 +149,7 @@ void compute_distance_matrix_blocked(double *input, double *core_dist,
       dist[i * n + k] += euclidean_distance_squared(input + i * d, input + k * d, d);
     }
   }
-
-  double tmp[n];
+  double* tmp = static_cast<double *>(malloc(n * n * sizeof(double)));;
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {
       dist[i * n + k] = sqrt(dist[i * n + k]);
