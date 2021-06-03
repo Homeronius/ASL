@@ -8,6 +8,7 @@ import seaborn as sns
 AMD = r" $\bf{AMD\ Ryzen\ 7\ 4800H\ (Zen\ 2),\ 2.9GHz}$"
 INTEL = r" $\bf{Intel\ i5-7300U\ (Kaby\ Lake),\ 2.6GHz}$"
 
+
 def read_dataset(path, system="intel"):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
     if system == "intel":
@@ -26,8 +27,9 @@ def main(args):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     system_name = INTEL if args.system == "intel" else AMD
-    title = r"$\bf{Performance\ on}$" if args.metric == "fp/c" \
-        else r"$\bf{Runtime\ on}$"
+    title = (
+        r"$\bf{Performance\ on}$" if args.metric == "fp/c" else r"$\bf{Runtime\ on}$"
+    )
 
     title += system_name
     if args.metric == "fp/c":
@@ -54,6 +56,7 @@ def main(args):
 
         if args.x_scale == "linear":
             (line,) = ax.plot(N, y, linestyle="-", marker="o")
+            ax.xaxis.set_major_locator(plt.MultipleLocator(2048))
         elif args.x_scale == "log":
             (line,) = ax.semilogx(N, y, linestyle="-", marker="o", base=2)
         else:
@@ -63,12 +66,12 @@ def main(args):
 
     ax.set_xlabel("n")
     # ax.set_ylabel('flops/cycle')
-    ax.legend(bbox_to_anchor=(1.05,1))
+    ax.legend(bbox_to_anchor=(1.05, 1))
 
     if args.save_path is None:
         plt.show()
     else:
-        fig.savefig(args.save_path, bbox_inches='tight')
+        fig.savefig(args.save_path, bbox_inches="tight")
 
 
 if __name__ == "__main__":
