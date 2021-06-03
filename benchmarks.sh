@@ -15,7 +15,8 @@ fi
 # extend here with different test names
 if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
    [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
-   [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "mpts" ] && [ $2 != "all" ]; then
+   [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "mpts" ] && \
+   [ $2 != "dimensions" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
     echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
@@ -443,16 +444,52 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
         --save-path plots/${TIME}/gcc_v_clang.png
 fi
 
+#####################################################
+######## Comparison for different dimensions ########
+#####################################################
 
+if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
+    N=12
+    D=7
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DBENCHMARK_AMD=${AMD} &&
+    ninja build_bench_vec &&
+    cd ..
+    for i in $(seq 1 ${D}); do
+        d=$((2 ** ${i}))
+        python helper_scripts/generate_clusters.py data 6 ${d}
+        printf "running for d = ${d}...\n"
+        ./run_perf_measurements.sh advprim_distvec_quickvec_dims${d} hdbscan_benchmark_distvec_quickvec perf_data_d${d} ${N} ${TIME}
+        rm ./data/perf_data_d${d}*
+    done
+    
+    python helper_scripts/plot_performance_alt.py --system $1  \
+        --data-path data/timings/${TIME} \
+        --files advprim_distvec_quickvec_dims2.csv \
+                advprim_distvec_quickvec_dims4.csv \
+                advprim_distvec_quickvec_dims8.csv \
+                advprim_distvec_quickvec_dims16.csv \
+                advprim_distvec_quickvec_dims32.csv \
+                advprim_distvec_quickvec_dims64.csv \
+                advprim_distvec_quickvec_dims128.csv \
+        --save-path cycles_dims.png \
+        --metric=cycles \
+        --x-scale=linear
+    
+    python helper_scripts/plot_performance_alt.py --system $1  \
+        --data-path data/timings/${TIME} \
+        --files advprim_distvec_quickvec_dims2.csv \
+                advprim_distvec_quickvec_dims4.csv \
+                advprim_distvec_quickvec_dims8.csv \
+                advprim_distvec_quickvec_dims16.csv \
+                advprim_distvec_quickvec_dims32.csv \
+                advprim_distvec_quickvec_dims64.csv \
+                advprim_distvec_quickvec_dims128.csv \
+        --save-path perf_dims.png \
+        --x-scale=linear
 
-
-
-
-
-
-
-
-
-
-
-
+fi
