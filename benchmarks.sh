@@ -66,17 +66,15 @@ fi
 ######## Baseline    ##########
 ##########################################################
 
-cd build && cmake -G Ninja .. \
-    -DCMAKE_C_COMPILER=clang-11 \
-    -DCMAKE_CXX_COMPILER=clang++-11 \
-    -DCMAKE_CXX_FLAGS="-O3" \
-    -DPACKLEFT_WLOOKUP=1 \
-    -DBENCHMARK_AMD=${AMD} &&
-    ninja build_bench &&
-    cd ..
-
-
 if [ $2 = "basic" ] || [ $2 = "all" ]; then
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang-11 \
+        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_CXX_FLAGS="-O3" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        cd ..
     # No optimizations
     ./run_perf_measurements.sh basic_O3 hdbscan_basic_benchmark perf_data_d${D} ${N} ${TIME}
 
@@ -306,7 +304,7 @@ fi
 #######################################################################################
 # Total Comparison flops/cycles d=128
 N=12
-exit 1
+
 if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     printf "Running blocked-v-triangular benchmarks. Creating data...\n"
     python helper_scripts/generate_clusters.py data 6 128
