@@ -452,13 +452,13 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
     N=12
     D=7
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
-    ninja build_bench_vec &&
-    cd ..
+        ninja build_bench_vec &&
+        cd ..
     for i in $(seq 1 ${D}); do
         d=$((2 ** ${i}))
         python helper_scripts/generate_clusters.py data 6 ${d}

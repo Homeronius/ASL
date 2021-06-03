@@ -53,7 +53,7 @@ else
       printf "======================\
               \nMeasurement for ${FILEBASE}_${i}.csv\
               \n======================\n" >>${OUTPUT_LOG}
-      ${BINARY} "-i ${FILEBASE}_${i}.csv" "-o ${OUTPUT_CSV}" "-k ${MPTS}" >>${OUTPUT_LOG}
+      ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >>${OUTPUT_LOG}
       printf "\n" >>${OUTPUT_LOG}
   done
 fi
