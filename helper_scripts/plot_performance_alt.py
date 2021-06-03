@@ -12,9 +12,9 @@ INTEL = r" $\bf{Intel\ i5-7300U\ (Kaby\ Lake),\ 2.6GHz}$"
 def read_dataset(path, system="intel"):
     data = np.loadtxt(open(path, "rb"), delimiter=",", skiprows=1)
     if system == "intel":
-        return data[:, 0], data[:, 6], data[:, 2], data[:, 3]
+        return data[:, 0], data[:, 6], data[:, 2], data[:, 3],data[:,10]
     else:
-        return data[:, 0], data[:, 6], data[:, 2], data[:, 3]
+        return data[:, 0], data[:, 6], data[:, 2], data[:, 3],data[:,11]
 
 
 def main(args):
@@ -40,10 +40,15 @@ def main(args):
         title += "\n [" + r"$\times 10^9$" + " cycles]"
     ax.set_title(title, loc="left")
 
+    mpts_mode = False
+
     freq = 2.6e9 if args.system == "intel" else 2.9e9
     for file in args.files[0]:
         fpath = path.join(datadir, file)
-        N, flops, cycles, time = read_dataset(fpath, args.system)
+        N, flops, cycles, time, mpts = read_dataset(fpath, args.system)
+
+        # hack hack hack
+        mpts_mode = all(elem == N[0] for elem in N)
         # flops *= 1e-9
         if args.metric == "fp/c":
             y = np.divide(flops, cycles)
@@ -55,16 +60,16 @@ def main(args):
             raise TypeError("unsupported metric to plot")
 
         if args.x_scale == "linear":
-            (line,) = ax.plot(N, y, linestyle="-", marker="o")
+            (line,) = ax.plot(mpts if mpts_mode else N, y, linestyle="-", marker="o")
             ax.xaxis.set_major_locator(plt.MultipleLocator(2048))
         elif args.x_scale == "log":
-            (line,) = ax.semilogx(N, y, linestyle="-", marker="o", base=2)
+            (line,) = ax.semilogx(mpts if mpts_mode else N, y, linestyle="-", marker="o", base=2)
         else:
             raise TypeError("unsupported scale for x-axis")
 
         line.set_label(path.splitext(file)[0])
 
-    ax.set_xlabel("n")
+    ax.set_xlabel("k" if mpts_mode else "n")
     # ax.set_ylabel('flops/cycle')
     ax.legend(bbox_to_anchor=(1.05, 1))
 

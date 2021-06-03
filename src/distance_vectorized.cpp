@@ -599,11 +599,11 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
     }
     // this is a hardcoded case distinction,
     // which nicely improved performance based on some testing
-    if (mpts < 70) {
-      core_dist[k] = get_kth_neighbor(distances, n, mpts);
-    } else {
+#ifdef HDBSCAN_QUICKSELECT
       core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
-    }
+#else
+      core_dist[k] = get_kth_neighbor(distances, n, mpts);
+#endif
   }
 }
 
@@ -636,11 +636,11 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
     }
     // this is a hardcoded case distinction,
     // which nicely improved performance based on some testing
-    if (mpts < 70) {
-      core_dist[i] = get_kth_neighbor(tmp, n, mpts);
-    } else {
+#ifdef HDBSCAN_QUICKSELECT
       core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
-    }
+#else
+      core_dist[i] = get_kth_neighbor(tmp, n, mpts);
+#endif
   }
 
   for (int i = 0; i < n; i++) {

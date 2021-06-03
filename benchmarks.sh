@@ -1,24 +1,24 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
     exit 1
 fi
 
 # extend here with different test names
 if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
    [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
-   [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "all" ]; then
+   [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "mpts" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
     exit 1
 fi
 
@@ -28,6 +28,10 @@ if [ $1 = "amd" ]; then
 fi
 
 TIME=$(date +%Y%m%d_%H%M%S)
+# C_COMPILER=/usr/bin/clang
+# CXX_COMPILER=/usr/bin/clang++
+C_COMPILER=clang-11
+CXX_COMPILER=clang++-11
 # data creation here first
 
 # create build dir
@@ -43,7 +47,7 @@ N=12
 D=4
 
 # Basic everything
-if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "mpts" ] || [ $2 = "all" ]; then
     python helper_scripts/generate_clusters.py data 6 ${D}
 fi
 
@@ -53,9 +57,9 @@ fi
 if [ $2 = "reference" ] || [ $2 = "all" ]; then
     cd references/hdbscan-cpp && make clean
     if [ $1 = "amd" ]; then
-        make CXX=clang++-11 CPPFLAGS="-DBENCHMARK_AMD -march=native"
+        make CXX=${CXX_COMPILER} CPPFLAGS="-DBENCHMARK_AMD -march=native"
     else
-        make CXX=clang++-11 CPPFLAGS="march=native"
+        make CXX=${CXX_COMPILER} CPPFLAGS="march=native"
     fi
     cd ../..
     # a bit hacky, but our script assumes binary is in build
@@ -68,8 +72,8 @@ fi
 
 if [ $2 = "basic" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
@@ -80,15 +84,68 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
 
 fi
 
+
+################################################################################
+### Plot with mpts on the x axis
+################################################################################
+
+if [ $2 = "mpts" ] || [ $2 = "all" ]; then
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DBENCHMARK_AMD=${AMD} \
+        -DHDBSCAN_QUICKSELECT=0 &&
+        ninja build_bench &&
+        ninja build_bench_vec &&
+        cd ..
+
+  ./run_perf_measurements.sh quickselect_baseline hdbscan_benchmark perf_data_d${D} 7 ${TIME} 4
+  ./run_perf_measurements.sh bubbleselect hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 4
+  for i in $(seq 20 40 80); do
+    ./run_perf_measurements.sh quickselect_baseline hdbscan_benchmark perf_data_d${D} 7 ${TIME} ${i}
+    ./run_perf_measurements.sh bubbleselect hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} ${i}
+  done
+
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DBENCHMARK_AMD=${AMD} \
+        -DHDBSCAN_QUICKSELECT=1 &&
+        ninja build_bench_vec &&
+        cd ..
+
+  ./run_perf_measurements.sh quickselect_vectorized hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 4
+  for i in $(seq 20 40 80); do
+    ./run_perf_measurements.sh quickselect_vectorized hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} ${i}
+  done
+
+  python helper_scripts/plot_performance_alt.py --system $1  \
+      --data-path data/timings/${TIME} \
+      --files quickselect_baseline.csv \
+              bubbleselect.csv \
+              quickselect_vectorized.csv \
+      --save-path plots/${TIME}/cycles_mpts.png \
+      --metric=cycles \
+      --x-scale=linear
+fi
+
+if [ $2 != "mpts" ]; then
+
 cd build && cmake -G Ninja .. \
-    -DCMAKE_C_COMPILER=clang-11 \
-    -DCMAKE_CXX_COMPILER=clang++-11 \
+    -DCMAKE_C_COMPILER=${C_COMPILER} \
+    -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
     -DPACKLEFT_WLOOKUP=1 \
     -DBENCHMARK_AMD=${AMD} &&
     ninja build_bench &&
     ninja build_bench_vec &&
     cd ..
+
+fi
 
 
 ##########################################################
@@ -230,7 +287,7 @@ if [ $2 = "all" ]; then
         --save-path plots/${TIME}/performance_ref_vs_ours.png --x-scale=linear
 fi
 
-if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 != "reference" ] || [ $2 = "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 == "reference" ] || [ $2 = "mpts" ] || [ $2 = "all" ]; then
     # Clean up datasets used for this part
     rm ./data/perf_data_d${D}_*
 fi
@@ -251,8 +308,8 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     # First with the version where `pext` and `pdep` are used
     python helper_scripts/generate_clusters.py data 6 ${D}
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=0 \
         -DBENCHMARK_AMD=${AMD} &&
@@ -266,8 +323,8 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
 
     # Then the optimized version for AMD, using a lookup table
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} &&
@@ -309,8 +366,8 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     printf "Running blocked-v-triangular benchmarks. Creating data...\n"
     python helper_scripts/generate_clusters.py data 6 20
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang-11 \
-        -DCMAKE_CXX_COMPILER=clang++-11 \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native -DHDBSCAN_BLOCK_SIZE=80" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
