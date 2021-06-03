@@ -311,7 +311,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=clang-11 \
         -DCMAKE_CXX_COMPILER=clang++-11 \
-        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native -DHDBSCAN_BLOCK_SIZE=80" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
@@ -328,43 +328,12 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
 
     ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark_blocked perf_data_d20 ${N} ${TIME}
 
-    # python helper_scripts/generate_clusters.py data 6 20
-    # cd build && cmake -G Ninja .. \
-    #     -DCMAKE_C_COMPILER=clang-11 \
-    #     -DCMAKE_CXX_COMPILER=clang++-11 \
-    #     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-    #     -DPACKLEFT_WLOOKUP=0 \
-    #     -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=1 \
-    #     -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
-    #     -DBENCHMARK_AMD=${AMD} &&
-    #     ninja build_bench &&
-    #     cd ..
-
-    # printf "Running blocked-v-triangular benchmarks. Run benchmark triangular matrix version...\n"
-    # # Triangular
-    # ./run_perf_measurements.sh distance_matrix_triangular hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
-    
-    # python helper_scripts/generate_clusters.py data 6 20
-    # cd build && cmake -G Ninja .. \
-    #     -DCMAKE_C_COMPILER=clang-11 \
-    #     -DCMAKE_CXX_COMPILER=clang++-11 \
-    #     -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-    #     -DPACKLEFT_WLOOKUP=0 \
-    #     -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
-    #     -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=1 \
-    #     -DBENCHMARK_AMD=${AMD} &&
-    #     ninja build_bench &&
-    #     cd ..
-
-    # printf "Running blocked-v-triangular benchmarks. Run benchmark blocked matrix version...\n"
-    # # Triangular
-    # ./run_perf_measurements.sh distance_matrix_blocked hdbscan_basic_benchmark perf_data_d20 ${N} ${TIME}
-
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files distance_matrix_basic.csv \
                 distance_matrix_triangular.csv \
                 distance_matrix_blocked.csv \
+
         --save-path plots/triangular_v_blocked.png \
         --metric=cycles \
         --x-scale=linear

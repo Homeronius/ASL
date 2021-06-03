@@ -113,9 +113,13 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
 
 void compute_distance_matrix_blocked(double *input, double *core_dist,
                                      double *dist, int mpts, int n, int d) {
-  int CACHE_SIZE = 4096; // size in double. assume cache size 32KiB
 
+  #ifndef HDBSCAN_BLOCK_SIZE
+  int CACHE_SIZE = 4096; // size in double. assume cache size 32KiB
   int block_size = (int)(sqrt( d * d + CACHE_SIZE) - d); // blcok*2 + 2*d*block - Cache = 0
+  #else
+  int block_size = HDBSCAN_BLOCK_SIZE;
+  #endif
 
   // printf("Running Blocked Computation: Cache = %d, dim = %d, Blocksize = %d, n=%d\n", CACHE_SIZE, d, block_size, n);
   int i_block = 0;
