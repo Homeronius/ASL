@@ -63,12 +63,12 @@ def main(args):
 
     ax.set_xlabel("n")
     # ax.set_ylabel('flops/cycle')
-    ax.legend()
+    ax.legend(bbox_to_anchor=(1.05,1))
 
     if args.save_path is None:
         plt.show()
     else:
-        fig.savefig(args.save_path)
+        fig.savefig(args.save_path, bbox_inches='tight')
 
 
 if __name__ == "__main__":

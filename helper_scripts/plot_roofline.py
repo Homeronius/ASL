@@ -102,7 +102,7 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
 
     # Save to file if requested
     if out_filename is not None:
-        out_filename += "_" + system + ".svg"
+        out_filename = "plots/roofline/" + out_filename + "_" + system + ".pdf"
         fig.savefig(out_filename)
 
 
@@ -125,7 +125,7 @@ def get_basic_data(system):
         "basic_distvec_quickvec",
         "basic_distvec_quickvec_primvec",
     ]
-    markers = ["s", "o", "v", "x"]
+    markers = ["x", "+", "1", "3"]
     return OI, P, labels, markers
 
 
@@ -152,7 +152,7 @@ def get_advprim_data(system):
         "advprim_distvec_quickvec",
         "advprim_distvec_quickvec_primvec",
     ]
-    markers = ["*", "+", "h", "p"]
+    markers = ["s", "o", "^", "v"]
     return OI, P, labels, markers
 
 
