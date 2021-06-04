@@ -67,24 +67,6 @@ if [ $2 = "reference" ] || [ $2 = "all" ]; then
     ./run_perf_measurements.sh reference_hdbscan ../../references/hdbscan-cpp/main perf_data_d${D} ${N} ${TIME}
 fi
 
-##########################################################
-######## Baseline    ##########
-##########################################################
-
-if [ $2 = "basic" ] || [ $2 = "all" ]; then
-    cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=${C_COMPILER} \
-        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
-        -DCMAKE_CXX_FLAGS="-O3" \
-        -DPACKLEFT_WLOOKUP=1 \
-        -DBENCHMARK_AMD=${AMD} &&
-        ninja build_bench &&
-        cd ..
-    # No optimizations
-    ./run_perf_measurements.sh basic_O3 hdbscan_basic_benchmark perf_data_d${D} ${N} ${TIME}
-
-fi
-
 
 ################################################################################
 ### Plot with mpts on the x axis
@@ -135,16 +117,16 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
 fi
 
 if [ $2 != "mpts" ]; then
-
-cd build && cmake -G Ninja .. \
-    -DCMAKE_C_COMPILER=${C_COMPILER} \
-    -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
-    -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-    -DPACKLEFT_WLOOKUP=1 \
-    -DBENCHMARK_AMD=${AMD} &&
-    ninja build_bench &&
-    ninja build_bench_vec &&
-    cd ..
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        ninja build_bench_vec &&
+        cd ..
 
 fi
 
