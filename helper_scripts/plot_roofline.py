@@ -95,18 +95,18 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
             P_restricted[i],
             label=labels_merged[i],
             marker=markers_merged[i],
-            s=90,
+            s=110,
         )
 
     ax.legend()
 
     # Save to file if requested
     if out_filename is not None:
-        out_filename = "plots/roofline/" + out_filename + "_" + system + ".pdf"
+        out_filename = "plots/roofline/" + out_filename + "_" + system + ".svg"
         fig.savefig(out_filename)
 
 
-def get_basic_data(system):
+def get_basic_data_full(system):
     if system == "Intel":
         OI = [
             0.184961962919771,
@@ -129,7 +129,26 @@ def get_basic_data(system):
     return OI, P, labels, markers
 
 
-def get_advprim_data(system):
+def get_basic_data_short(system):
+    if system == "Intel":
+        OI = [
+            0.184961962919771,
+            0.317883872804069,
+        ]
+        P = [0.556348234141028, 1.09540163823838]
+    else:
+        OI = [0.17909045424534, 0.308249510493958]
+        P = [0.635809892483325, 1.28755371235177]
+
+    labels = [
+        "basic",
+        "basic_distvec_quickvec_primvec",
+    ]
+    markers = ["x", "+"]
+    return OI, P, labels, markers
+
+
+def get_advprim_data_full(system):
     if system == "Intel":
         OI = [
             0.259328495378513,
@@ -153,6 +172,27 @@ def get_advprim_data(system):
         "advprim_distvec_quickvec_primvec",
     ]
     markers = ["s", "o", "^", "v"]
+    return OI, P, labels, markers
+
+
+def get_advprim_data_short(system):
+    if system == "Intel":
+        OI = [
+            0.259328495378513,
+            0.300761044847042,
+        ]
+        P = [0.671533159591363, 1.37466157995285]
+    else:
+        OI = [
+            0.256525267221385,
+            0.297660768031818,
+        ]
+        P = [0.87654620238442, 1.69627398352711]
+    labels = [
+        "advprim",
+        "advprim_distvec_quickvec",
+    ]
+    markers = ["s", "^"]
     return OI, P, labels, markers
 
 
@@ -202,14 +242,19 @@ def main():
 
     Roofline = namedtuple("Roofline", ["pi", "OI", "P", "labels", "markers"])
 
-    sequential = Roofline(pi, *get_basic_data(system))
-    vectorized = Roofline(pi_vec, *get_advprim_data(system))
+    # All optimizations
+    # sequential = Roofline(pi, *get_basic_data_full(system))
+    # vectorized = Roofline(pi_vec, *get_advprim_data_full(system))
+
+    # Only baseline and best
+    sequential = Roofline(pi, *get_basic_data_short(system))
+    vectorized = Roofline(pi_vec, *get_advprim_data_short(system))
 
     create_roofline(
         beta,
         roof_1=sequential,
         roof_2=vectorized,
-        out_filename="combined_roofline",
+        out_filename="selection_roofline",
         system=system,
     )
 
