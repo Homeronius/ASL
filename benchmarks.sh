@@ -450,7 +450,7 @@ fi
 
 if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
     N=12
-    D=7
+    D=8
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
@@ -480,7 +480,7 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
         --metric=cycles \
         --x-scale=linear
     
-    python helper_scripts/plot_performance_alt.py --system $1  \
+    python helper_scripts/plot_performance_dims.py --system $1  \
         --data-path data/timings/${TIME} \
         --files advprim_distvec_quickvec_dims2.csv \
                 advprim_distvec_quickvec_dims4.csv \
@@ -489,7 +489,6 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
                 advprim_distvec_quickvec_dims32.csv \
                 advprim_distvec_quickvec_dims64.csv \
                 advprim_distvec_quickvec_dims128.csv \
-        --save-path perf_dims.png \
-        --x-scale=linear
+        --save-path perf_dims_heatmap.png
 
 fi
