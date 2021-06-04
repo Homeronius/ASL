@@ -502,7 +502,7 @@ if [ $2 = "data_variance" ] || [ $2 = "all" ]; then
         ./run_perf_measurements.sh advprim_vec_blobs${i} hdbscan_benchmark_distvec_quickvec perf_data_d${D} ${N} ${TIME}
         ./run_perf_measurements.sh basic_best_blobs${i} hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d${D} ${N} ${TIME}
     done
-    rm ./data/perf_data_d${d}*
+    rm ./data/perf_data_d${D}*
     
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
