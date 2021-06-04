@@ -48,7 +48,7 @@ N=12
 D=4
 
 # Basic everything
-if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "mpts" ] || [ $2 = "all" ]; then
+if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "mpts" ] || [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     python helper_scripts/generate_clusters.py data 6 ${D}
 fi
 
@@ -271,32 +271,22 @@ if [ $2 = "all" ]; then
         --save-path plots/${TIME}/performance_ref_vs_ours.png --x-scale=linear
 fi
 
-if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 == "reference" ] || [ $2 = "mpts" ] || [ $2 = "all" ]; then
-    # Clean up datasets used for this part
-    rm ./data/perf_data_d${D}_*
-fi
-
-
-
 ##########################################################
 ######## Comparison between Intel and AMD         ########
 ######## with focus on the vectorization          ########
 ######## of the partition function                ########
 ##########################################################
 
-# Total Comparison flops/cycles d=128
 N=12
-D=8
 if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
     printf "Running amd-v-intel benchmarks. Creating data...\n"
     # First with the version where `pext` and `pdep` are used
-    python helper_scripts/generate_clusters.py data 6 ${D}
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=0 \
-        -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_QUICKSELECT=1 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -304,7 +294,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
 
     printf "Running amd-v-intel benchmarks. Run benchmark with pext/pdep partitioning...\n"
     # Best performing 
-    ./run_perf_measurements.sh $1_pext_partition hdbscan_benchmark_distvec_quickvec perf_data_d8 ${N} ${TIME}
+    ./run_perf_measurements.sh $1_pext_partition hdbscan_benchmark_distvec_quickvec perf_data_d4 ${N} ${TIME}
 
     # Then the optimized version for AMD, using a lookup table
     cd build && cmake -G Ninja .. \
@@ -312,6 +302,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=1 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -319,10 +310,10 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
 
     printf "Running amd-v-intel benchmarks. Run benchmark with LUT partitioning...\n"
     # Best performing 
-    ./run_perf_measurements.sh $1_lut_partition hdbscan_benchmark_distvec_quickvec perf_data_d8 ${N} ${TIME}
+    ./run_perf_measurements.sh $1_lut_partition hdbscan_benchmark_distvec_quickvec perf_data_d4 ${N} ${TIME}
 
     printf "Running amd-v-intel benchmarks. Run benchmark without vectorization...\n"
-    ./run_perf_measurements.sh $1_no_vec hdbscan_benchmark perf_data_d8 ${N} ${TIME}
+    ./run_perf_measurements.sh $1_no_vec hdbscan_benchmark perf_data_d4 ${N} ${TIME}
 
     # Plot like this here (should be done with second machine, i.e.
     # benchmarks have been copied) 
@@ -336,8 +327,11 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         --metric=cycles
         --x-scale=linear
     '
-    # Remove data used for this experiment
-    rm ./data/perf_data_d8_*
+fi
+
+if [ $2 = "basic" ] || [ $2 = "advanced" ] || [ $2 == "reference" ] || [ $2 = "mpts" ] || [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
+    # Clean up datasets used for this part
+    rm ./data/perf_data_d${D}_*
 fi
 
 
