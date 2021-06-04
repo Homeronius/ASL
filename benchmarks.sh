@@ -84,9 +84,9 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
         ninja build_bench_vec &&
         cd ..
 
-  ./run_perf_measurements.sh quickselect_baseline hdbscan_benchmark perf_data_d${D} 7 ${TIME} 4
-  ./run_perf_measurements.sh bubbleselect hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 4
-  for i in $(seq 20 40 80); do
+  ./run_perf_measurements.sh quickselect_baseline hdbscan_benchmark perf_data_d${D} 7 ${TIME} 5
+  ./run_perf_measurements.sh bubbleselect hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 5
+  for i in $(seq 10 10 100); do
     ./run_perf_measurements.sh quickselect_baseline hdbscan_benchmark perf_data_d${D} 7 ${TIME} ${i}
     ./run_perf_measurements.sh bubbleselect hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} ${i}
   done
@@ -101,8 +101,8 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
         ninja build_bench_vec &&
         cd ..
 
-  ./run_perf_measurements.sh quickselect_vectorized hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 4
-  for i in $(seq 20 40 80); do
+  ./run_perf_measurements.sh quickselect_vectorized hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} 5
+  for i in $(seq 10 10 100); do
     ./run_perf_measurements.sh quickselect_vectorized hdbscan_benchmark_distvec_quickvec perf_data_d${D} 7 ${TIME} ${i}
   done
 
@@ -115,6 +115,7 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
       --metric=cycles \
       --x-scale=linear
 fi
+
 
 if [ $2 != "mpts" ]; then
     cd build && cmake -G Ninja .. \

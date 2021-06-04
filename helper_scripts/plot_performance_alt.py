@@ -60,8 +60,11 @@ def main(args):
             raise TypeError("unsupported metric to plot")
 
         if args.x_scale == "linear":
-            (line,) = ax.plot(mpts if mpts_mode else N, y, linestyle="-", marker="o")
-            ax.xaxis.set_major_locator(plt.MultipleLocator(2048))
+            if mpts_mode:
+                (line,) = ax.plot(mpts, y, linestyle="-", marker="o")
+            else:
+                (line,) = ax.plot(N, y, linestyle="-", marker="o")
+                ax.xaxis.set_major_locator(plt.MultipleLocator(2048))
         elif args.x_scale == "log":
             (line,) = ax.semilogx(mpts if mpts_mode else N, y, linestyle="-", marker="o", base=2)
         else:
