@@ -1,15 +1,17 @@
 #include<iostream>
 #include<cstdio>
+#include <cctype>
 #include"../HDBSCAN-CPP/Hdbscan/hdbscan.hpp"
 #include "unistd.h"
 #include <locale.h>
 #include "benchmark_util.h"
 using namespace std;
 
-static char *dataset_path;
+static char *dataset_path = NULL;
 static Hdbscan *hdbscan;
 static int n;
 static int d;
+static int mpts = 4;
 
 void compute_hdbscan() {
 	vector<vector <double>> dataset = (*hdbscan).dataset;
@@ -44,14 +46,34 @@ long long measure_flops(unsigned long config) {
 
 int main(int argc, char **argv) {
 
-  if (argc < 2 || argc > 3) {
-    printf("Usage: hdbscan_benchmark <input_path> [<output-file>]\n");
-    return -1;
+  int opt;
+  char* ovalue = NULL;
+  while ((opt = getopt(argc, argv, "i:k:do:")) != EOF) {
+    switch (opt) {
+    case 'k':
+      mpts = atoi(optarg);
+      break;
+    case 'i':
+      dataset_path = optarg;
+      break;
+    case 'o':
+      ovalue = optarg;
+      break;
+    case '?':
+      if (optopt == 'k')
+        fprintf(stderr, "Option -%c requires an integer argument.\n", optopt);
+      if (optopt == 'o' || optopt == 'i')
+        fprintf(stderr, "Option -%c requires a string argument.\n", optopt);
+      else
+        fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o <output-file>] [-k <mpts>]\n");
+      return 1;
+    }
+  }
+  if (dataset_path == NULL) {
+      fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o <output-file>] [-k <mpts>]\n");
+      return 1;
   }
   int shape[2];
-  
-  // load dataset
-  dataset_path = argv[1];
 
   hdbscan = new Hdbscan(dataset_path);
   hdbscan->loadCsv(&shape);
@@ -140,18 +162,19 @@ int main(int argc, char **argv) {
       (double)scalar_flops / r);
 
   FILE *fptr;
-  if (argc == 3) {
+  if (ovalue != NULL) {
+    printf("Got ovalue: %s\n\n", ovalue);
     // Check if file already exists
-    if (access(argv[2], F_OK) == 0) { // exists -> append
-      fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld\n", n, d, r, c, t,
-              p, scalar_flops, sd, pd128, pd256);
+    if (access(ovalue, F_OK) == 0) { // exists -> append
+      fptr = fopen(ovalue, "a");
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r, c, t,
+              p, scalar_flops, sd, pd128, pd256,mpts);
     } else { // file doesn't exist -> create new, inclusive header line
-      fptr = fopen(argv[2], "w");
+      fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,sd,pd128,pd256\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld\n", n, d, r, c, t,
-              p, scalar_flops, sd, pd128, pd256);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r, c, t,
+              p, scalar_flops, sd, pd128, pd256,mpts);
     }
 
     fclose(fptr);
@@ -186,18 +209,18 @@ int main(int argc, char **argv) {
   printf("Performance (RDTSC) = %'f dflops/cycle\n", (double)all_flops / r);
 
   FILE *fptr;
-  if (argc == 3) {
+  if (ovalue != NULL) {
     // Check if file already exists
-    if (access(argv[2], F_OK) == 0) { // exists -> append
-      fptr = fopen(argv[2], "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
-              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add);
+    if (access(ovalue, F_OK) == 0) { // exists -> append
+      fptr = fopen(ovalue, "a");
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r,
+              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
     } else { // file doesn't exist -> create new, inclusive header line
-      fptr = fopen(argv[2], "w");
+      fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,all,add_sub,mult,div_sqrt,mult_add\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld\n", n, d, r,
-              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r,
+              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
     }
 
     fclose(fptr);
