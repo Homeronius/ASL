@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
     exit 1
 fi
 
@@ -16,10 +16,10 @@ fi
 if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
    [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
    [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "mpts" ] && \
-   [ $2 != "dimensions" ] && [ $2 != "all" ]; then
+   [ $2 != "dimensions" ] && [ $2 != "data_variance" ] && [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
     exit 1
 fi
 
@@ -65,24 +65,6 @@ if [ $2 = "reference" ] || [ $2 = "all" ]; then
     cd ../..
     # a bit hacky, but our script assumes binary is in build
     ./run_perf_measurements.sh reference_hdbscan ../../references/hdbscan-cpp/main perf_data_d${D} ${N} ${TIME}
-fi
-
-##########################################################
-######## Baseline    ##########
-##########################################################
-
-if [ $2 = "basic" ] || [ $2 = "all" ]; then
-    cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=${C_COMPILER} \
-        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
-        -DCMAKE_CXX_FLAGS="-O3" \
-        -DPACKLEFT_WLOOKUP=1 \
-        -DBENCHMARK_AMD=${AMD} &&
-        ninja build_bench &&
-        cd ..
-    # No optimizations
-    ./run_perf_measurements.sh basic_O3 hdbscan_basic_benchmark perf_data_d${D} ${N} ${TIME}
-
 fi
 
 
@@ -135,16 +117,16 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
 fi
 
 if [ $2 != "mpts" ]; then
-
-cd build && cmake -G Ninja .. \
-    -DCMAKE_C_COMPILER=${C_COMPILER} \
-    -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
-    -DCMAKE_CXX_FLAGS="-O3 -march=native" \
-    -DPACKLEFT_WLOOKUP=1 \
-    -DBENCHMARK_AMD=${AMD} &&
-    ninja build_bench &&
-    ninja build_bench_vec &&
-    cd ..
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench &&
+        ninja build_bench_vec &&
+        cd ..
 
 fi
 
@@ -313,6 +295,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=0 \
+        -DHDBSCAN_QUICKSELECT=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -374,6 +357,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
+        -DHDBSCAN_QUICKSELECT=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
@@ -471,6 +455,7 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_COMPILER=c++ \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -495,12 +480,13 @@ fi
 
 if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
     N=12
-    D=7
+    D=8
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench_vec &&
         cd ..
@@ -521,11 +507,11 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
                 advprim_distvec_quickvec_dims32.csv \
                 advprim_distvec_quickvec_dims64.csv \
                 advprim_distvec_quickvec_dims128.csv \
-        --save-path cycles_dims.png \
+        --save-path plots/${TIME}/cycles_dims.png \
         --metric=cycles \
         --x-scale=linear
     
-    python helper_scripts/plot_performance_alt.py --system $1  \
+    python helper_scripts/plot_performance_dims.py --system $1  \
         --data-path data/timings/${TIME} \
         --files advprim_distvec_quickvec_dims2.csv \
                 advprim_distvec_quickvec_dims4.csv \
@@ -534,7 +520,45 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
                 advprim_distvec_quickvec_dims32.csv \
                 advprim_distvec_quickvec_dims64.csv \
                 advprim_distvec_quickvec_dims128.csv \
-        --save-path perf_dims.png \
-        --x-scale=linear
+        --save-path plots/${TIME}/perf_dims_heatmap.png
 
+fi
+
+#####################################################
+######## Comparison for different data ########
+#####################################################
+
+if [ $2 = "data_variance" ] || [ $2 = "all" ]; then
+    N=12
+    D=4
+    K=4
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native" \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
+        -DBENCHMARK_AMD=${AMD} &&
+        ninja build_bench_vec &&
+        cd ..
+    for i in $(seq 1 ${K}); do
+        python helper_scripts/generate_clusters.py data ${i} ${D}
+        printf "running for i = ${i} blobs...\n"
+        ./run_perf_measurements.sh advprim_vec_blobs${i} hdbscan_benchmark_distvec_quickvec perf_data_d${D} ${N} ${TIME}
+        ./run_perf_measurements.sh basic_best_blobs${i} hdbscan_basic_benchmark_distvec_quickvec_primvec perf_data_d${D} ${N} ${TIME}
+    done
+    rm ./data/perf_data_d${D}*
+    
+    python helper_scripts/plot_performance_alt.py --system $1  \
+        --data-path data/timings/${TIME} \
+        --files advprim_vec_blobs1.csv \
+                advprim_vec_blobs2.csv \
+                advprim_vec_blobs3.csv \
+                advprim_vec_blobs4.csv \
+                basic_best_blobs1.csv \
+                basic_best_blobs2.csv \
+                basic_best_blobs3.csv \
+                basic_best_blobs4.csv \
+        --save-path plots/${TIME}/performance_data_variance.png \
+        --x-scale=linear
 fi
