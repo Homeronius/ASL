@@ -59,6 +59,10 @@ def main(args):
         else:
             raise TypeError("unsupported metric to plot")
 
+        if not mpts_mode:
+          N = N[2:]
+          y = y[2:]
+
         if args.x_scale == "linear":
             if mpts_mode:
                 (line,) = ax.plot(mpts, y, linestyle="-", marker="o")
