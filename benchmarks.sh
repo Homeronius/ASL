@@ -117,7 +117,7 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
 fi
 
 
-if [ $2 != "mpts" ] && [ $2 != "gcc-v-clang" ]; then
+if [ $2 != "mpts" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
@@ -443,8 +443,8 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
     mkdir -p build
 
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=gcc-11 \
-        -DCMAKE_CXX_COMPILER=g++-11 \
+        -DCMAKE_C_COMPILER=cc \
+        -DCMAKE_CXX_COMPILER=c++ \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
