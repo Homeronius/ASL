@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|cache_analysis|all]"
     exit 1
 fi
 
 if [ ! -z $1 ] && [ $1 != "amd" ] && [ $1 != "intel" ]; then
     echo "Invalid argument: $1" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|cache_analysis|all]"
     exit 1
 fi
 
@@ -16,10 +16,11 @@ fi
 if [ ! -z $2 ] && [ $2 != "basic" ] && [ $2 != "advanced" ] && \
    [ $2 != "amd-v-intel" ] && [ $2 != "blocked-v-triangular" ] && \
    [ $2 != "reference" ] && [ $2 != "gcc-v-clang" ] && [ $2 != "mpts" ] && \
-   [ $2 != "dimensions" ] && [ $2 != "data_variance" ] && [ $2 != "all" ]; then
+   [ $2 != "dimensions" ] && [ $2 != "data_variance" ] && [ $2 != "cache_analysis" ] && \
+   [ $2 != "all" ]; then
     echo "Invalid argument: $2" >&2
     echo ""
-    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|all]"
+    echo "Usage: $(basename $0) [intel|amd] [basic|advanced|amd-v-intel|blocked-v-triangular|reference|gcc-v-clang|mpts|data_variance|cache_analysis|all]"
     exit 1
 fi
 
@@ -571,4 +572,86 @@ if [ $2 = "data_variance" ] || [ $2 = "all" ]; then
                 basic_best_blobs4.csv \
         --save-path plots/${TIME}/performance_data_variance.png \
         --x-scale=linear
+fi
+
+
+if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
+
+    rm -rf build
+    mkdir -p build
+    cd build && cmake -G Ninja .. \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_FLAGS="-O3 -march=native -DHDBSCAN_BLOCK_SIZE=80" \
+        -DPACKLEFT_WLOOKUP=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
+        -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
+        -DHDBSCAN_VERBOSE=0 \
+        -DHDBSCAN_TEST=0 &&
+        ninja &&
+        cd ..
+    #cd build && ninja && cd ..
+
+    declare -a basic_arr=("hdbscan_basic"
+                           "hdbscan_basic_distvec"
+                           "hdbscan_basic_distvec_quickvec"
+                           "hdbscan_basic_distvec_quickvec_primvec"
+    )
+
+    declare -a advprim_arr=("hdbscan"
+                            "hdbscan_distvec"
+                            "hdbscan_distvec_quickvec"
+                            "hdbscan_distvec_quickvec_primvec"
+    )
+
+    declare -a blocked_v_distvec_arr=("hdbscan_basic_blocked"
+                                      "hdbscan_basic_triang"
+    )
+
+    N=12
+    save_dir="./data/timings/${TIME}/"
+    mkdir -p ${save_dir}
+    python helper_scripts/generate_clusters.py data 3 4
+    python helper_scripts/generate_clusters.py data 6 20
+
+    echo ===============
+    echo Basic binaries:
+    echo ===============
+    for D in 4 20; do
+        outfile="${save_dir}basic_cg_N${N}_d${D}.out"
+        touch ${outfile}
+        for i in "${basic_arr[@]}"; do
+           printf "Running Cache analysis for $i\n\n" >> $outfile
+           valgrind --tool=cachegrind --cachegrind-out-file=cg.out ./build/bin/$i data/perf_data_d${D}_${N}.csv 2>> $outfile
+           printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
+        done
+    done
+
+    echo =======================
+    echo Advanced Prim binaries:
+    echo =======================
+    for D in 4 20; do
+        outfile="${save_dir}advprim_cg_N${N}_d${D}.out"
+        touch $outfile
+        for i in "${advprim_arr[@]}"; do
+           printf "Running Cache analysis for $i\n\n" >> $outfile
+           valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./build/bin/${i} data/perf_data_d${D}_${N}.csv 2>> $outfile
+           printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
+        done
+    done
+
+
+    echo ===============
+    echo Blocked-v-Triang binaries:
+    echo ===============
+    for D in 4 20; do
+        outfile="${save_dir}blocked_v_triang_cg_N${N}_d${D}.out"
+        touch $outfile
+        for i in "${blocked_v_distvec_arr[@]}"; do
+           printf "Running Cache analysis for $i\n\n" >> $outfile
+           valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./build/bin/$i data/perf_data_d${D}_${N}.csv 2>> $outfile
+           printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
+        done
+    done
+
 fi
