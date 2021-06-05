@@ -79,6 +79,7 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} \
+        -DHDBSCAN_TEST=0 \
         -DHDBSCAN_QUICKSELECT=0 &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -97,6 +98,7 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DBENCHMARK_AMD=${AMD} \
+        -DHDBSCAN_TEST=0 \
         -DHDBSCAN_QUICKSELECT=1 &&
         ninja build_bench_vec &&
         cd ..
@@ -124,6 +126,7 @@ if [ $2 != "mpts" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -285,6 +288,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_QUICKSELECT=1 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -301,6 +305,7 @@ if [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=1 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -351,6 +356,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
         -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
@@ -371,6 +377,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
@@ -385,6 +392,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
@@ -399,6 +407,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         cd ..
@@ -448,6 +457,7 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench &&
         ninja build_bench_vec &&
@@ -483,6 +493,7 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench_vec &&
         cd ..
@@ -536,6 +547,7 @@ if [ $2 = "data_variance" ] || [ $2 = "all" ]; then
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
+        -DHDBSCAN_TEST=0 \
         -DBENCHMARK_AMD=${AMD} &&
         ninja build_bench_vec &&
         cd ..
