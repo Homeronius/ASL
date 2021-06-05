@@ -443,8 +443,8 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
     mkdir -p build
 
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=cc \
-        -DCMAKE_CXX_COMPILER=c++ \
+        -DCMAKE_C_COMPILER=gcc-11 \
+        -DCMAKE_CXX_COMPILER=g++-11 \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
@@ -464,7 +464,11 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
                 clang_basic_best.csv \
                 clang_advprim_best.csv  \
         --save-path plots/${TIME}/gcc_v_clang.png
+    
+    rm -rf build
+    mkdir -p build
 fi
+
 
 #####################################################
 ######## Comparison for different dimensions ########
