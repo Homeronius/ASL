@@ -98,12 +98,13 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
             s=110,
         )
 
-    ax.legend()
+    # ax.legend()
+    ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
 
     # Save to file if requested
     if out_filename is not None:
         out_filename = "plots/roofline/" + out_filename + "_" + system + ".svg"
-        fig.savefig(out_filename)
+        fig.savefig(out_filename, bbox_inches="tight")
 
 
 def get_basic_data_full(system):
@@ -113,19 +114,37 @@ def get_basic_data_full(system):
             0.287174387196608,
             0.300471007575244,
             0.317883872804069,
+            1.09707165841223,
+            1.70252181905201,
         ]
-        P = [0.556348234141028, 0.871948888609612, 0.960406357898148, 1.09540163823838]
+        P = [
+            0.556348234141028,
+            0.871948888609612,
+            0.960406357898148,
+            1.09540163823838,
+            0.937031545550276,
+            0.937452388154464,
+        ]
+        labels = [
+            "basic",
+            "basic_distvec",
+            "basic_distvec_quickvec",
+            "basic_distvec_quickvec_primvec",
+            "basic_blocked",
+            "basic_triang",
+        ]
+        markers = ["x", "+", "1", "2", "3", "4"]
     else:
         OI = [0.17909045424534, 0.278472602157544, 0.291366471616787, 0.308249510493958]
         P = [0.635809892483325, 0.937797158145406, 1.08584416268159, 1.28755371235177]
+        labels = [
+            "basic",
+            "basic_distvec",
+            "basic_distvec_quickvec",
+            "basic_distvec_quickvec_primvec",
+        ]
+        markers = ["x", "+", "1", "3"]
 
-    labels = [
-        "basic",
-        "basic_distvec",
-        "basic_distvec_quickvec",
-        "basic_distvec_quickvec_primvec",
-    ]
-    markers = ["x", "+", "1", "3"]
     return OI, P, labels, markers
 
 
@@ -227,8 +246,8 @@ def showcase():
 
 
 def main():
-    # system = "Intel"
-    system = "AMD"
+    system = "Intel"
+    # system = "AMD"
 
     # Define hardware properties
     if system == "Intel":
@@ -243,18 +262,18 @@ def main():
     Roofline = namedtuple("Roofline", ["pi", "OI", "P", "labels", "markers"])
 
     # All optimizations
-    # sequential = Roofline(pi, *get_basic_data_full(system))
-    # vectorized = Roofline(pi_vec, *get_advprim_data_full(system))
+    sequential = Roofline(pi, *get_basic_data_full(system))
+    vectorized = Roofline(pi_vec, *get_advprim_data_full(system))
 
     # Only baseline and best
-    sequential = Roofline(pi, *get_basic_data_short(system))
-    vectorized = Roofline(pi_vec, *get_advprim_data_short(system))
+    # sequential = Roofline(pi, *get_basic_data_short(system))
+    # vectorized = Roofline(pi_vec, *get_advprim_data_short(system))
 
     create_roofline(
         beta,
         roof_1=sequential,
         roof_2=vectorized,
-        out_filename="selection_roofline",
+        out_filename="combined_extended_roofline",
         system=system,
     )
 
