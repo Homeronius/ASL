@@ -60,7 +60,7 @@ if [ $2 = "reference" ] || [ $2 = "all" ]; then
     if [ $1 = "amd" ]; then
         make CXX=${CXX_COMPILER} CPPFLAGS="-DBENCHMARK_AMD -march=native"
     else
-        make CXX=${CXX_COMPILER} CPPFLAGS="march=native"
+        make CXX=${CXX_COMPILER} CPPFLAGS="-march=native"
     fi
     cd ../..
     # a bit hacky, but our script assumes binary is in build
@@ -117,7 +117,7 @@ if [ $2 = "mpts" ] || [ $2 = "all" ]; then
 fi
 
 
-if [ $2 != "mpts" ]; then
+if [ $2 != "mpts" ] && [ $2 != "gcc-v-clang" ]; then
     cd build && cmake -G Ninja .. \
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
@@ -148,16 +148,14 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
     # Plot result
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
-        --files basic_O3.csv \
-                basic.csv \
+        --files basic.csv \
                 basic_distvec.csv \
                 basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/performance_basic.png
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
-        --files basic_O3.csv \
-                basic.csv \
+        --files basic.csv \
                 basic_distvec.csv \
                 basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
@@ -415,8 +413,7 @@ if [ $2 = "blocked-v-triangular" ] || [ $2 = "all" ]; then
                 distance_matrix_blocked_40.csv \
                 distance_matrix_blocked_80.csv \
                 distance_matrix_blocked_100.csv \
-
-        --save-path plots/triangular_v_blocked.png \
+        --save-path=plots/triangular_v_blocked.png \
         --metric=cycles \
         --x-scale=linear
 
@@ -502,6 +499,7 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
                 advprim_distvec_quickvec_dims32.csv \
                 advprim_distvec_quickvec_dims64.csv \
                 advprim_distvec_quickvec_dims128.csv \
+                advprim_distvec_quickvec_dims256.csv \
         --save-path plots/${TIME}/cycles_dims.png \
         --metric=cycles \
         --x-scale=linear
@@ -515,6 +513,7 @@ if [ $2 = "dimensions" ] || [ $2 = "all" ]; then
                 advprim_distvec_quickvec_dims32.csv \
                 advprim_distvec_quickvec_dims64.csv \
                 advprim_distvec_quickvec_dims128.csv \
+                advprim_distvec_quickvec_dims256.csv \
         --save-path plots/${TIME}/perf_dims_heatmap.png
 
 fi
