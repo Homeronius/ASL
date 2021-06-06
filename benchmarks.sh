@@ -582,8 +582,8 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
     rm -rf build
     mkdir -p build
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_C_COMPILER=${C_COMPILER} \
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native -DHDBSCAN_BLOCK_SIZE=80" \
         -DPACKLEFT_WLOOKUP=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
