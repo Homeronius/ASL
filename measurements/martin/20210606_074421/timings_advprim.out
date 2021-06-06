@@ -1,0 +1,300 @@
+Running test at time Sun Jun  6 08:04:29 AM CEST 2021
+======================              
+Measurement for data/perf_data_d4_0.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_0.csv
+
+RDTSC: 65,698.000000 cycles (0.000025 sec @ 2,600.000000 MHz)
+C clock(): 65,553.515625 cycles (0.000025 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000025 sec
+
+PERF cycles: 162,683
+FLOPS count scalar double: 21,284
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.130831 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.323967 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_1.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_1.csv
+
+RDTSC: 360,475.000000 cycles (0.000139 sec @ 2,600.000000 MHz)
+C clock(): 344,750.520833 cycles (0.000133 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000133 sec
+
+PERF cycles: 355,985
+FLOPS count scalar double: 85,087
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.239018 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.236041 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_2.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_2.csv
+
+RDTSC: 1,375,347.000000 cycles (0.000529 sec @ 2,600.000000 MHz)
+C clock(): 1,317,847.916667 cycles (0.000507 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000518 sec
+
+PERF cycles: 1,323,724
+FLOPS count scalar double: 338,413
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.255652 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.246056 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_3.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_3.csv
+
+RDTSC: 4,617,974.000000 cycles (0.001776 sec @ 2,600.000000 MHz)
+C clock(): 4,411,441.666667 cycles (0.001697 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.001723 sec
+
+PERF cycles: 4,552,990
+FLOPS count scalar double: 1,348,045
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.296079 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.291913 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_4.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_4.csv
+
+RDTSC: 17,517,292.000000 cycles (0.006737 sec @ 2,600.000000 MHz)
+C clock(): 16,323,666.666667 cycles (0.006278 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.006927 sec
+
+PERF cycles: 16,655,558
+FLOPS count scalar double: 5,380,962
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.323073 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.307180 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_5.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_5.csv
+
+RDTSC: 73,390,564.000000 cycles (0.028227 sec @ 2,600.000000 MHz)
+C clock(): 74,628,666.666667 cycles (0.028703 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.027084 sec
+
+PERF cycles: 70,182,388
+FLOPS count scalar double: 21,511,183
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.306504 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.293106 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_6.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_6.csv
+
+RDTSC: 293,396,447.000000 cycles (0.112845 sec @ 2,600.000000 MHz)
+C clock(): 287,742,866.666667 cycles (0.110670 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.107316 sec
+
+PERF cycles: 284,706,636
+FLOPS count scalar double: 86,018,813
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.302131 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.293183 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_7.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,229,525,567.000000 cycles (0.472894 sec @ 2,600.000000 MHz)
+C clock(): 1,149,785,866.666667 cycles (0.442225 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.443431 sec
+
+PERF cycles: 1,149,485,523
+FLOPS count scalar double: 344,037,088
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.299297 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.279813 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_8.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_8.csv
+
+RDTSC: 2,756,580,739.000000 cycles (1.060223 sec @ 2,600.000000 MHz)
+C clock(): 2,641,359,066.666667 cycles (1.015907 sec @ 2,600.000000 MHz)
+C gettimeofday(): 1.005855 sec
+
+PERF cycles: 2,616,060,337
+FLOPS count scalar double: 774,028,206
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.295876 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.280793 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_9.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_9.csv
+
+RDTSC: 4,657,344,990.000000 cycles (1.791287 sec @ 2,600.000000 MHz)
+C clock(): 4,497,662,866.666666 cycles (1.729870 sec @ 2,600.000000 MHz)
+C gettimeofday(): 1.715726 sec
+
+PERF cycles: 4,469,216,310
+FLOPS count scalar double: 1,376,019,777
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.307888 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.295452 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_10.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_10.csv
+
+RDTSC: 7,519,599,784.000000 cycles (2.892154 sec @ 2,600.000000 MHz)
+C clock(): 7,198,611,333.333333 cycles (2.768697 sec @ 2,600.000000 MHz)
+C gettimeofday(): 2.774186 sec
+
+PERF cycles: 7,185,091,038
+FLOPS count scalar double: 2,149,986,482
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.299229 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.285918 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_11.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_11.csv
+
+RDTSC: 10,596,148,964.000000 cycles (4.075442 sec @ 2,600.000000 MHz)
+C clock(): 10,203,344,666.666668 cycles (3.924363 sec @ 2,600.000000 MHz)
+C gettimeofday(): 3.926035 sec
+
+PERF cycles: 10,099,422,559
+FLOPS count scalar double: 3,095,982,642
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.306550 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.292180 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+
+======================              
+Measurement for data/perf_data_d4_12.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_12.csv
+
+RDTSC: 14,764,614,598.000000 cycles (5.678698 sec @ 2,600.000000 MHz)
+C clock(): 14,165,727,333.333334 cycles (5.448357 sec @ 2,600.000000 MHz)
+C gettimeofday(): 5.471064 sec
+
+PERF cycles: 14,190,626,235
+FLOPS count scalar double: 4,213,896,240
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.296949 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.285405 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/advprim.csv
+
+

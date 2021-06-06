@@ -1,0 +1,262 @@
+Running test at time Sun Jun  6 09:00:34 AM CEST 2021
+======================              
+Measurement for data/perf_data_d20_0.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_0.csv
+
+RDTSC: 103,020.000000 cycles (0.000040 sec @ 2,600.000000 MHz)
+C clock(): 101,144.401042 cycles (0.000039 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000038 sec
+
+PERF cycles: 157,612
+FLOPS count scalar double: 64,601
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 120 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.412919 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.631732 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_1.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_1.csv
+
+RDTSC: 384,865.000000 cycles (0.000148 sec @ 2,600.000000 MHz)
+C clock(): 376,573.437500 cycles (0.000145 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000141 sec
+
+PERF cycles: 357,490
+FLOPS count scalar double: 256,298
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 744 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.725262 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.673675 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_2.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_2.csv
+
+RDTSC: 1,522,767.000000 cycles (0.000586 sec @ 2,600.000000 MHz)
+C clock(): 1,487,443.750000 cycles (0.000572 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000569 sec
+
+PERF cycles: 1,381,759
+FLOPS count scalar double: 1,020,482
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 3,528 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.748751 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.679417 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_3.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_3.csv
+
+RDTSC: 6,008,749.000000 cycles (0.002311 sec @ 2,600.000000 MHz)
+C clock(): 5,801,141.666667 cycles (0.002231 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.002146 sec
+
+PERF cycles: 5,220,989
+FLOPS count scalar double: 4,072,636
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 15,240 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.791727 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.687930 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_4.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_4.csv
+
+RDTSC: 24,680,525.000000 cycles (0.009493 sec @ 2,600.000000 MHz)
+C clock(): 22,570,166.666667 cycles (0.008681 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.008373 sec
+
+PERF cycles: 20,175,399
+FLOPS count scalar double: 16,271,589
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 63,240 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.819044 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.669538 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_5.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_5.csv
+
+RDTSC: 91,120,116.000000 cycles (0.035046 sec @ 2,600.000000 MHz)
+C clock(): 90,560,600.000000 cycles (0.034831 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.033634 sec
+
+PERF cycles: 79,824,453
+FLOPS count scalar double: 65,052,397
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 257,544 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.827849 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.725225 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_6.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_6.csv
+
+RDTSC: 447,377,151.000000 cycles (0.172068 sec @ 2,600.000000 MHz)
+C clock(): 443,063,400.000000 cycles (0.170409 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.164325 sec
+
+PERF cycles: 332,160,417
+FLOPS count scalar double: 260,138,950
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 1,039,368 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.795689 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.590769 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_7.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_7.csv
+
+RDTSC: 1,854,041,220.000000 cycles (0.713093 sec @ 2,600.000000 MHz)
+C clock(): 1,739,931,266.666667 cycles (0.669204 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.667243 sec
+
+PERF cycles: 1,367,295,345
+FLOPS count scalar double: 1,040,361,146
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 4,175,880 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.773106 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.570141 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_8.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_8.csv
+
+RDTSC: 4,117,170,500.000000 cycles (1.583527 sec @ 2,600.000000 MHz)
+C clock(): 3,933,509,666.666667 cycles (1.512888 sec @ 2,600.000000 MHz)
+C gettimeofday(): 1.513549 sec
+
+PERF cycles: 3,090,349,723
+FLOPS count scalar double: 2,340,729,921
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 9,409,544 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.769611 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.577671 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_9.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_9.csv
+
+RDTSC: 7,392,638,669.000000 cycles (2.843323 sec @ 2,600.000000 MHz)
+C clock(): 7,066,942,133.333333 cycles (2.718055 sec @ 2,600.000000 MHz)
+C gettimeofday(): 2.710392 sec
+
+PERF cycles: 5,598,202,854
+FLOPS count scalar double: 4,161,163,757
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 16,740,360 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.755265 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.571937 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_10.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=40
+
+DATASET path: data/perf_data_d20_10.csv
+
+RDTSC: 11,565,422,569.000000 cycles (4.448239 sec @ 2,600.000000 MHz)
+C clock(): 10,981,287,200.000000 cycles (4.223572 sec @ 2,600.000000 MHz)
+C gettimeofday(): 4.247641 sec
+
+PERF cycles: 8,656,865,337
+FLOPS count scalar double: 6,501,845,911
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 26,168,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.763154 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.571230 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210606_074421/distance_matrix_blocked_40.csv
+
+
+======================              
+Measurement for data/perf_data_d20_11.csv              
+======================
+
+======================              
+Measurement for data/perf_data_d20_12.csv              
+======================
+

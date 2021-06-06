@@ -1,0 +1,1794 @@
+Running Cache analysis for hdbscan_basic_blocked
+
+==3589520== Cachegrind, a cache and branch-prediction profiler
+==3589520== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==3589520== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==3589520== Command: ./build/bin/hdbscan_basic_blocked data/perf_data_d4_12.csv
+==3589520== 
+--3589520-- warning: L3 cache found, using its data for the LL simulation.
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3589520-- WARNING: Serious error when reading debug info
+--3589520-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3589520-- Ignoring non-Dwarf2/3/4 block in .debug_info
+==3589520== brk segment overflow in thread #1: can't grow to 0x4836000
+==3589520== (see section Limitations in user manual)
+==3589520== NOTE: further instances of this message will not be shown
+==3589520== 
+==3589520== I   refs:      19,998,211,568
+==3589520== I1  misses:             2,978
+==3589520== LLi misses:             2,410
+==3589520== I1  miss rate:           0.00%
+==3589520== LLi miss rate:           0.00%
+==3589520== 
+==3589520== D   refs:       5,723,952,965  (4,555,050,021 rd   + 1,168,902,944 wr)
+==3589520== D1  misses:       243,357,207  (  216,520,849 rd   +    26,836,358 wr)
+==3589520== LLd misses:       101,834,050  (   75,700,091 rd   +    26,133,959 wr)
+==3589520== D1  miss rate:            4.3% (          4.8%     +           2.3%  )
+==3589520== LLd miss rate:            1.8% (          1.7%     +           2.2%  )
+==3589520== 
+==3589520== LL refs:          243,360,185  (  216,523,827 rd   +    26,836,358 wr)
+==3589520== LL misses:        101,836,460  (   75,702,501 rd   +    26,133,959 wr)
+==3589520== LL miss rate:             0.4% (          0.3%     +           2.2%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_triang
+
+==3590892== Cachegrind, a cache and branch-prediction profiler
+==3590892== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==3590892== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==3590892== Command: ./build/bin/hdbscan_basic_triang data/perf_data_d4_12.csv
+==3590892== 
+--3590892-- warning: L3 cache found, using its data for the LL simulation.
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libstdc++.so.6.0.29:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+--3590892-- WARNING: Serious error when reading debug info
+--3590892-- When reading debug info from /usr/lib/libgcc_s.so.1:
+--3590892-- Ignoring non-Dwarf2/3/4 block in .debug_info
+==3590892== brk segment overflow in thread #1: can't grow to 0x4839000
+==3590892== (see section Limitations in user manual)
+==3590892== NOTE: further instances of this message will not be shown
+==3590892== 
+==3590892== I   refs:      16,749,295,183
+==3590892== I1  misses:             2,951
+==3590892== LLi misses:             2,383
+==3590892== I1  miss rate:           0.00%
+==3590892== LLi miss rate:           0.00%
+==3590892== 
+==3590892== D   refs:       4,410,343,537  (3,669,783,344 rd   + 740,560,193 wr)
+==3590892== D1  misses:       399,127,968  (  360,499,110 rd   +  38,628,858 wr)
+==3590892== LLd misses:       101,563,507  (   88,450,225 rd   +  13,113,282 wr)
+==3590892== D1  miss rate:            9.0% (          9.8%     +         5.2%  )
+==3590892== LLd miss rate:            2.3% (          2.4%     +         1.8%  )
+==3590892== 
+==3590892== LL refs:          399,130,919  (  360,502,061 rd   +  38,628,858 wr)
+==3590892== LL misses:        101,565,890  (   88,452,608 rd   +  13,113,282 wr)
+==3590892== LL miss rate:             0.5% (          0.4%     +         1.8%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+

@@ -1,0 +1,294 @@
+Running test at time Sat Jun  5 12:26:01 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 652,523,972.000000 cycles (0.250971 sec @ 2,600.000000 MHz)
+C clock(): 626,505,533.333333 cycles (0.240964 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.240904 sec
+
+PERF cycles: 628,740,636
+FLOPS count scalar double: 33,765,113
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.560650 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.540215 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:26:15 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 715,303,569.000000 cycles (0.275117 sec @ 2,600.000000 MHz)
+C clock(): 687,185,200.000000 cycles (0.264302 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.263331 sec
+
+PERF cycles: 686,623,099
+FLOPS count scalar double: 33,729,468
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.513335 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.492753 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:26:29 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 818,441,086.000000 cycles (0.314785 sec @ 2,600.000000 MHz)
+C clock(): 784,916,600.000000 cycles (0.301891 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.304011 sec
+
+PERF cycles: 788,118,944
+FLOPS count scalar double: 33,667,337
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.447148 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.430582 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:26:45 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 882,045,247.000000 cycles (0.339248 sec @ 2,600.000000 MHz)
+C clock(): 846,751,533.333333 cycles (0.325674 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.325641 sec
+
+PERF cycles: 838,497,958
+FLOPS count scalar double: 33,652,021
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.420264 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.399515 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:27:01 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 942,145,466.000000 cycles (0.362364 sec @ 2,600.000000 MHz)
+C clock(): 904,703,800.000000 cycles (0.347963 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.347254 sec
+
+PERF cycles: 899,778,631
+FLOPS count scalar double: 33,653,912
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.391643 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.374032 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:27:17 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 992,516,982.000000 cycles (0.381737 sec @ 2,600.000000 MHz)
+C clock(): 951,824,466.666667 cycles (0.366086 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.366531 sec
+
+PERF cycles: 951,052,546
+FLOPS count scalar double: 33,659,969
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.370535 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.355055 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:27:34 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,058,041,582.000000 cycles (0.406939 sec @ 2,600.000000 MHz)
+C clock(): 1,014,572,000.000000 cycles (0.390220 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.392056 sec
+
+PERF cycles: 1,013,187,371
+FLOPS count scalar double: 33,659,860
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.347812 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.333067 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:27:52 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,127,890,426.000000 cycles (0.433804 sec @ 2,600.000000 MHz)
+C clock(): 1,080,826,066.666667 cycles (0.415702 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.416363 sec
+
+PERF cycles: 1,082,408,167
+FLOPS count scalar double: 33,668,993
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.325577 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.312448 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:28:10 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,211,524,115.000000 cycles (0.465971 sec @ 2,600.000000 MHz)
+C clock(): 1,176,760,866.666667 cycles (0.452600 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.451731 sec
+
+PERF cycles: 1,155,308,465
+FLOPS count scalar double: 33,668,973
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.305033 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.290879 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:28:28 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,295,647,907.000000 cycles (0.498326 sec @ 2,600.000000 MHz)
+C clock(): 1,243,021,866.666667 cycles (0.478085 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.476704 sec
+
+PERF cycles: 1,234,462,635
+FLOPS count scalar double: 33,668,980
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.285474 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.271993 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+
+======================            
+OUTPUT_LOG from new performance run:            
+======================
+Running test at time Sat Jun  5 12:28:47 AM CEST 2021
+======================          
+Measurement for data/perf_data_d4_7.csv          
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d4_7.csv
+
+RDTSC: 1,383,325,296.000000 cycles (0.532048 sec @ 2,600.000000 MHz)
+C clock(): 1,325,623,000.000000 cycles (0.509855 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.510075 sec
+
+PERF cycles: 1,316,866,967
+FLOPS count scalar double: 33,668,994
+FLOPS count 128 packed double: 8,386,560 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 75,491,328 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.267610 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.254754 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/bubbleselect.csv
+
+

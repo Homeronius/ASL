@@ -1,0 +1,235 @@
+Running test at time Sat Jun  5 12:04:58 AM CEST 2021
+======================              
+Measurement for data/perf_data_d4_0.csv              
+======================
+n: 32
+d: 4
+RDTSC: 356,625.000000 cycles (0.000137 sec @ 2,600.000000 MHz)
+C clock(): 341,690.104167 cycles (0.000131 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000162 sec
+
+PERF cycles: 522,677
+FLOPS count scalar double: 7,703
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.014738 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.021600 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_1.csv              
+======================
+n: 64
+d: 4
+RDTSC: 1,282,317.000000 cycles (0.000493 sec @ 2,600.000000 MHz)
+C clock(): 1,231,695.833333 cycles (0.000474 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.000472 sec
+
+PERF cycles: 1,225,419
+FLOPS count scalar double: 30,786
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.025123 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.024008 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_2.csv              
+======================
+n: 128
+d: 4
+RDTSC: 4,820,538.000000 cycles (0.001854 sec @ 2,600.000000 MHz)
+C clock(): 3,901,245.833333 cycles (0.001500 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.001579 sec
+
+PERF cycles: 4,304,203
+FLOPS count scalar double: 123,009
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.028579 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.025518 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_3.csv              
+======================
+n: 256
+d: 4
+RDTSC: 12,374,816.000000 cycles (0.004760 sec @ 2,600.000000 MHz)
+C clock(): 12,152,616.666667 cycles (0.004674 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.004929 sec
+
+PERF cycles: 12,064,117
+FLOPS count scalar double: 491,864
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.040771 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.039747 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_4.csv              
+======================
+n: 512
+d: 4
+RDTSC: 45,077,432.000000 cycles (0.017337 sec @ 2,600.000000 MHz)
+C clock(): 42,922,533.333333 cycles (0.016509 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.016623 sec
+
+PERF cycles: 41,645,246
+FLOPS count scalar double: 1,966,690
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.047225 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.043629 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_5.csv              
+======================
+n: 1024
+d: 4
+RDTSC: 196,051,178.000000 cycles (0.075404 sec @ 2,600.000000 MHz)
+C clock(): 187,345,600.000000 cycles (0.072056 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.078169 sec
+
+PERF cycles: 206,166,171
+FLOPS count scalar double: 7,865,611
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.038152 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.040120 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_6.csv              
+======================
+n: 2048
+d: 4
+RDTSC: 784,717,106.000000 cycles (0.301814 sec @ 2,600.000000 MHz)
+C clock(): 746,907,200.000000 cycles (0.287272 sec @ 2,600.000000 MHz)
+C gettimeofday(): 0.283824 sec
+
+PERF cycles: 672,722,192
+FLOPS count scalar double: 31,459,583
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.046765 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.040090 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_7.csv              
+======================
+n: 4096
+d: 4
+RDTSC: 3,061,758,320.000000 cycles (1.177599 sec @ 2,600.000000 MHz)
+C clock(): 2,884,376,733.333333 cycles (1.109376 sec @ 2,600.000000 MHz)
+C gettimeofday(): 1.139795 sec
+
+PERF cycles: 2,906,144,958
+FLOPS count scalar double: 125,834,124
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.043299 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.041099 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_8.csv              
+======================
+n: 6144
+d: 4
+RDTSC: 8,541,472,861.000000 cycles (3.285182 sec @ 2,600.000000 MHz)
+C clock(): 8,025,368,866.666667 cycles (3.086680 sec @ 2,600.000000 MHz)
+C gettimeofday(): 2.954765 sec
+
+PERF cycles: 7,693,184,685
+FLOPS count scalar double: 283,122,813
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.036802 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.033147 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_9.csv              
+======================
+n: 8192
+d: 4
+RDTSC: 16,583,300,994.000000 cycles (6.378193 sec @ 2,600.000000 MHz)
+C clock(): 15,740,093,200.000000 cycles (6.053882 sec @ 2,600.000000 MHz)
+C gettimeofday(): 6.064834 sec
+
+PERF cycles: 15,869,942,186
+FLOPS count scalar double: 503,326,103
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.031716 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.030351 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_10.csv              
+======================
+n: 10240
+d: 4
+RDTSC: 29,859,655,312.000000 cycles (11.484483 sec @ 2,600.000000 MHz)
+C clock(): 28,192,269,733.333332 cycles (10.843181 sec @ 2,600.000000 MHz)
+C gettimeofday(): 10.998243 sec
+
+PERF cycles: 28,866,572,121
+FLOPS count scalar double: 786,443,898
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.027244 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.026338 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_11.csv              
+======================
+n: 12288
+d: 4
+RDTSC: 48,147,730,899.000000 cycles (18.518358 sec @ 2,600.000000 MHz)
+C clock(): 46,862,834,200.000000 cycles (18.024167 sec @ 2,600.000000 MHz)
+C gettimeofday(): 18.019561 sec
+
+PERF cycles: 46,824,521,653
+FLOPS count scalar double: 1,132,476,487
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.024186 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.023521 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
+======================              
+Measurement for data/perf_data_d4_12.csv              
+======================
+n: 14336
+d: 4
+RDTSC: 61,163,748,414.000000 cycles (23.524519 sec @ 2,600.000000 MHz)
+C clock(): 58,907,195,533.333336 cycles (22.656614 sec @ 2,600.000000 MHz)
+C gettimeofday(): 22.988543 sec
+
+PERF cycles: 58,929,791,780
+FLOPS count scalar double: 1,541,423,392
+FLOPS count 128 packed double: 0 (multiply by 2 to get scalar operations)
+FLOPS count 256 packed double: 0 (multiply by 4 to get scalar operations)
+Performance (PERF) = 0.026157 dflops/cycle (only counting add, mul, sub)
+Performance (RDTSC) = 0.025202 dflops/cycle (only counting add, mul, sub)
+Got ovalue: data/timings/20210605_000445/reference_hdbscan.csv
+
+
