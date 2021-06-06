@@ -36,6 +36,8 @@ C_COMPILER=clang-11
 CXX_COMPILER=clang++-11
 # data creation here first
 
+rm -rf build
+
 # create build dir
 mkdir -p build
 mkdir -p plots/${TIME}
