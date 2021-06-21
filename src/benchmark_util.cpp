@@ -78,7 +78,7 @@ double rdtsc(void (*compute)()) {
   return (double)cycles;
 }
 
-double rdtsc_lambda(std::function<void ()> compute) {
+double rdtsc_lambda(std::function<void()> compute) {
   int i, num_runs;
   myInt64 cycles;
   myInt64 start;
@@ -363,7 +363,8 @@ void init_measurement(struct measurement_data_t *data) {
   data->mult_add = 0;
 }
 
-void add_measurement(struct measurement_data_t *data, std::function<void ()> compute) {
+void add_measurement(struct measurement_data_t *data,
+                     std::function<void()> compute) {
   int fd = start_flops_counter(ADD_SUB_FLOPS);
   compute();
   data->add_sub += stop_flops_counter(fd);
@@ -382,16 +383,18 @@ void add_measurement(struct measurement_data_t *data, std::function<void ()> com
 
 void print_measurement(struct measurement_data_t *data, const char *prefix) {
   setlocale(LC_NUMERIC, "");
-  printf("%s RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", prefix, data->runtime, data->runtime / (FREQUENCY),
-         (FREQUENCY) / 1e6);
+  printf("%s RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", prefix, data->runtime,
+         data->runtime / (FREQUENCY), (FREQUENCY) / 1e6);
   printf("%s FLOPS count add/sub: %'lu\n", prefix, data->add_sub);
   printf("%s FLOPS count mult: %'lu\n", prefix, data->mult);
   printf("%s FLOPS count div/sqrt: %'lu\n", prefix, data->div_sqrt);
   printf("%s FLOPS count multiply-add: %'lu\n", prefix, data->mult_add);
-  unsigned long all_flops = data->add_sub + data->mult + data->div_sqrt + data->mult_add;
+  unsigned long all_flops =
+      data->add_sub + data->mult + data->div_sqrt + data->mult_add;
   printf("%s FLOPS count overall: %'lu\n", prefix, all_flops);
 
-  printf("%s Performance (RDTSC) = %'f dflops/cycle\n", prefix, (double)all_flops / data->runtime);
+  printf("%s Performance (RDTSC) = %'f dflops/cycle\n", prefix,
+         (double)all_flops / data->runtime);
 }
 
 #else
@@ -403,7 +406,8 @@ void init_measurement(struct measurement_data_t *data) {
   data->pd256 = 0;
 }
 
-void add_measurement(struct measurement_data_t *data, std::function<void ()> compute) {
+void add_measurement(struct measurement_data_t *data,
+                     std::function<void()> compute) {
   int fd = start_flops_counter(FP_ARITH_INST_RETIRED_SCALAR_DOUBLE);
   compute();
   data->sd += stop_flops_counter(fd);
@@ -419,18 +423,20 @@ void add_measurement(struct measurement_data_t *data, std::function<void ()> com
 
 void print_measurement(struct measurement_data_t *data, const char *prefix) {
   setlocale(LC_NUMERIC, "");
-  printf("%s RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", prefix, data->runtime, data->runtime / (FREQUENCY),
-         (FREQUENCY) / 1e6);
+  printf("%s RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", prefix, data->runtime,
+         data->runtime / (FREQUENCY), (FREQUENCY) / 1e6);
   printf("%s FLOPS count scalar double: %'lu\n", prefix, data->sd);
   printf("%s FLOPS count 128 packed double: %'lu (multiply by 2 to get scalar "
-         "operations)\n", prefix, data->pd128);
+         "operations)\n",
+         prefix, data->pd128);
   printf("%s FLOPS count 256 packed double: %'lu (multiply by 4 to get scalar "
-         "operations)\n", prefix, data->pd256);
+         "operations)\n",
+         prefix, data->pd256);
 
   long long scalar_flops = data->sd + 2 * data->pd128 + 4 * data->pd256;
-  printf(
-      "%s Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, sub)\n",
-      prefix, (double)scalar_flops / data->runtime);
+  printf("%s Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, "
+         "sub)\n",
+         prefix, (double)scalar_flops / data->runtime);
 }
 
 #endif

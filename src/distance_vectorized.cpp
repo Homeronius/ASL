@@ -309,10 +309,10 @@ double euclidean_distance(double *p1, double *p2, int d) {
     __m256d diff2 = _mm256_sub_pd(pv3, pv4);
     __m256d diff3 = _mm256_sub_pd(pv5, pv6);
     __m256d diff4 = _mm256_sub_pd(pv7, pv8);
-     sum1 = _mm256_fmadd_pd(diff1, diff1, sum1);
-     sum2 = _mm256_fmadd_pd(diff2, diff2, sum2);
-     sum3 = _mm256_fmadd_pd(diff3, diff3, sum3);
-     sum4 = _mm256_fmadd_pd(diff4, diff4, sum4);
+    sum1 = _mm256_fmadd_pd(diff1, diff1, sum1);
+    sum2 = _mm256_fmadd_pd(diff2, diff2, sum2);
+    sum3 = _mm256_fmadd_pd(diff3, diff3, sum3);
+    sum4 = _mm256_fmadd_pd(diff4, diff4, sum4);
   }
 
   __m256d suma = _mm256_add_pd(sum1, sum2);
@@ -327,8 +327,8 @@ double euclidean_distance(double *p1, double *p2, int d) {
   __m128d res = _mm_add_sd(p, s);
 
   for (; i < d; i++) {
-    __m128d p1_vec = _mm_load_sd(p1+i);
-    __m128d p2_vec = _mm_load_sd(p2+i);
+    __m128d p1_vec = _mm_load_sd(p1 + i);
+    __m128d p2_vec = _mm_load_sd(p2 + i);
     __m128d diff = _mm_sub_sd(p1_vec, p2_vec);
     res = _mm_fmadd_sd(diff, diff, res);
   }
@@ -395,10 +395,10 @@ double manhattan_distance(double *p1, double *p2, int d) {
     __m256d diff2 = _mm256_sub_pd(pv3, pv4);
     __m256d diff3 = _mm256_sub_pd(pv5, pv6);
     __m256d diff4 = _mm256_sub_pd(pv7, pv8);
-     sum1 = _mm256_add_pd(_mm256_and_pd(diff1, abs_mask), sum1);
-     sum2 = _mm256_add_pd(_mm256_and_pd(diff2, abs_mask), sum2);
-     sum3 = _mm256_add_pd(_mm256_and_pd(diff3, abs_mask), sum3);
-     sum4 = _mm256_add_pd(_mm256_and_pd(diff4, abs_mask), sum4);
+    sum1 = _mm256_add_pd(_mm256_and_pd(diff1, abs_mask), sum1);
+    sum2 = _mm256_add_pd(_mm256_and_pd(diff2, abs_mask), sum2);
+    sum3 = _mm256_add_pd(_mm256_and_pd(diff3, abs_mask), sum3);
+    sum4 = _mm256_add_pd(_mm256_and_pd(diff4, abs_mask), sum4);
   }
 
   __m256d suma = _mm256_add_pd(sum1, sum2);
@@ -413,8 +413,8 @@ double manhattan_distance(double *p1, double *p2, int d) {
   __m128d res = _mm_add_sd(s, p);
 
   for (; i < d; i++) {
-    __m128d p1_vec = _mm_load_sd(p1+i);
-    __m128d p2_vec = _mm_load_sd(p2+i);
+    __m128d p1_vec = _mm_load_sd(p1 + i);
+    __m128d p2_vec = _mm_load_sd(p2 + i);
     __m128d diff = _mm_sub_sd(p1_vec, p2_vec);
     res = _mm_add_sd(_mm_and_pd(diff, _mm256_castpd256_pd128(abs_mask)), res);
   }
@@ -523,34 +523,34 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
 #ifdef FINE_GRAINED_BENCH
     auto compute = [&]() {
 #endif
-    int i = 0;
+      int i = 0;
 #ifdef SPECIALIZED_DISTANCE
-    for (; i < n - 3; i += 4) {
-      if (d == 2) {
-        euclidean_distance_2(input + k * d, input + i * d, input + k * d,
-                             input + (i + 1) * d, input + k * d,
-                             input + (i + 2) * d, input + k * d,
-                             input + (i + 3) * d, distances + i);
-      } else if (d == 4) {
-        euclidean_distance_4_opt_alt(input + k * d, input + i * d,
-                                     input + (i + 1) * d, input + (i + 2) * d,
-                                     input + (i + 3) * d, distances + i);
-      } else {
-        break;
+      for (; i < n - 3; i += 4) {
+        if (d == 2) {
+          euclidean_distance_2(input + k * d, input + i * d, input + k * d,
+                               input + (i + 1) * d, input + k * d,
+                               input + (i + 2) * d, input + k * d,
+                               input + (i + 3) * d, distances + i);
+        } else if (d == 4) {
+          euclidean_distance_4_opt_alt(input + k * d, input + i * d,
+                                       input + (i + 1) * d, input + (i + 2) * d,
+                                       input + (i + 3) * d, distances + i);
+        } else {
+          break;
+        }
       }
-    }
 #endif
-    for (; i < n; i++) {
-      distances[i] = euclidean_distance(input + i * d, input + k * d, d);
-    }
+      for (; i < n; i++) {
+        distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+      }
 #ifdef FINE_GRAINED_BENCH
-  };
-  add_measurement(&mdata, compute);
+    };
+    add_measurement(&mdata, compute);
 #endif
 #ifdef HDBSCAN_QUICKSELECT
-      core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
+    core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
 #else
-      core_dist[k] = get_kth_neighbor(distances, n, mpts);
+    core_dist[k] = get_kth_neighbor(distances, n, mpts);
 #endif
   }
 
@@ -567,43 +567,42 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
   init_measurement(&mdata);
 #endif
 
-
   for (int i = 0; i < n; i++) {
 #ifdef FINE_GRAINED_BENCH
     auto compute = [&]() {
 #endif
-    int k = 0;
+      int k = 0;
 #ifdef SPECIALIZED_DISTANCE
-    for (; k < n - 3; k += 4) {
-      if (d == 2) {
-        euclidean_distance_2(input + i * d, input + k * d, input + i * d,
-                             input + (k + 1) * d, input + i * d,
-                             input + (k + 2) * d, input + i * d,
-                             input + (k + 3) * d, tmp + k);
-      } else if (d == 4) {
-        euclidean_distance_4_opt_alt(input + i * d, input + k * d,
-                                     input + (k + 1) * d, input + (k + 2) * d,
-                                     input + (k + 3) * d, tmp + k);
-      } else {
-        break;
-      }
+      for (; k < n - 3; k += 4) {
+        if (d == 2) {
+          euclidean_distance_2(input + i * d, input + k * d, input + i * d,
+                               input + (k + 1) * d, input + i * d,
+                               input + (k + 2) * d, input + i * d,
+                               input + (k + 3) * d, tmp + k);
+        } else if (d == 4) {
+          euclidean_distance_4_opt_alt(input + i * d, input + k * d,
+                                       input + (k + 1) * d, input + (k + 2) * d,
+                                       input + (k + 3) * d, tmp + k);
+        } else {
+          break;
+        }
 
-      __m256d t = _mm256_loadu_pd(tmp + k);
-      _mm256_storeu_pd(dist + i * n + k, t);
-    }
+        __m256d t = _mm256_loadu_pd(tmp + k);
+        _mm256_storeu_pd(dist + i * n + k, t);
+      }
 #endif
-    for (; k < n; k++) {
-      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
-      dist[i * n + k] = tmp[k];
-    }
+      for (; k < n; k++) {
+        tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+        dist[i * n + k] = tmp[k];
+      }
 #ifdef FINE_GRAINED_BENCH
-  };
-  add_measurement(&mdata, compute);
+    };
+    add_measurement(&mdata, compute);
 #endif
 #ifdef HDBSCAN_QUICKSELECT
-      core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
+    core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
 #else
-      core_dist[i] = get_kth_neighbor(tmp, n, mpts);
+    core_dist[i] = get_kth_neighbor(tmp, n, mpts);
 #endif
   }
 

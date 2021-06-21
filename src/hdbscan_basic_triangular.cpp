@@ -66,7 +66,6 @@ void HDBSCAN::build_mst() {
   printf("Core distances computed.\n");
 #endif
 
-  
   dist = static_cast<float_t *>(malloc(n * (n + 1) / 2 * sizeof(float_t)));
   compute_distance_matrix_triang(dataset, core_dist, dist, mpts, n, d);
 #ifdef HDBSCAN_VERBOSE

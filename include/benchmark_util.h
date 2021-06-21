@@ -62,7 +62,7 @@ struct measurement_data_t {
 //------------------------------------------------------------------------------
 
 double rdtsc(void (*compute)());
-double rdtsc_lambda(std::function<void ()> compute);
+double rdtsc_lambda(std::function<void()> compute);
 double c_clock(void (*compute)());
 double timeofday(void (*compute)());
 void measure_and_print(void (*compute)());
@@ -95,8 +95,8 @@ void stop_all_flops_counter(int fd, unsigned long *ids, unsigned long *result,
 //------------------------------------------------------------------------------
 
 void init_measurement(struct measurement_data_t *data);
-void add_measurement(struct measurement_data_t *data, std::function<void ()> compute);
+void add_measurement(struct measurement_data_t *data,
+                     std::function<void()> compute);
 void print_measurement(struct measurement_data_t *data, const char *prefix);
-
 
 #endif // _BENCHMARK_UTIL_H_

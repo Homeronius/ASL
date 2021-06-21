@@ -1,8 +1,8 @@
 #include "distance.h"
 #include "quickselect.h"
 #include <math.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifdef FINE_GRAINED_BENCH
 #include "benchmark_util.h"
@@ -62,12 +62,12 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
 #ifdef FINE_GRAINED_BENCH
     auto compute = [&]() {
 #endif
-    for (int i = 0; i < n; i++) {
-      distances[i] = euclidean_distance(input + i * d, input + k * d, d);
-    }
+      for (int i = 0; i < n; i++) {
+        distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+      }
 #ifdef FINE_GRAINED_BENCH
-  };
-  add_measurement(&mdata, compute);
+    };
+    add_measurement(&mdata, compute);
 #endif
 
     core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
@@ -91,13 +91,13 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
 #ifdef FINE_GRAINED_BENCH
     auto compute = [&]() {
 #endif
-    for (int k = 0; k < n; k++) {
-      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
-      dist[i * n + k] = tmp[k];
-    }
+      for (int k = 0; k < n; k++) {
+        tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+        dist[i * n + k] = tmp[k];
+      }
 #ifdef FINE_GRAINED_BENCH
-  };
-  add_measurement(&mdata, compute);
+    };
+    add_measurement(&mdata, compute);
 #endif
     core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
   }
@@ -152,14 +152,16 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
 void compute_distance_matrix_blocked(double *input, double *core_dist,
                                      double *dist, int mpts, int n, int d) {
 
-  #ifndef HDBSCAN_BLOCK_SIZE
+#ifndef HDBSCAN_BLOCK_SIZE
   int CACHE_SIZE = 4096; // size in double. assume cache size 32KiB
-  int block_size = (int)(sqrt( d * d + CACHE_SIZE) - d); // blcok*2 + 2*d*block - Cache = 0
-  #else
+  int block_size =
+      (int)(sqrt(d * d + CACHE_SIZE) - d); // blcok*2 + 2*d*block - Cache = 0
+#else
   int block_size = HDBSCAN_BLOCK_SIZE;
-  #endif
+#endif
 
-  // printf("Running Blocked Computation: Cache = %d, dim = %d, Blocksize = %d, n=%d\n", CACHE_SIZE, d, block_size, n);
+  // printf("Running Blocked Computation: Cache = %d, dim = %d, Blocksize = %d,
+  // n=%d\n", CACHE_SIZE, d, block_size, n);
   int i_block = 0;
   int k_block = 0;
   for (; i_block < n - block_size; i_block += block_size) {
@@ -188,10 +190,12 @@ void compute_distance_matrix_blocked(double *input, double *core_dist,
   }
   for (int i = i_block; i < n; i++) {
     for (int k = k_block; k < n; k++) {
-      dist[i * n + k] += euclidean_distance_squared(input + i * d, input + k * d, d);
+      dist[i * n + k] +=
+          euclidean_distance_squared(input + i * d, input + k * d, d);
     }
   }
-  double* tmp = static_cast<double *>(malloc(n * n * sizeof(double)));;
+  double *tmp = static_cast<double *>(malloc(n * n * sizeof(double)));
+  ;
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {
       dist[i * n + k] = sqrt(dist[i * n + k]);

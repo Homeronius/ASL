@@ -49,7 +49,7 @@ void get_preorder(std::vector<Cluster *> &ordered_clusters, Cluster *c) {
 std::vector<Cluster *>
 extract_clusters(std::vector<Cluster *> ordered_clusters) {
   std::vector<Cluster *> selected_clusters;
-  for (int i =  0; i < ordered_clusters.size(); i++) {
+  for (int i = 0; i < ordered_clusters.size(); i++) {
     if (ordered_clusters[i]->selected) {
       Cluster *parent = ordered_clusters[i]->parent;
       if (parent != nullptr) {
@@ -62,7 +62,7 @@ extract_clusters(std::vector<Cluster *> ordered_clusters) {
       }
     }
   }
-  for (auto &&c : ordered_clusters) { 
+  for (auto &&c : ordered_clusters) {
     if (c->selected) {
       selected_clusters.push_back(c);
     }

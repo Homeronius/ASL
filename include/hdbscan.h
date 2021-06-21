@@ -31,8 +31,8 @@ private:
 
   // Algorithm related buffer pointers
   float_t *core_dist = nullptr; // core distance for each datapoint
-  float_t *dist = nullptr; // full pairwise dist matrix
-  edge *mst = nullptr; // minimum-spanning-tree
+  float_t *dist = nullptr;      // full pairwise dist matrix
+  edge *mst = nullptr;          // minimum-spanning-tree
   std::vector<Cluster *> condensed_cluster_tree;
   std::vector<Cluster *> ordered_cluster_tree;
   std::vector<Cluster *> selected_clusters;

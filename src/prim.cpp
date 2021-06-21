@@ -63,8 +63,9 @@ void prim(double *adjacency, edge *result, int n) {
  *        adjacency matrix with corresponding
  *        edge weights. The graph is assumed to be undirected.
  *
- * @param adjacency the upper triangular of the adjacency matrix of the graph, size n*(n+1)/2
- *                  access translation is: Matrix[i][j] -> adjacency[(n * i - (i * (i + 1) / 2)) + j]
+ * @param adjacency the upper triangular of the adjacency matrix of the graph,
+ * size n*(n+1)/2 access translation is: Matrix[i][j] -> adjacency[(n * i - (i *
+ * (i + 1) / 2)) + j]
  * @param result pointer to store result into
  * @param n number of nodes in the graph
  *

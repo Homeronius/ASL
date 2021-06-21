@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 #endif
 
   int opt;
-  char* ovalue = NULL;
+  char *ovalue = NULL;
   while ((opt = getopt(argc, argv, "i:k:do:")) != EOF) {
     switch (opt) {
     case 'k':
@@ -70,13 +70,15 @@ int main(int argc, char **argv) {
       if (optopt == 'o' || optopt == 'i')
         fprintf(stderr, "Option -%c requires a string argument.\n", optopt);
       else
-        fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o <output-file>] [-k <mpts>]\n");
+        fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o "
+                        "<output-file>] [-k <mpts>]\n");
       return 1;
     }
   }
   if (dataset_path == NULL) {
-      fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o <output-file>] [-k <mpts>]\n");
-      return 1;
+    fprintf(stderr, "Usage: hdbscan_benchmark -i <input_path> [-o "
+                    "<output-file>] [-k <mpts>]\n");
+    return 1;
   }
   printf("DATASET path: %s\n\n", dataset_path);
 
@@ -166,14 +168,14 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(ovalue, F_OK) == 0) { // exists -> append
       fptr = fopen(ovalue, "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t,
-              p, scalar_flops, sd, pd128, pd256,mpts);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t, p,
+              scalar_flops, sd, pd128, pd256, mpts);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,sd,pd128,pd256\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t,
-              p, scalar_flops, sd, pd128, pd256,mpts);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t, p,
+              scalar_flops, sd, pd128, pd256, mpts);
     }
 
     fclose(fptr);
@@ -212,14 +214,14 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(ovalue, F_OK) == 0) { // exists -> append
       fptr = fopen(ovalue, "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r,
-              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c,
+              t, p, all_flops, add_sub, mult, div_sqrt, mult_add, mpts);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,all,add_sub,mult,div_sqrt,mult_add\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r,
-              c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c,
+              t, p, all_flops, add_sub, mult, div_sqrt, mult_add, mpts);
     }
 
     fclose(fptr);
