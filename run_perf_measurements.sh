@@ -21,7 +21,7 @@ mkdir -p data/timings/${TIME}
 
 SUFFIX=$1
 PREFIX="data/timings/${TIME}"
-BINARY="./build/bin/$2"
+BINARY=$2
 OUTPUT_LOG="${PREFIX}/timings_${SUFFIX}.out"
 OUTPUT_CSV="${PREFIX}/${SUFFIX}.csv"
 
