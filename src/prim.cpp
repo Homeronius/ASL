@@ -171,8 +171,12 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
 
       curr_min_cost_j = cost[j];
       core_dist_j = core_distances[j];
-      // @TODO different distance funcs?
+
+#ifdef HDBSCAN_MANHATTAN
+      dist_between = manhattan_distance(X + i * d, X + j * d, d);
+#else
       dist_between = euclidean_distance(X + i * d, X + j * d, d);
+#endif
 
       mutual_reach_dist = fmax(core_dist_i, fmax(core_dist_j, dist_between));
 

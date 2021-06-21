@@ -209,6 +209,12 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
 
         core_dist_j_vec = _mm256_load_pd(core_dist_j_local);
 
+#ifdef HDBSCAN_MANHATTAN
+        for (k = 0; k < 4; ++k) {
+          dist_between_local[k] =
+              manhattan_distance(X + i * d, X + idx_j_local[k] * d, d);
+        }
+#else
         if (d == 2) {
           dist_between_vec = euclidean_distance_2_ret_simd(
               X + i * d, X + idx_j_local[0] * d, X + i * d,
@@ -224,6 +230,7 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
                 euclidean_distance(X + i * d, X + idx_j_local[k] * d, d);
           }
         }
+#endif
 
         mutual_reach_dist_vec = _mm256_max_pd(
             core_dist_i_vec, _mm256_max_pd(core_dist_j_vec, dist_between_vec));
@@ -261,7 +268,11 @@ void prim_advanced(double *X, double *core_distances, edge *result, int n,
       curr_min_cost_j = cost[j];
       double core_dist_j = core_distances[j];
       // @TODO different distance funcs?
+#ifdef HDBSCAN_MANHATTAN
+      dist_between = manhattan_distance(X + i * d, X + j * d, d);
+#else
       dist_between = euclidean_distance(X + i * d, X + j * d, d);
+#endif
 
       double mutual_reach_dist =
           fmax(core_distances[i], fmax(core_dist_j, dist_between));

@@ -527,21 +527,39 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
 #ifdef SPECIALIZED_DISTANCE
       for (; i < n - 3; i += 4) {
         if (d == 2) {
+#ifdef HDBSCAN_MANHATTAN
+          manhattan_distance_2(input + k * d, input + i * d, input + k * d,
+                               input + (i + 1) * d, input + k * d,
+                               input + (i + 2) * d, input + k * d,
+                               input + (i + 3) * d, distances + i);
+#else
           euclidean_distance_2(input + k * d, input + i * d, input + k * d,
                                input + (i + 1) * d, input + k * d,
                                input + (i + 2) * d, input + k * d,
                                input + (i + 3) * d, distances + i);
+#endif
         } else if (d == 4) {
+#ifdef HDBSCAN_MANHATTAN
+          manhattan_distance_4(input + k * d, input + i * d, input + k * d,
+                               input + (i + 1) * d, input + k * d,
+                               input + (i + 2) * d, input + k * d,
+                               input + (i + 3) * d, distances + i);
+#else
           euclidean_distance_4_opt_alt(input + k * d, input + i * d,
                                        input + (i + 1) * d, input + (i + 2) * d,
                                        input + (i + 3) * d, distances + i);
+#endif
         } else {
           break;
         }
       }
 #endif
       for (; i < n; i++) {
-        distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+#ifdef HDBSCAN_MANHATTAN
+        distances[i] = manhattan_distance(input + i * d, input + k * d, d);
+#else
+      distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
       }
 #ifdef FINE_GRAINED_BENCH
     };
@@ -575,14 +593,28 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
 #ifdef SPECIALIZED_DISTANCE
       for (; k < n - 3; k += 4) {
         if (d == 2) {
+#ifdef HDBSCAN_MANHATTAN
+          manhattan_distance_2(input + i * d, input + k * d, input + i * d,
+                               input + (k + 1) * d, input + i * d,
+                               input + (k + 2) * d, input + i * d,
+                               input + (k + 3) * d, tmp + k);
+#else
           euclidean_distance_2(input + i * d, input + k * d, input + i * d,
                                input + (k + 1) * d, input + i * d,
                                input + (k + 2) * d, input + i * d,
                                input + (k + 3) * d, tmp + k);
+#endif
         } else if (d == 4) {
+#ifdef HDBSCAN_MANHATTAN
+          manhattan_distance_4(input + i * d, input + k * d, input + i * d,
+                               input + (k + 1) * d, input + i * d,
+                               input + (k + 2) * d, input + i * d,
+                               input + (k + 3) * d, tmp + k);
+#else
           euclidean_distance_4_opt_alt(input + i * d, input + k * d,
                                        input + (k + 1) * d, input + (k + 2) * d,
                                        input + (k + 3) * d, tmp + k);
+#endif
         } else {
           break;
         }
@@ -592,7 +624,11 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
       }
 #endif
       for (; k < n; k++) {
-        tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#ifdef HDBSCAN_MANHATTAN
+        tmp[k] = manhattan_distance(input + i * d, input + k * d, d);
+#else
+      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
         dist[i * n + k] = tmp[k];
       }
 #ifdef FINE_GRAINED_BENCH
@@ -642,7 +678,11 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
     dist[(n * i - (i * (i + 1) / 2)) + i] = 0;
     tmp[i] = 0;
     for (k = i + 1; k < n; k++) {
+#ifdef HDBSCAN_MANHATTAN
+      tmp[k] = manhattan_distance(input + i * d, input + k * d, d);
+#else
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
       dist[(n * i - (i * (i + 1) / 2)) + k] = tmp[k];
     }
     core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);

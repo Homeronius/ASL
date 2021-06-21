@@ -63,7 +63,11 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
     auto compute = [&]() {
 #endif
       for (int i = 0; i < n; i++) {
-        distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+#ifdef HDBSCAN_MANHATTAN
+        distances[i] = manhattan_distance(input + i * d, input + k * d, d);
+#else
+      distances[i] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
       }
 #ifdef FINE_GRAINED_BENCH
     };
@@ -92,7 +96,11 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
     auto compute = [&]() {
 #endif
       for (int k = 0; k < n; k++) {
-        tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#ifdef HDBSCAN_MANHATTAN
+        tmp[k] = manhattan_distance(input + i * d, input + k * d, d);
+#else
+      tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
         dist[i * n + k] = tmp[k];
       }
 #ifdef FINE_GRAINED_BENCH
@@ -134,7 +142,11 @@ void compute_distance_matrix_triang(double *input, double *core_dist,
     dist[(n * i - (i * (i + 1) / 2)) + i] = 0;
     tmp[i] = 0;
     for (k = i + 1; k < n; k++) {
+#ifdef HDBSCAN_MANHATTAN
+      tmp[k] = manhattan_distance(input + i * d, input + k * d, d);
+#else
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
+#endif
       dist[(n * i - (i * (i + 1) / 2)) + k] = tmp[k];
     }
     core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
@@ -169,14 +181,22 @@ void compute_distance_matrix_blocked(double *input, double *core_dist,
       for (int i = i_block; i < i_block + block_size; i++) {
         for (int k = k_block; k < k_block + block_size; k++) {
           dist[i * n + k] +=
+#ifdef HDBSCAN_MANHATTAN
+              manhattan_distance(input + i * d, input + k * d, d);
+#else
               euclidean_distance_squared(input + i * d, input + k * d, d);
+#endif
         }
       }
     }
     for (int i = i_block; i < i_block + block_size; i++) {
       for (int k = k_block; k < n; k++) {
         dist[i * n + k] +=
+#ifdef HDBSCAN_MANHATTAN
+            manhattan_distance(input + i * d, input + k * d, d);
+#else
             euclidean_distance_squared(input + i * d, input + k * d, d);
+#endif
       }
     }
   }
@@ -184,21 +204,31 @@ void compute_distance_matrix_blocked(double *input, double *core_dist,
     for (int i = i_block; i < n; i++) {
       for (int k = k_block; k < k_block + block_size; k++) {
         dist[i * n + k] +=
+#ifdef HDBSCAN_MANHATTAN
+            manhattan_distance(input + i * d, input + k * d, d);
+#else
             euclidean_distance_squared(input + i * d, input + k * d, d);
+#endif
       }
     }
   }
   for (int i = i_block; i < n; i++) {
     for (int k = k_block; k < n; k++) {
       dist[i * n + k] +=
+#ifdef HDBSCAN_MANHATTAN
+          manhattan_distance(input + i * d, input + k * d, d);
+#else
           euclidean_distance_squared(input + i * d, input + k * d, d);
+#endif
     }
   }
   double *tmp = static_cast<double *>(malloc(n * n * sizeof(double)));
   ;
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {
+#ifndef HDBSCAN_MANHATTAN
       dist[i * n + k] = sqrt(dist[i * n + k]);
+#endif
       tmp[i * n + k] = dist[i * n + k];
     }
     core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
