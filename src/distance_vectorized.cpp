@@ -524,6 +524,7 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
     auto compute = [&]() {
 #endif
     int i = 0;
+#ifdef SPECIALIZED_DISTANCE
     for (; i < n - 3; i += 4) {
       if (d == 2) {
         euclidean_distance_2(input + k * d, input + i * d, input + k * d,
@@ -538,6 +539,7 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
         break;
       }
     }
+#endif
     for (; i < n; i++) {
       distances[i] = euclidean_distance(input + i * d, input + k * d, d);
     }
@@ -571,6 +573,7 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
     auto compute = [&]() {
 #endif
     int k = 0;
+#ifdef SPECIALIZED_DISTANCE
     for (; k < n - 3; k += 4) {
       if (d == 2) {
         euclidean_distance_2(input + i * d, input + k * d, input + i * d,
@@ -588,6 +591,7 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
       __m256d t = _mm256_loadu_pd(tmp + k);
       _mm256_storeu_pd(dist + i * n + k, t);
     }
+#endif
     for (; k < n; k++) {
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[i * n + k] = tmp[k];
