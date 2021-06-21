@@ -46,6 +46,7 @@ object
 # Build folder
 build/
 data/
+venv/
 
 #virtual enviorment
 helper_scripts/venv/
