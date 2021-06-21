@@ -12,6 +12,7 @@ configure_file (
 ################### PRIM ADVANCED ####################
 ######################################################
 add_library(hdbscan_lib
+  benchmark_util.cpp
   distance.cpp
   union_find.cpp
   clustering.cpp
@@ -43,6 +44,7 @@ target_link_libraries(hdbscan_benchmark PRIVATE
 #### VECTORIZED DISTANCE ####
 #############################
 add_library(hdbscan_lib_distvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp
@@ -67,6 +69,7 @@ target_link_libraries(hdbscan_distvec PRIVATE hdbscan_lib_distvec)
 #### VECTORIZED DISTANCE + QUICKSELECT ####
 ###########################################
 add_library(hdbscan_lib_distvec_quickvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp
@@ -91,6 +94,7 @@ target_link_libraries(hdbscan_distvec_quickvec PRIVATE hdbscan_lib_distvec_quick
 #### VECT. DISTANCE + QUICKSELECT + PRIM ####
 #############################################
 add_library(hdbscan_lib_distvec_quickvec_primvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp
@@ -121,6 +125,7 @@ target_link_libraries(hdbscan_distvec_quickvec_primvec PRIVATE hdbscan_lib_distv
 ######################################################
 # the version with precomputation of distances
 add_library(hdbscan_basic_lib
+  benchmark_util.cpp
   distance.cpp
   union_find.cpp
   clustering.cpp
@@ -154,6 +159,7 @@ target_link_libraries(hdbscan_basic_benchmark PRIVATE
 ####################################
 
 add_library(hdbscan_basic_lib_triang
+  benchmark_util.cpp
   distance.cpp
   union_find.cpp
   clustering.cpp
@@ -180,6 +186,7 @@ target_link_libraries(hdbscan_basic_triang PRIVATE hdbscan_basic_lib_triang)
 #################################
 
 add_library(hdbscan_basic_lib_blocked
+  benchmark_util.cpp
   distance.cpp
   union_find.cpp
   clustering.cpp
@@ -205,6 +212,7 @@ target_link_libraries(hdbscan_basic_blocked PRIVATE hdbscan_basic_lib_blocked)
 #### VECTORIZED DISTANCE ####
 #############################
 add_library(hdbscan_basic_lib_distvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp
@@ -229,6 +237,7 @@ target_link_libraries(hdbscan_basic_distvec PRIVATE hdbscan_basic_lib_distvec)
 #### VECTORIZED DISTANCE + QUICKSELECT ####
 ###########################################
 add_library(hdbscan_basic_lib_distvec_quickvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp
@@ -254,6 +263,7 @@ target_link_libraries(hdbscan_basic_distvec_quickvec PRIVATE hdbscan_basic_lib_d
 #### VECT. DISTANCE + QUICKSELECT + PRIM ####
 #############################################
 add_library(hdbscan_basic_lib_distvec_quickvec_primvec
+  benchmark_util.cpp
   distance_vectorized.cpp
   union_find.cpp
   clustering.cpp

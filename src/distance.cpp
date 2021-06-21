@@ -2,6 +2,11 @@
 #include "quickselect.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+#ifdef FINE_GRAINED_BENCH
+#include "benchmark_util.h"
+#endif
 
 #ifdef HDBSCAN_INSTRUMENT
 extern long hdbscan_sqrt_counter;
@@ -48,25 +53,58 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
                             int d) {
   double distances[n];
 
+#ifdef FINE_GRAINED_BENCH
+  struct measurement_data_t mdata;
+  init_measurement(&mdata);
+#endif
+
   for (int k = 0; k < n; k++) {
+#ifdef FINE_GRAINED_BENCH
+    auto compute = [&]() {
+#endif
     for (int i = 0; i < n; i++) {
       distances[i] = euclidean_distance(input + i * d, input + k * d, d);
     }
+#ifdef FINE_GRAINED_BENCH
+  };
+  add_measurement(&mdata, compute);
+#endif
 
     core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
   }
+
+#ifdef FINE_GRAINED_BENCH
+  print_measurement(&mdata, "(distance)");
+#endif
 }
 
 void compute_distance_matrix(double *input, double *core_dist, double *dist,
                              int mpts, int n, int d) {
   double tmp[n];
+
+#ifdef FINE_GRAINED_BENCH
+  struct measurement_data_t mdata;
+  init_measurement(&mdata);
+#endif
+
   for (int i = 0; i < n; i++) {
+#ifdef FINE_GRAINED_BENCH
+    auto compute = [&]() {
+#endif
     for (int k = 0; k < n; k++) {
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[i * n + k] = tmp[k];
     }
+#ifdef FINE_GRAINED_BENCH
+  };
+  add_measurement(&mdata, compute);
+#endif
     core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
   }
+
+#ifdef FINE_GRAINED_BENCH
+  print_measurement(&mdata, "(distance)");
+#endif
 
   for (int i = 0; i < n; i++) {
     for (int k = 0; k < n; k++) {

@@ -4,6 +4,10 @@
 #include <math.h>
 #include <stdint.h>
 
+#ifdef FINE_GRAINED_BENCH
+#include "benchmark_util.h"
+#endif
+
 #ifdef HDBSCAN_INSTRUMENT
 extern long hdbscan_sqrt_counter;
 #endif
@@ -508,8 +512,17 @@ double get_kth_neighbor(double *input, int n, int k) {
 void compute_core_distances(double *input, double *core_dist, int mpts, int n,
                             int d) {
   double distances[n];
+
+#ifdef FINE_GRAINED_BENCH
+  struct measurement_data_t mdata;
+  init_measurement(&mdata);
+#endif
+
   BuildPackMask();
   for (int k = 0; k < n; k++) {
+#ifdef FINE_GRAINED_BENCH
+    auto compute = [&]() {
+#endif
     int i = 0;
     for (; i < n - 3; i += 4) {
       if (d == 2) {
@@ -528,21 +541,35 @@ void compute_core_distances(double *input, double *core_dist, int mpts, int n,
     for (; i < n; i++) {
       distances[i] = euclidean_distance(input + i * d, input + k * d, d);
     }
-    // this is a hardcoded case distinction,
-    // which nicely improved performance based on some testing
+#ifdef FINE_GRAINED_BENCH
+  };
+  add_measurement(&mdata, compute);
+#endif
 #ifdef HDBSCAN_QUICKSELECT
       core_dist[k] = iterative_quickselect(distances, n, mpts - 1);
 #else
       core_dist[k] = get_kth_neighbor(distances, n, mpts);
 #endif
   }
+
+#ifdef FINE_GRAINED_BENCH
+  print_measurement(&mdata, "(distance)");
+#endif
 }
 
 void compute_distance_matrix(double *input, double *core_dist, double *dist,
                              int mpts, int n, int d) {
   double tmp[n];
+#ifdef FINE_GRAINED_BENCH
+  struct measurement_data_t mdata;
+  init_measurement(&mdata);
+#endif
+
 
   for (int i = 0; i < n; i++) {
+#ifdef FINE_GRAINED_BENCH
+    auto compute = [&]() {
+#endif
     int k = 0;
     for (; k < n - 3; k += 4) {
       if (d == 2) {
@@ -565,14 +592,20 @@ void compute_distance_matrix(double *input, double *core_dist, double *dist,
       tmp[k] = euclidean_distance(input + i * d, input + k * d, d);
       dist[i * n + k] = tmp[k];
     }
-    // this is a hardcoded case distinction,
-    // which nicely improved performance based on some testing
+#ifdef FINE_GRAINED_BENCH
+  };
+  add_measurement(&mdata, compute);
+#endif
 #ifdef HDBSCAN_QUICKSELECT
       core_dist[i] = iterative_quickselect(tmp, n, mpts - 1);
 #else
       core_dist[i] = get_kth_neighbor(tmp, n, mpts);
 #endif
   }
+
+#ifdef FINE_GRAINED_BENCH
+  print_measurement(&mdata, "(distance)");
+#endif
 
   for (int i = 0; i < n; i++) {
     int k = 0;

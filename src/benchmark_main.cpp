@@ -37,10 +37,10 @@ void compute_hdbscan() {
   delete clusterer;
 }
 
-long long measure_flops(unsigned long config) {
+unsigned long measure_flops(unsigned long config) {
   int fd = start_flops_counter(config);
   compute_hdbscan();
-  long long count = stop_flops_counter(fd);
+  unsigned long count = stop_flops_counter(fd);
 
   return count;
 }
@@ -100,8 +100,8 @@ int main(int argc, char **argv) {
 
   int fd = start_perf_cycle_counter();
   compute_hdbscan();
-  long long p = stop_perf_cycle_counter(fd);
-  printf("PERF cycles: %'lld\n", p);
+  unsigned long p = stop_perf_cycle_counter(fd);
+  printf("PERF cycles: %'lu\n", p);
 
 #ifndef BENCHMARK_AMD
 
@@ -120,9 +120,9 @@ int main(int argc, char **argv) {
   compute_hdbscan();
   stop_all_flops_counter(fd, ids, result, k);
 
-  long long sd = result[0];
-  long long pd128 = result[1];
-  long long pd256 = result[2];
+  unsigned long sd = result[0];
+  unsigned long pd128 = result[1];
+  unsigned long pd256 = result[2];
 
   // const unsigned long single_configs[] = {
   // FP_ARITH_INST_RETIRED_SCALAR_SINGLE,
@@ -133,26 +133,26 @@ int main(int argc, char **argv) {
   // compute_hdbscan();
   // stop_all_flops_counter(fd, ids, result, k);
 
-  // long long ss = result[0];
-  // long long ps128 = result[1];
-  // long long ps256 = result[2];
+  // unsigned long ss = result[0];
+  // unsigned long ps128 = result[1];
+  // unsigned long ps256 = result[2];
 
-  printf("FLOPS count scalar double: %'lld\n", sd);
-  // printf("FLOPS count scalar float: %'lld\n", ss);
-  printf("FLOPS count 128 packed double: %'lld (multiply by 2 to get scalar "
+  printf("FLOPS count scalar double: %'lu\n", sd);
+  // printf("FLOPS count scalar float: %'lu\n", ss);
+  printf("FLOPS count 128 packed double: %'lu (multiply by 2 to get scalar "
          "operations)\n",
          pd128);
-  // printf("FLOPS count 128 packed float: %'lld (multiply by 4 to get scalar "
+  // printf("FLOPS count 128 packed float: %'lu (multiply by 4 to get scalar "
   //"operations)\n",
   // ps128);
-  printf("FLOPS count 256 packed double: %'lld (multiply by 4 to get scalar "
+  printf("FLOPS count 256 packed double: %'lu (multiply by 4 to get scalar "
          "operations)\n",
          pd256);
-  // printf("FLOPS count 256 packed float: %'lld (multiply by 8 to get scalar "
+  // printf("FLOPS count 256 packed float: %'lu (multiply by 8 to get scalar "
   //"operations)\n\n",
   // ps256);
 
-  long long scalar_flops = sd + 2 * pd128 + 4 * pd256;
+  unsigned long scalar_flops = sd + 2 * pd128 + 4 * pd256;
   printf(
       "Performance (PERF) = %'f dflops/cycle (only counting add, mul, sub)\n",
       (double)scalar_flops / p);
@@ -166,13 +166,13 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(ovalue, F_OK) == 0) { // exists -> append
       fptr = fopen(ovalue, "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r, c, t,
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t,
               p, scalar_flops, sd, pd128, pd256,mpts);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,sd,pd128,pd256\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r, c, t,
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r, c, t,
               p, scalar_flops, sd, pd128, pd256,mpts);
     }
 
@@ -191,18 +191,18 @@ int main(int argc, char **argv) {
   compute_hdbscan();
   stop_all_flops_counter(fd, ids, result, k);
 
-  long long add_sub = result[0];
-  printf("FLOPS count add/sub: %'lld\n", add_sub);
-  long long mult = result[1];
-  printf("FLOPS count mult: %'lld\n", mult);
-  long long div_sqrt = result[2];
-  printf("FLOPS count div/sqrt: %'lld\n", div_sqrt);
+  unsigned long add_sub = result[0];
+  printf("FLOPS count add/sub: %'lu\n", add_sub);
+  unsigned long mult = result[1];
+  printf("FLOPS count mult: %'lu\n", mult);
+  unsigned long div_sqrt = result[2];
+  printf("FLOPS count div/sqrt: %'lu\n", div_sqrt);
   // for some reason only n = 3 works to count
   // multiple events at the same time, hence do mult_add individually
-  long long mult_add = measure_flops(MULT_ADD_FLOPS);
-  printf("FLOPS count multiply-add: %'lld\n", mult_add);
-  long long all_flops = add_sub + mult + div_sqrt + mult_add;
-  printf("FLOPS count overall: %'lld\n", all_flops);
+  unsigned long mult_add = measure_flops(MULT_ADD_FLOPS);
+  printf("FLOPS count multiply-add: %'lu\n", mult_add);
+  unsigned long all_flops = add_sub + mult + div_sqrt + mult_add;
+  printf("FLOPS count overall: %'lu\n", all_flops);
 
   printf("Performance (PERF) = %'f dflops/cycle\n", (double)all_flops / p);
   printf("Performance (RDTSC) = %'f dflops/cycle\n", (double)all_flops / r);
@@ -212,13 +212,13 @@ int main(int argc, char **argv) {
     // Check if file already exists
     if (access(ovalue, F_OK) == 0) { // exists -> append
       fptr = fopen(ovalue, "a");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r,
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r,
               c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
     } else { // file doesn't exist -> create new, inclusive header line
       fptr = fopen(ovalue, "w");
       // Header
       fprintf(fptr, "n,d,r,c,t,p,all,add_sub,mult,div_sqrt,mult_add\n");
-      fprintf(fptr, "%i,%i,%f,%f,%f,%lld,%lld,%lld,%lld,%lld,%lld,%d\n", n, d, r,
+      fprintf(fptr, "%i,%i,%f,%f,%f,%lu,%lu,%lu,%lu,%lu,%lu,%d\n", n, d, r,
               c, t, p, all_flops, add_sub, mult, div_sqrt, mult_add,mpts);
     }
 

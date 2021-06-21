@@ -2,6 +2,8 @@
 
 #include <asm/unistd.h>
 #include <cassert>
+#include <clocale>
+#include <functional>
 #include <linux/perf_event.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +16,12 @@
 #include "benchmark_util.h"
 #include "tsc_x86.h"
 
+#ifdef FINE_GRAINED_BENCH
+#define CYCLES_REQUIRED 1e4
+#else
 #define CYCLES_REQUIRED 1e8
+#endif
+
 #define CALIBRATE
 
 //------------------------------------------------------------------------------
@@ -36,6 +43,42 @@ long perf_event_open(perf_event_attr *hw_event, pid_t pid, int cpu,
  */
 
 double rdtsc(void (*compute)()) {
+  int i, num_runs;
+  myInt64 cycles;
+  myInt64 start;
+  num_runs = NUM_RUNS;
+
+/*
+ * The CPUID instruction serializes the pipeline.
+ * Using it, we can create execution barriers around the code we want to time.
+ * The calibrate section is used to make the computation large enough so as to
+ * avoid measurements bias due to the timing overhead.
+ */
+#ifdef CALIBRATE
+  while (num_runs < (1 << 14)) {
+    start = start_tsc();
+    for (i = 0; i < num_runs; ++i) {
+      compute();
+    }
+    cycles = stop_tsc(start);
+
+    if (cycles >= CYCLES_REQUIRED)
+      break;
+
+    num_runs *= 2;
+  }
+#endif
+
+  start = start_tsc();
+  for (i = 0; i < num_runs; ++i) {
+    compute();
+  }
+
+  cycles = stop_tsc(start) / num_runs;
+  return (double)cycles;
+}
+
+double rdtsc_lambda(std::function<void ()> compute) {
   int i, num_runs;
   myInt64 cycles;
   myInt64 start;
@@ -292,16 +335,108 @@ int start_flops_counter(unsigned long config) {
   return fd;
 }
 
-long long stop_flops_counter(int fd) {
+unsigned long stop_flops_counter(int fd) {
   if (fd == -1) {
     return 0;
   }
 
   // disable and read out the counter
   ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
-  long long count;
-  read(fd, &count, sizeof(long long));
+  unsigned long count;
+  read(fd, &count, sizeof(unsigned long));
   close(fd);
 
   return count;
 }
+
+//------------------------------------------------------------------------------
+//---- End-to-End measurement utils
+//------------------------------------------------------------------------------
+
+#ifdef BENCHMARK_AMD
+
+void init_measurement(struct measurement_data_t *data) {
+  data->runtime = 0;
+  data->add_sub = 0;
+  data->mult = 0;
+  data->div_sqrt = 0;
+  data->mult_add = 0;
+}
+
+void add_measurement(struct measurement_data_t *data, std::function<void ()> compute) {
+  int fd = start_flops_counter(ADD_SUB_FLOPS);
+  compute();
+  data->add_sub += stop_flops_counter(fd);
+  fd = start_flops_counter(MULT_FLOPS);
+  compute();
+  data->mult += stop_flops_counter(fd);
+  fd = start_flops_counter(DIV_SQRT_FLOPS);
+  compute();
+  data->div_sqrt += stop_flops_counter(fd);
+  fd = start_flops_counter(MULT_ADD_FLOPS);
+  compute();
+  data->mult_add += stop_flops_counter(fd);
+
+  data->runtime += rdtsc_lambda(compute);
+}
+
+void print_measurement(struct measurement_data_t *data, const char *prefix) {
+  setlocale(LC_NUMERIC, "");
+  printf("%s RDTSC: %'lf cycles (%'lf sec @ %'lf MHz)\n", prefix, data->runtime, data->runtime / (FREQUENCY),
+         (FREQUENCY) / 1e6);
+  printf("%s FLOPS count add/sub: %'lu\n", prefix, data->add_sub);
+  printf("%s FLOPS count mult: %'lu\n", prefix, data->mult);
+  printf("%s FLOPS count div/sqrt: %'lu\n", prefix, data->div_sqrt);
+  printf("%s FLOPS count multiply-add: %'lu\n", prefix, data->mult_add);
+  unsigned long all_flops = data->add_sub + data->mult + data->div_sqrt + data->mult_add;
+  printf("%s FLOPS count overall: %'lu\n", prefix, all_flops);
+
+  printf("%s Performance (RDTSC) = %'f dflops/cycle\n", prefix, (double)all_flops / data->runtime);
+}
+
+#else
+
+void init_measurement(struct measurement_data_t *data) {
+  data->runtime = 0;
+  data->sd = 0;
+  data->pd128 = 0;
+  data->pd256 = 0;
+}
+
+void add_measurement(struct measurement_data_t *data, std::function<void ()> compute) {
+  const int k = 3;
+  unsigned long ids[k];
+  unsigned long result[k];
+
+  const unsigned long double_configs[] = {
+      FP_ARITH_INST_RETIRED_SCALAR_DOUBLE,
+      FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE,
+      FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE};
+
+  fd = start_all_flops_counter(double_configs, ids, k);
+  compute();
+  stop_all_flops_counter(fd, ids, result, k);
+
+  data->sd += result[0];
+  data->pd128 += result[1];
+  data->pd256 += result[2];
+
+  data->runtime += rdtsc_lambda(compute);
+}
+
+void print_measurement(struct measurement_data_t *data, const char *prefix) {
+  setlocale(LC_NUMERIC, "");
+  printf("%s FLOPS count scalar double: %'lu\n", prefix, data->sd);
+  printf("%s FLOPS count 128 packed double: %'lu (multiply by 2 to get scalar "
+         "operations)\n", prefix, data->pd128);
+  printf("%s FLOPS count 256 packed double: %'lu (multiply by 4 to get scalar "
+         "operations)\n", prefix, data->pd256);
+
+  long long scalar_flops = data->sd + 2 * data->pd128 + 4 * data->pd256;
+  printf(
+      "%s Performance (RDTSC) = %'f dflops/cycle (only counting add, mul, sub)\n",
+      prefix, (double)scalar_flops / data->runtime);
+
+}
+
+#endif

@@ -1,6 +1,8 @@
 #ifndef _BENCHMARK_UTIL_H_
 #define _BENCHMARK_UTIL_H_
 
+#include <functional>
+
 #define NUM_RUNS 3
 #ifndef BENCHMARK_AMD
 #define FREQUENCY 2.6e9
@@ -17,6 +19,13 @@
 #define FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE 0x08C7
 #define FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE 0x10C7
 #define FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE 0x20C7
+
+struct measurement_data_t {
+  double runtime;
+  unsigned long sd;
+  unsigned long pd128;
+  unsigned long pd256;
+};
 
 #else
 // base frequency of AMD Ryzen 7 4800H (alex' machine)
@@ -38,6 +47,14 @@
 #define DIV_SQRT_FLOPS 0x0403
 #define MULT_ADD_FLOPS 0x0803
 
+struct measurement_data_t {
+  double runtime;
+  unsigned long add_sub;
+  unsigned long mult;
+  unsigned long div_sqrt;
+  unsigned long mult_add;
+};
+
 #endif
 
 //------------------------------------------------------------------------------
@@ -45,6 +62,7 @@
 //------------------------------------------------------------------------------
 
 double rdtsc(void (*compute)());
+double rdtsc_lambda(std::function<void ()> compute);
 double c_clock(void (*compute)());
 double timeofday(void (*compute)());
 void measure_and_print(void (*compute)());
@@ -66,10 +84,19 @@ struct read_format_t {
 };
 
 int start_flops_counter(unsigned long config);
-long long stop_flops_counter(int fd);
+unsigned long stop_flops_counter(int fd);
 int start_all_flops_counter(const unsigned long *configs, unsigned long *ids,
                             int n);
 void stop_all_flops_counter(int fd, unsigned long *ids, unsigned long *result,
                             int n);
+
+//------------------------------------------------------------------------------
+//---- End-to-End measurement utils
+//------------------------------------------------------------------------------
+
+void init_measurement(struct measurement_data_t *data);
+void add_measurement(struct measurement_data_t *data, std::function<void ()> compute);
+void print_measurement(struct measurement_data_t *data, const char *prefix);
+
 
 #endif // _BENCHMARK_UTIL_H_
