@@ -1,0 +1,120 @@
+Running Cache analysis for hdbscan
+
+==333003== Cachegrind, a cache and branch-prediction profiler
+==333003== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==333003== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==333003== Command: ./build/bin/hdbscan data/perf_data_d4_12.csv
+==333003== 
+--333003-- warning: L3 cache found, using its data for the LL simulation.
+==333003== brk segment overflow in thread #1: can't grow to 0x4838000
+==333003== (see section Limitations in user manual)
+==333003== NOTE: further instances of this message will not be shown
+==333003== 
+==333003== I   refs:      28,015,847,844
+==333003== I1  misses:             2,582
+==333003== LLi misses:             2,353
+==333003== I1  miss rate:           0.00%
+==333003== LLi miss rate:           0.00%
+==333003== 
+==333003== D   refs:       7,603,290,561  (6,605,937,801 rd   + 997,352,760 wr)
+==333003== D1  misses:       320,015,761  (  294,695,970 rd   +  25,319,791 wr)
+==333003== LLd misses:           189,846  (       54,584 rd   +     135,262 wr)
+==333003== D1  miss rate:            4.2% (          4.5%     +         2.5%  )
+==333003== LLd miss rate:            0.0% (          0.0%     +         0.0%  )
+==333003== 
+==333003== LL refs:          320,018,343  (  294,698,552 rd   +  25,319,791 wr)
+==333003== LL misses:            192,199  (       56,937 rd   +     135,262 wr)
+==333003== LL miss rate:             0.0% (          0.0%     +         0.0%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_distvec
+
+==333704== Cachegrind, a cache and branch-prediction profiler
+==333704== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==333704== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==333704== Command: ./build/bin/hdbscan_distvec data/perf_data_d4_12.csv
+==333704== 
+--333704-- warning: L3 cache found, using its data for the LL simulation.
+==333704== brk segment overflow in thread #1: can't grow to 0x4838000
+==333704== (see section Limitations in user manual)
+==333704== NOTE: further instances of this message will not be shown
+==333704== 
+==333704== I   refs:      29,565,564,068
+==333704== I1  misses:             3,370
+==333704== LLi misses:             2,355
+==333704== I1  miss rate:           0.00%
+==333704== LLi miss rate:           0.00%
+==333704== 
+==333704== D   refs:       6,287,074,848  (5,639,794,262 rd   + 647,280,586 wr)
+==333704== D1  misses:       298,379,135  (  271,902,612 rd   +  26,476,523 wr)
+==333704== LLd misses:           189,841  (       54,579 rd   +     135,262 wr)
+==333704== D1  miss rate:            4.7% (          4.8%     +         4.1%  )
+==333704== LLd miss rate:            0.0% (          0.0%     +         0.0%  )
+==333704== 
+==333704== LL refs:          298,382,505  (  271,905,982 rd   +  26,476,523 wr)
+==333704== LL misses:            192,196  (       56,934 rd   +     135,262 wr)
+==333704== LL miss rate:             0.0% (          0.0%     +         0.0%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_distvec_quickvec
+
+==334970== Cachegrind, a cache and branch-prediction profiler
+==334970== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==334970== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==334970== Command: ./build/bin/hdbscan_distvec_quickvec data/perf_data_d4_12.csv
+==334970== 
+--334970-- warning: L3 cache found, using its data for the LL simulation.
+==334970== brk segment overflow in thread #1: can't grow to 0x4838000
+==334970== (see section Limitations in user manual)
+==334970== NOTE: further instances of this message will not be shown
+==334970== 
+==334970== I   refs:      29,565,566,638
+==334970== I1  misses:             3,402
+==334970== LLi misses:             2,374
+==334970== I1  miss rate:           0.00%
+==334970== LLi miss rate:           0.00%
+==334970== 
+==334970== D   refs:       6,287,075,250  (5,639,794,405 rd   + 647,280,845 wr)
+==334970== D1  misses:       298,391,985  (  271,905,492 rd   +  26,486,493 wr)
+==334970== LLd misses:           189,859  (       54,583 rd   +     135,276 wr)
+==334970== D1  miss rate:            4.7% (          4.8%     +         4.1%  )
+==334970== LLd miss rate:            0.0% (          0.0%     +         0.0%  )
+==334970== 
+==334970== LL refs:          298,395,387  (  271,908,894 rd   +  26,486,493 wr)
+==334970== LL misses:            192,233  (       56,957 rd   +     135,276 wr)
+==334970== LL miss rate:             0.0% (          0.0%     +         0.0%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_distvec_quickvec_primvec
+
+==336223== Cachegrind, a cache and branch-prediction profiler
+==336223== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==336223== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==336223== Command: ./build/bin/hdbscan_distvec_quickvec_primvec data/perf_data_d4_12.csv
+==336223== 
+--336223-- warning: L3 cache found, using its data for the LL simulation.
+==336223== brk segment overflow in thread #1: can't grow to 0x4845000
+==336223== (see section Limitations in user manual)
+==336223== NOTE: further instances of this message will not be shown
+==336223== 
+==336223== I   refs:      34,519,211,509
+==336223== I1  misses:             3,393
+==336223== LLi misses:             2,377
+==336223== I1  miss rate:           0.00%
+==336223== LLi miss rate:           0.00%
+==336223== 
+==336223== D   refs:       7,870,557,535  (6,914,234,961 rd   + 956,322,574 wr)
+==336223== D1  misses:       286,709,596  (  260,220,703 rd   +  26,488,893 wr)
+==336223== LLd misses:           192,470  (       55,892 rd   +     136,578 wr)
+==336223== D1  miss rate:            3.6% (          3.8%     +         2.8%  )
+==336223== LLd miss rate:            0.0% (          0.0%     +         0.0%  )
+==336223== 
+==336223== LL refs:          286,712,989  (  260,224,096 rd   +  26,488,893 wr)
+==336223== LL misses:            194,847  (       58,269 rd   +     136,578 wr)
+==336223== LL miss rate:             0.0% (          0.0%     +         0.0%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+

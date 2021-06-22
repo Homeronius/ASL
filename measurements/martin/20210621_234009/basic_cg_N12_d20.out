@@ -1,0 +1,108 @@
+Running Cache analysis for hdbscan_basic
+
+==322434== Cachegrind, a cache and branch-prediction profiler
+==322434== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==322434== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==322434== Command: ./build/bin/hdbscan_basic data/perf_data_d20_12.csv
+==322434== 
+--322434-- warning: L3 cache found, using its data for the LL simulation.
+==322434== 
+==322434== I   refs:      37,685,655,205
+==322434== I1  misses:             5,458
+==322434== LLi misses:             2,401
+==322434== I1  miss rate:           0.00%
+==322434== LLi miss rate:           0.00%
+==322434== 
+==322434== D   refs:      13,266,862,474  (12,096,747,798 rd   + 1,170,114,676 wr)
+==322434== D1  misses:       771,168,288  (   719,562,480 rd   +    51,605,808 wr)
+==322434== LLd misses:        74,327,688  (    48,507,525 rd   +    25,820,163 wr)
+==322434== D1  miss rate:            5.8% (           5.9%     +           4.4%  )
+==322434== LLd miss rate:            0.6% (           0.4%     +           2.2%  )
+==322434== 
+==322434== LL refs:          771,173,746  (   719,567,938 rd   +    51,605,808 wr)
+==322434== LL misses:         74,330,089  (    48,509,926 rd   +    25,820,163 wr)
+==322434== LL miss rate:             0.1% (           0.1%     +           2.2%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_distvec
+
+==323482== Cachegrind, a cache and branch-prediction profiler
+==323482== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==323482== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==323482== Command: ./build/bin/hdbscan_basic_distvec data/perf_data_d20_12.csv
+==323482== 
+--323482-- warning: L3 cache found, using its data for the LL simulation.
+==323482== 
+==323482== I   refs:      28,375,766,420
+==323482== I1  misses:            15,803
+==323482== LLi misses:             2,405
+==323482== I1  miss rate:           0.00%
+==323482== LLi miss rate:           0.00%
+==323482== 
+==323482== D   refs:       7,378,102,099  (6,745,228,876 rd   + 632,873,223 wr)
+==323482== D1  misses:       735,545,155  (  683,636,455 rd   +  51,908,700 wr)
+==323482== LLd misses:        74,333,529  (   48,510,707 rd   +  25,822,822 wr)
+==323482== D1  miss rate:           10.0% (         10.1%     +         8.2%  )
+==323482== LLd miss rate:            1.0% (          0.7%     +         4.1%  )
+==323482== 
+==323482== LL refs:          735,560,958  (  683,652,258 rd   +  51,908,700 wr)
+==323482== LL misses:         74,335,934  (   48,513,112 rd   +  25,822,822 wr)
+==323482== LL miss rate:             0.2% (          0.1%     +         4.1%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_distvec_quickvec
+
+==326589== Cachegrind, a cache and branch-prediction profiler
+==326589== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==326589== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==326589== Command: ./build/bin/hdbscan_basic_distvec_quickvec data/perf_data_d20_12.csv
+==326589== 
+--326589-- warning: L3 cache found, using its data for the LL simulation.
+==326589== 
+==326589== I   refs:      28,375,766,447
+==326589== I1  misses:            15,813
+==326589== LLi misses:             2,413
+==326589== I1  miss rate:           0.00%
+==326589== LLi miss rate:           0.00%
+==326589== 
+==326589== D   refs:       7,378,102,100  (6,745,228,877 rd   + 632,873,223 wr)
+==326589== D1  misses:       735,497,794  (  683,603,667 rd   +  51,894,127 wr)
+==326589== LLd misses:        74,333,523  (   48,510,676 rd   +  25,822,847 wr)
+==326589== D1  miss rate:           10.0% (         10.1%     +         8.2%  )
+==326589== LLd miss rate:            1.0% (          0.7%     +         4.1%  )
+==326589== 
+==326589== LL refs:          735,513,607  (  683,619,480 rd   +  51,894,127 wr)
+==326589== LL misses:         74,335,936  (   48,513,089 rd   +  25,822,847 wr)
+==326589== LL miss rate:             0.2% (          0.1%     +         4.1%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_distvec_quickvec_primvec
+
+==329757== Cachegrind, a cache and branch-prediction profiler
+==329757== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==329757== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==329757== Command: ./build/bin/hdbscan_basic_distvec_quickvec_primvec data/perf_data_d20_12.csv
+==329757== 
+--329757-- warning: L3 cache found, using its data for the LL simulation.
+==329757== 
+==329757== I   refs:      27,772,296,849
+==329757== I1  misses:            15,804
+==329757== LLi misses:             2,406
+==329757== I1  miss rate:           0.00%
+==329757== LLi miss rate:           0.00%
+==329757== 
+==329757== D   refs:       7,261,967,114  (6,526,892,780 rd   + 735,074,334 wr)
+==329757== D1  misses:       814,913,081  (  763,203,186 rd   +  51,709,895 wr)
+==329757== LLd misses:        77,184,023  (   51,411,300 rd   +  25,772,723 wr)
+==329757== D1  miss rate:           11.2% (         11.7%     +         7.0%  )
+==329757== LLd miss rate:            1.1% (          0.8%     +         3.5%  )
+==329757== 
+==329757== LL refs:          814,928,885  (  763,218,990 rd   +  51,709,895 wr)
+==329757== LL misses:         77,186,429  (   51,413,706 rd   +  25,772,723 wr)
+==329757== LL miss rate:             0.2% (          0.1%     +         3.5%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
