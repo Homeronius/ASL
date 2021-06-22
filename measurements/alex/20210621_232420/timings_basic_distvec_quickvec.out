@@ -1,0 +1,300 @@
+Running test at time Di 22 Jun 2021 00:29:59 CEST
+======================              
+Measurement for data/perf_data_d64_0.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_0.csv
+
+RDTSC: 80’982.000000 cycles (0.000028 sec @ 2’900.000000 MHz)
+C clock(): 81’183.007812 cycles (0.000028 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000028 sec
+
+PERF cycles: 81’268
+FLOPS count add/sub: 82’690
+FLOPS count mult: 0
+FLOPS count div/sqrt: 1’037
+FLOPS count multiply-add: 131’072
+FLOPS count overall: 214’799
+Performance (PERF) = 2.643094 dflops/cycle
+Performance (RDTSC) = 2.652429 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_1.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_1.csv
+
+RDTSC: 292’655.000000 cycles (0.000101 sec @ 2’900.000000 MHz)
+C clock(): 291’684.114583 cycles (0.000101 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000099 sec
+
+PERF cycles: 287’871
+FLOPS count add/sub: 329’358
+FLOPS count mult: 0
+FLOPS count div/sqrt: 4’136
+FLOPS count multiply-add: 524’288
+FLOPS count overall: 857’782
+Performance (PERF) = 2.979744 dflops/cycle
+Performance (RDTSC) = 2.931035 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_2.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_2.csv
+
+RDTSC: 1’143’258.000000 cycles (0.000394 sec @ 2’900.000000 MHz)
+C clock(): 1’142’388.541667 cycles (0.000394 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000394 sec
+
+PERF cycles: 1’368’360
+FLOPS count add/sub: 1’314’240
+FLOPS count mult: 0
+FLOPS count div/sqrt: 16’485
+FLOPS count multiply-add: 2’097’152
+FLOPS count overall: 3’427’877
+Performance (PERF) = 2.505099 dflops/cycle
+Performance (RDTSC) = 2.998341 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_3.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_3.csv
+
+RDTSC: 4’280’386.000000 cycles (0.001476 sec @ 2’900.000000 MHz)
+C clock(): 4’252’125.000000 cycles (0.001466 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.001466 sec
+
+PERF cycles: 4’193’800
+FLOPS count add/sub: 5’249’843
+FLOPS count mult: 0
+FLOPS count div/sqrt: 65’749
+FLOPS count multiply-add: 8’388’608
+FLOPS count overall: 13’704’200
+Performance (PERF) = 3.267729 dflops/cycle
+Performance (RDTSC) = 3.201627 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_4.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_4.csv
+
+RDTSC: 16’389’282.000000 cycles (0.005651 sec @ 2’900.000000 MHz)
+C clock(): 16’317’091.666667 cycles (0.005627 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.005778 sec
+
+PERF cycles: 16’287’452
+FLOPS count add/sub: 20’984’262
+FLOPS count mult: 0
+FLOPS count div/sqrt: 262’594
+FLOPS count multiply-add: 33’554’432
+FLOPS count overall: 54’801’288
+Performance (PERF) = 3.364632 dflops/cycle
+Performance (RDTSC) = 3.343727 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_5.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_5.csv
+
+RDTSC: 76’145’116.000000 cycles (0.026257 sec @ 2’900.000000 MHz)
+C clock(): 67’294’500.000000 cycles (0.023205 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.022940 sec
+
+PERF cycles: 65’999’166
+FLOPS count add/sub: 83’912’300
+FLOPS count mult: 0
+FLOPS count div/sqrt: 1’049’496
+FLOPS count multiply-add: 134’217’728
+FLOPS count overall: 219’179’524
+Performance (PERF) = 3.320944 dflops/cycle
+Performance (RDTSC) = 2.878445 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_6.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_6.csv
+
+RDTSC: 306’932’075.000000 cycles (0.105839 sec @ 2’900.000000 MHz)
+C clock(): 310’568’733.333333 cycles (0.107093 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.105037 sec
+
+PERF cycles: 267’206’368
+FLOPS count add/sub: 335’591’825
+FLOPS count mult: 0
+FLOPS count div/sqrt: 4’196’163
+FLOPS count multiply-add: 536’870’912
+FLOPS count overall: 876’658’900
+Performance (PERF) = 3.280831 dflops/cycle
+Performance (RDTSC) = 2.856198 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_7.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_7.csv
+
+RDTSC: 1’303’289’744.000000 cycles (0.449410 sec @ 2’900.000000 MHz)
+C clock(): 1’313’078’433.333333 cycles (0.452786 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.442656 sec
+
+PERF cycles: 1’105’620’889
+FLOPS count add/sub: 1’342’277’494
+FLOPS count mult: 0
+FLOPS count div/sqrt: 16’780’972
+FLOPS count multiply-add: 2’147’483’648
+FLOPS count overall: 3’506’542’114
+Performance (PERF) = 3.171559 dflops/cycle
+Performance (RDTSC) = 2.690532 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_8.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_8.csv
+
+RDTSC: 3’170’122’288.000000 cycles (1.093146 sec @ 2’900.000000 MHz)
+C clock(): 3’108’979’800.000000 cycles (1.072062 sec @ 2’900.000000 MHz)
+C gettimeofday(): 1.073673 sec
+
+PERF cycles: 2’781’869’405
+FLOPS count add/sub: 3’020’054’840
+FLOPS count mult: 0
+FLOPS count div/sqrt: 37’754’395
+FLOPS count multiply-add: 4’831’838’208
+FLOPS count overall: 7’889’647’443
+Performance (PERF) = 2.836096 dflops/cycle
+Performance (RDTSC) = 2.488752 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_9.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_9.csv
+
+RDTSC: 6’507’387’555.000000 cycles (2.243927 sec @ 2’900.000000 MHz)
+C clock(): 6’487’013’866.666667 cycles (2.236901 sec @ 2’900.000000 MHz)
+C gettimeofday(): 2.266951 sec
+
+PERF cycles: 5’881’421’297
+FLOPS count add/sub: 5’368’925’773
+FLOPS count mult: 0
+FLOPS count div/sqrt: 67’116’479
+FLOPS count multiply-add: 8’589’934’592
+FLOPS count overall: 14’025’976’844
+Performance (PERF) = 2.384794 dflops/cycle
+Performance (RDTSC) = 2.155393 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_10.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_10.csv
+
+RDTSC: 11’199’968’683.000000 cycles (3.862058 sec @ 2’900.000000 MHz)
+C clock(): 11’278’893’633.333332 cycles (3.889274 sec @ 2’900.000000 MHz)
+C gettimeofday(): 3.876414 sec
+
+PERF cycles: 10’405’586’502
+FLOPS count add/sub: 8’388’889’157
+FLOPS count mult: 0
+FLOPS count div/sqrt: 104’867’193
+FLOPS count multiply-add: 13’421’772’800
+FLOPS count overall: 21’915’529’150
+Performance (PERF) = 2.106131 dflops/cycle
+Performance (RDTSC) = 1.956749 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_11.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_11.csv
+
+RDTSC: 17’099’920’102.000000 cycles (5.896524 sec @ 2’900.000000 MHz)
+C clock(): 17’133’850’566.666666 cycles (5.908224 sec @ 2’900.000000 MHz)
+C gettimeofday(): 5.895624 sec
+
+PERF cycles: 15’697’304’985
+FLOPS count add/sub: 12’079’936’337
+FLOPS count mult: 0
+FLOPS count div/sqrt: 151’006’471
+FLOPS count multiply-add: 19’327’352’832
+FLOPS count overall: 31’558’295’640
+Performance (PERF) = 2.010428 dflops/cycle
+Performance (RDTSC) = 1.845523 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_12.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native
+
+DATASET path: data/perf_data_d64_12.csv
+
+RDTSC: 23’742’879’371.000000 cycles (8.187200 sec @ 2’900.000000 MHz)
+C clock(): 23’844’339’400.000000 cycles (8.222186 sec @ 2’900.000000 MHz)
+C gettimeofday(): 8.301615 sec
+
+PERF cycles: 21’934’994’996
+FLOPS count add/sub: 16’442’081’288
+FLOPS count mult: 0
+FLOPS count div/sqrt: 205’534’349
+FLOPS count multiply-add: 26’306’674’688
+FLOPS count overall: 42’954’290’325
+Performance (PERF) = 1.958254 dflops/cycle
+Performance (RDTSC) = 1.809144 dflops/cycle
+

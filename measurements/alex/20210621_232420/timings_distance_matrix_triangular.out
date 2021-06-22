@@ -1,0 +1,300 @@
+Running test at time Di 22 Jun 2021 02:06:24 CEST
+======================              
+Measurement for data/perf_data_d20_0.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_0.csv
+
+RDTSC: 73’152.000000 cycles (0.000025 sec @ 2’900.000000 MHz)
+C clock(): 78’394.401042 cycles (0.000027 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000025 sec
+
+PERF cycles: 73’621
+FLOPS count add/sub: 20’475
+FLOPS count mult: 9’920
+FLOPS count div/sqrt: 509
+FLOPS count multiply-add: 0
+FLOPS count overall: 30’904
+Performance (PERF) = 0.419772 dflops/cycle
+Performance (RDTSC) = 0.422463 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_1.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_1.csv
+
+RDTSC: 275’043.000000 cycles (0.000095 sec @ 2’900.000000 MHz)
+C clock(): 273’747.916667 cycles (0.000094 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000094 sec
+
+PERF cycles: 271’422
+FLOPS count add/sub: 81’983
+FLOPS count mult: 40’320
+FLOPS count div/sqrt: 2’061
+FLOPS count multiply-add: 0
+FLOPS count overall: 124’364
+Performance (PERF) = 0.458194 dflops/cycle
+Performance (RDTSC) = 0.452162 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_2.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_2.csv
+
+RDTSC: 1’225’052.000000 cycles (0.000422 sec @ 2’900.000000 MHz)
+C clock(): 1’228’361.458333 cycles (0.000424 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000423 sec
+
+PERF cycles: 1’385’144
+FLOPS count add/sub: 328’056
+FLOPS count mult: 162’560
+FLOPS count div/sqrt: 8’237
+FLOPS count multiply-add: 0
+FLOPS count overall: 498’853
+Performance (PERF) = 0.360145 dflops/cycle
+Performance (RDTSC) = 0.407210 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_3.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_3.csv
+
+RDTSC: 5’506’065.000000 cycles (0.001899 sec @ 2’900.000000 MHz)
+C clock(): 5’183’750.000000 cycles (0.001788 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.001789 sec
+
+PERF cycles: 5’162’388
+FLOPS count add/sub: 1’311’881
+FLOPS count mult: 652’800
+FLOPS count div/sqrt: 32’873
+FLOPS count multiply-add: 0
+FLOPS count overall: 1’997’554
+Performance (PERF) = 0.386944 dflops/cycle
+Performance (RDTSC) = 0.362792 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_4.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_4.csv
+
+RDTSC: 19’639’336.000000 cycles (0.006772 sec @ 2’900.000000 MHz)
+C clock(): 19’286’450.000000 cycles (0.006651 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.006757 sec
+
+PERF cycles: 19’273’689
+FLOPS count add/sub: 5’245’403
+FLOPS count mult: 2’616’320
+FLOPS count div/sqrt: 131’301
+FLOPS count multiply-add: 0
+FLOPS count overall: 7’993’024
+Performance (PERF) = 0.414712 dflops/cycle
+Performance (RDTSC) = 0.406991 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_5.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_5.csv
+
+RDTSC: 81’733’725.000000 cycles (0.028184 sec @ 2’900.000000 MHz)
+C clock(): 83’054’066.666667 cycles (0.028639 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.028508 sec
+
+PERF cycles: 80’318’425
+FLOPS count add/sub: 20’976’695
+FLOPS count mult: 10’475’520
+FLOPS count div/sqrt: 524’754
+FLOPS count multiply-add: 0
+FLOPS count overall: 31’976’969
+Performance (PERF) = 0.398127 dflops/cycle
+Performance (RDTSC) = 0.391233 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_6.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_6.csv
+
+RDTSC: 365’932’739.000000 cycles (0.126184 sec @ 2’900.000000 MHz)
+C clock(): 365’423’200.000000 cycles (0.126008 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.126193 sec
+
+PERF cycles: 361’727’445
+FLOPS count add/sub: 83’892’935
+FLOPS count mult: 41’922’560
+FLOPS count div/sqrt: 2’098’117
+FLOPS count multiply-add: 0
+FLOPS count overall: 127’913’612
+Performance (PERF) = 0.353619 dflops/cycle
+Performance (RDTSC) = 0.349555 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_7.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_7.csv
+
+RDTSC: 1’623’029’370.000000 cycles (0.559665 sec @ 2’900.000000 MHz)
+C clock(): 1’609’645’000.000000 cycles (0.555050 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.559037 sec
+
+PERF cycles: 1’519’454’381
+FLOPS count add/sub: 335’564’410
+FLOPS count mult: 167’731’200
+FLOPS count div/sqrt: 8’390’566
+FLOPS count multiply-add: 0
+FLOPS count overall: 511’686’176
+Performance (PERF) = 0.336757 dflops/cycle
+Performance (RDTSC) = 0.315266 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_8.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_8.csv
+
+RDTSC: 3’717’416’494.000000 cycles (1.281868 sec @ 2’900.000000 MHz)
+C clock(): 3’702’064’600.000000 cycles (1.276574 sec @ 2’900.000000 MHz)
+C gettimeofday(): 1.294685 sec
+
+PERF cycles: 3’551’709’916
+FLOPS count add/sub: 754’997’692
+FLOPS count mult: 377’425’920
+FLOPS count div/sqrt: 18’877’326
+FLOPS count multiply-add: 0
+FLOPS count overall: 1’151’300’938
+Performance (PERF) = 0.324154 dflops/cycle
+Performance (RDTSC) = 0.309705 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_9.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_9.csv
+
+RDTSC: 6’689’255’536.000000 cycles (2.306640 sec @ 2’900.000000 MHz)
+C clock(): 6’723’707’033.333333 cycles (2.318520 sec @ 2’900.000000 MHz)
+C gettimeofday(): 2.317786 sec
+
+PERF cycles: 6’338’841’123
+FLOPS count add/sub: 1’342’221’185
+FLOPS count mult: 671’006’720
+FLOPS count div/sqrt: 33’558’374
+FLOPS count multiply-add: 0
+FLOPS count overall: 2’046’786’279
+Performance (PERF) = 0.322896 dflops/cycle
+Performance (RDTSC) = 0.305981 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_10.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_10.csv
+
+RDTSC: 11’307’730’798.000000 cycles (3.899218 sec @ 2’900.000000 MHz)
+C clock(): 11’308’077’300.000000 cycles (3.899337 sec @ 2’900.000000 MHz)
+C gettimeofday(): 3.976894 sec
+
+PERF cycles: 10’727’007’676
+FLOPS count add/sub: 2’097’202’250
+FLOPS count mult: 1’048’473’600
+FLOPS count div/sqrt: 52’433’741
+FLOPS count multiply-add: 0
+FLOPS count overall: 3’198’109’591
+Performance (PERF) = 0.298136 dflops/cycle
+Performance (RDTSC) = 0.282825 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_11.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_11.csv
+
+RDTSC: 17’405’480’884.000000 cycles (6.001890 sec @ 2’900.000000 MHz)
+C clock(): 17’372’372’666.666664 cycles (5.990473 sec @ 2’900.000000 MHz)
+C gettimeofday(): 6.059887 sec
+
+PERF cycles: 16’370’954’061
+FLOPS count add/sub: 3’019’963’486
+FLOPS count mult: 1’509’826’560
+FLOPS count div/sqrt: 75’503’441
+FLOPS count multiply-add: 0
+FLOPS count overall: 4’605’293’487
+Performance (PERF) = 0.281309 dflops/cycle
+Performance (RDTSC) = 0.264589 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d20_12.csv              
+======================
+Compiled with
+- Compiler ID:		 Clang
+- Compiler version:	 11.1.0
+- Compiler flags:	 -O3 -march=native -DHDBSCAN_BLOCK_SIZE=20
+
+DATASET path: data/perf_data_d20_12.csv
+
+RDTSC: 24’065’692’920.000000 cycles (8.298515 sec @ 2’900.000000 MHz)
+C clock(): 23’923’812’933.333336 cycles (8.249591 sec @ 2’900.000000 MHz)
+C gettimeofday(): 8.187919 sec
+
+PERF cycles: 22’723’913’196
+FLOPS count add/sub: 4’110’498’604
+FLOPS count mult: 2’055’065’600
+FLOPS count div/sqrt: 102’767’376
+FLOPS count multiply-add: 0
+FLOPS count overall: 6’268’331’580
+Performance (PERF) = 0.275847 dflops/cycle
+Performance (RDTSC) = 0.260468 dflops/cycle
+

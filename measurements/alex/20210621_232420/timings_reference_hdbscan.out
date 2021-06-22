@@ -1,0 +1,235 @@
+Running test at time Mo 21 Jun 2021 23:24:33 CEST
+======================              
+Measurement for data/perf_data_d64_0.csv              
+======================
+n: 32
+d: 64
+RDTSC: 404’489.000000 cycles (0.000139 sec @ 2’900.000000 MHz)
+C clock(): 407’450.000000 cycles (0.000140 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000155 sec
+
+PERF cycles: 581’100
+FLOPS count add/sub: 63’612
+FLOPS count mult: 31’769
+FLOPS count div/sqrt: 610
+FLOPS count multiply-add: 0
+FLOPS count overall: 95’991
+Performance (PERF) = 0.165188 dflops/cycle
+Performance (RDTSC) = 0.237314 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_1.csv              
+======================
+n: 64
+d: 64
+RDTSC: 1’746’430.000000 cycles (0.000602 sec @ 2’900.000000 MHz)
+C clock(): 1’534’311.458333 cycles (0.000529 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.000523 sec
+
+PERF cycles: 1’470’490
+FLOPS count add/sub: 258’300
+FLOPS count mult: 129’081
+FLOPS count div/sqrt: 2’258
+FLOPS count multiply-add: 0
+FLOPS count overall: 389’639
+Performance (PERF) = 0.264972 dflops/cycle
+Performance (RDTSC) = 0.223106 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_2.csv              
+======================
+n: 128
+d: 64
+RDTSC: 5’590’715.000000 cycles (0.001928 sec @ 2’900.000000 MHz)
+C clock(): 5’516’041.666667 cycles (0.001902 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.001909 sec
+
+PERF cycles: 5’364’090
+FLOPS count add/sub: 1’040’892
+FLOPS count mult: 520’313
+FLOPS count div/sqrt: 8’626
+FLOPS count multiply-add: 0
+FLOPS count overall: 1’569’831
+Performance (PERF) = 0.292656 dflops/cycle
+Performance (RDTSC) = 0.280793 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_3.csv              
+======================
+n: 256
+d: 64
+RDTSC: 18’652’935.000000 cycles (0.006432 sec @ 2’900.000000 MHz)
+C clock(): 18’678’416.666667 cycles (0.006441 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.006478 sec
+
+PERF cycles: 18’829’032
+FLOPS count add/sub: 4’178’934
+FLOPS count mult: 2’089’206
+FLOPS count div/sqrt: 33’644
+FLOPS count multiply-add: 0
+FLOPS count overall: 6’301’784
+Performance (PERF) = 0.334684 dflops/cycle
+Performance (RDTSC) = 0.337844 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_4.csv              
+======================
+n: 512
+d: 64
+RDTSC: 71’144’163.000000 cycles (0.024532 sec @ 2’900.000000 MHz)
+C clock(): 70’785’133.333333 cycles (0.024409 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.024417 sec
+
+PERF cycles: 71’165’343
+FLOPS count add/sub: 16’746’480
+FLOPS count mult: 8’372’723
+FLOPS count div/sqrt: 132’838
+FLOPS count multiply-add: 0
+FLOPS count overall: 25’252’041
+Performance (PERF) = 0.354836 dflops/cycle
+Performance (RDTSC) = 0.354942 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_5.csv              
+======================
+n: 1024
+d: 64
+RDTSC: 284’419’114.000000 cycles (0.098076 sec @ 2’900.000000 MHz)
+C clock(): 283’062’233.333333 cycles (0.097608 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.097361 sec
+
+PERF cycles: 273’368’041
+FLOPS count add/sub: 67’047’408
+FLOPS count mult: 33’522’675
+FLOPS count div/sqrt: 527’846
+FLOPS count multiply-add: 0
+FLOPS count overall: 101’097’929
+Performance (PERF) = 0.369824 dflops/cycle
+Performance (RDTSC) = 0.355454 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_6.csv              
+======================
+n: 2048
+d: 64
+RDTSC: 1’136’674’140.000000 cycles (0.391957 sec @ 2’900.000000 MHz)
+C clock(): 1’102’000’966.666667 cycles (0.380000 sec @ 2’900.000000 MHz)
+C gettimeofday(): 0.376424 sec
+
+PERF cycles: 1’115’674’712
+FLOPS count add/sub: 268’312’542
+FLOPS count mult: 134’154’217
+FLOPS count div/sqrt: 2’104’274
+FLOPS count multiply-add: 0
+FLOPS count overall: 404’571’033
+Performance (PERF) = 0.362625 dflops/cycle
+Performance (RDTSC) = 0.355925 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_7.csv              
+======================
+n: 4096
+d: 64
+RDTSC: 4’356’750’842.000000 cycles (1.502328 sec @ 2’900.000000 MHz)
+C clock(): 4’681’756’133.333334 cycles (1.614399 sec @ 2’900.000000 MHz)
+C gettimeofday(): 1.571405 sec
+
+PERF cycles: 4’307’509’708
+FLOPS count add/sub: 1’073’496’018
+FLOPS count mult: 536’743’905
+FLOPS count div/sqrt: 8’402’882
+FLOPS count multiply-add: 0
+FLOPS count overall: 1’618’642’805
+Performance (PERF) = 0.375772 dflops/cycle
+Performance (RDTSC) = 0.371525 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_8.csv              
+======================
+n: 6144
+d: 64
+RDTSC: 11’589’905’206.000000 cycles (3.996519 sec @ 2’900.000000 MHz)
+C clock(): 11’162’506’966.666668 cycles (3.849140 sec @ 2’900.000000 MHz)
+C gettimeofday(): 3.927321 sec
+
+PERF cycles: 11’433’311’842
+FLOPS count add/sub: 2’415’550’410
+FLOPS count mult: 1’207’769’051
+FLOPS count div/sqrt: 18’895’798
+FLOPS count multiply-add: 0
+FLOPS count overall: 3’642’215’259
+Performance (PERF) = 0.318562 dflops/cycle
+Performance (RDTSC) = 0.314258 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_9.csv              
+======================
+n: 8192
+d: 64
+RDTSC: 22’928’653’863.000000 cycles (7.906432 sec @ 2’900.000000 MHz)
+C clock(): 22’925’744’100.000000 cycles (7.905429 sec @ 2’900.000000 MHz)
+C gettimeofday(): 7.851750 sec
+
+PERF cycles: 22’374’226’942
+FLOPS count add/sub: 4’294’475’694
+FLOPS count mult: 2’147’229’649
+FLOPS count div/sqrt: 33’583’010
+FLOPS count multiply-add: 0
+FLOPS count overall: 6’475’288’353
+Performance (PERF) = 0.289408 dflops/cycle
+Performance (RDTSC) = 0.282410 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_10.csv              
+======================
+n: 10240
+d: 64
+RDTSC: 43’952’740’769.000000 cycles (15.156118 sec @ 2’900.000000 MHz)
+C clock(): 43’721’634’433.333328 cycles (15.076426 sec @ 2’900.000000 MHz)
+C gettimeofday(): 15.096532 sec
+
+PERF cycles: 43’838’937’526
+FLOPS count add/sub: 6’710’271’890
+FLOPS count mult: 3’355’125’696
+FLOPS count div/sqrt: 52’464’512
+FLOPS count multiply-add: 0
+FLOPS count overall: 10’117’862’098
+Performance (PERF) = 0.230796 dflops/cycle
+Performance (RDTSC) = 0.230199 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_11.csv              
+======================
+n: 12288
+d: 64
+RDTSC: 69’769’278’800.000000 cycles (24.058372 sec @ 2’900.000000 MHz)
+C clock(): 70’234’839’966.666656 cycles (24.218910 sec @ 2’900.000000 MHz)
+C gettimeofday(): 24.833501 sec
+
+PERF cycles: 72’997’223’476
+FLOPS count add/sub: 9’662’938’990
+FLOPS count mult: 4’831’457’199
+FLOPS count div/sqrt: 75’540’318
+FLOPS count multiply-add: 0
+FLOPS count overall: 14’569’936’507
+Performance (PERF) = 0.199596 dflops/cycle
+Performance (RDTSC) = 0.208830 dflops/cycle
+
+======================              
+Measurement for data/perf_data_d64_12.csv              
+======================
+n: 14336
+d: 64
+RDTSC: 99’223’028’208.000000 cycles (34.214837 sec @ 2’900.000000 MHz)
+C clock(): 99’397’568’633.333328 cycles (34.275024 sec @ 2’900.000000 MHz)
+C gettimeofday(): 34.466204 sec
+
+PERF cycles: 99’344’620’835
+FLOPS count add/sub: 13’152’477’038
+FLOPS count mult: 6’576’224’174
+FLOPS count div/sqrt: 102’810’460
+FLOPS count multiply-add: 0
+FLOPS count overall: 19’831’511’672
+Performance (PERF) = 0.199623 dflops/cycle
+Performance (RDTSC) = 0.199868 dflops/cycle
+

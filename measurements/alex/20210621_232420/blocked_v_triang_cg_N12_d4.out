@@ -1,0 +1,60 @@
+Running Cache analysis for hdbscan_basic_blocked
+
+==631167== Cachegrind, a cache and branch-prediction profiler
+==631167== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==631167== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==631167== Command: ./build/bin/hdbscan_basic_blocked data/perf_data_d4_12.csv
+==631167== 
+--631167-- warning: L3 cache found, using its data for the LL simulation.
+==631167== brk segment overflow in thread #1: can't grow to 0x4833000
+==631167== (see section Limitations in user manual)
+==631167== NOTE: further instances of this message will not be shown
+==631167== 
+==631167== I   refs:      19,579,834,003
+==631167== I1  misses:             2,743
+==631167== LLi misses:             2,521
+==631167== I1  miss rate:           0.00%
+==631167== LLi miss rate:           0.00%
+==631167== 
+==631167== D   refs:       5,298,942,117  (4,130,283,033 rd   + 1,168,659,084 wr)
+==631167== D1  misses:       236,835,112  (  209,960,267 rd   +    26,874,845 wr)
+==631167== LLd misses:       102,851,702  (   76,731,313 rd   +    26,120,389 wr)
+==631167== D1  miss rate:            4.5% (          5.1%     +           2.3%  )
+==631167== LLd miss rate:            1.9% (          1.9%     +           2.2%  )
+==631167== 
+==631167== LL refs:          236,837,855  (  209,963,010 rd   +    26,874,845 wr)
+==631167== LL misses:        102,854,223  (   76,733,834 rd   +    26,120,389 wr)
+==631167== LL miss rate:             0.4% (          0.3%     +           2.2%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_triang
+
+==631215== Cachegrind, a cache and branch-prediction profiler
+==631215== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==631215== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==631215== Command: ./build/bin/hdbscan_basic_triang data/perf_data_d4_12.csv
+==631215== 
+--631215-- warning: L3 cache found, using its data for the LL simulation.
+==631215== brk segment overflow in thread #1: can't grow to 0x483c000
+==631215== (see section Limitations in user manual)
+==631215== NOTE: further instances of this message will not be shown
+==631215== 
+==631215== I   refs:      19,677,815,095
+==631215== I1  misses:             2,715
+==631215== LLi misses:             2,494
+==631215== I1  miss rate:           0.00%
+==631215== LLi miss rate:           0.00%
+==631215== 
+==631215== D   refs:       4,287,109,365  (3,469,844,321 rd   + 817,265,044 wr)
+==631215== D1  misses:       396,542,399  (  357,895,904 rd   +  38,646,495 wr)
+==631215== LLd misses:       112,228,821  (   98,143,179 rd   +  14,085,642 wr)
+==631215== D1  miss rate:            9.2% (         10.3%     +         4.7%  )
+==631215== LLd miss rate:            2.6% (          2.8%     +         1.7%  )
+==631215== 
+==631215== LL refs:          396,545,114  (  357,898,619 rd   +  38,646,495 wr)
+==631215== LL misses:        112,231,315  (   98,145,673 rd   +  14,085,642 wr)
+==631215== LL miss rate:             0.5% (          0.4%     +         1.7%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
