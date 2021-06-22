@@ -35,7 +35,7 @@ EXT=$4
 AMD=0
 if [ $1 = "amd" ]; then
     AMD=1
-    PATH_PREFIX=./measurements/alex/${TIME}
+    PATH_IN=./measurements/alex/${TIME}
     PATH_OUT=./plots/alex/${TIME}
 fi
 
