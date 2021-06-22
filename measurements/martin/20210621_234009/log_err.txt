@@ -1,0 +1,201 @@
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+HDBSCAN-CPP/Distance/EuclideanDistance.cpp:1:9: warning: #pragma once in main file [-Wpragma-once-outside-header]
+#pragma once
+        ^
+1 warning generated.
+HDBSCAN-CPP/Distance/IDistanceCalculator.cpp:1:9: warning: #pragma once in main file [-Wpragma-once-outside-header]
+#pragma once
+        ^
+1 warning generated.
+HDBSCAN-CPP/Hdbscan/hdbscan.cpp:103:11: warning: unused variable 'numClusters' [-Wunused-variable]
+        uint32_t numClusters = 0;
+                 ^
+1 warning generated.
+In file included from HDBSCAN-CPP/HdbscanStar/undirectedGraph.cpp:1:
+HDBSCAN-CPP/HdbscanStar/undirectedGraph.hpp:20:7: warning: unused variable '_edgesLength' [-Wunused-variable]
+                int _edgesLength = _edges.size();
+                    ^
+1 warning generated.
+In file included from HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.cpp:9:
+HDBSCAN-CPP/HdbscanStar/undirectedGraph.hpp:20:7: warning: unused variable '_edgesLength' [-Wunused-variable]
+                int _edgesLength = _edges.size();
+                    ^
+HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.cpp:227:9: warning: unused variable 'iters' [-Wunused-variable]
+                                int iters = 0;
+                                    ^
+HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.cpp:583:34: warning: unused variable 'it' [-Wunused-variable]
+        std::vector<cluster> ::iterator it;
+                                        ^
+3 warnings generated.
+In file included from HDBSCAN-CPP/Runner/hdbscanRunner.cpp:6:
+In file included from HDBSCAN-CPP/Runner/../HdbscanStar/hdbscanAlgorithm.hpp:8:
+HDBSCAN-CPP/Runner/../HdbscanStar/undirectedGraph.hpp:20:7: warning: unused variable '_edgesLength' [-Wunused-variable]
+                int _edgesLength = _edges.size();
+                    ^
+1 warning generated.
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242165 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242169 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242179 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242191 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242199 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242209 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242222 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242230 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242243 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242252 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242260 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242268 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 242280 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243025 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243028 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243036 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243044 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243052 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243061 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243070 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243078 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243086 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243094 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243102 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243113 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243121 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243141 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243144 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243152 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243160 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243168 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243176 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243184 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243194 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243202 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243210 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243218 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243226 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Could not open file, check if passing the correct relative path to the data/ directory, or if it even exists
+./run_perf_measurements.sh: line 51: 243234 Aborted                 (core dumped) ${BINARY} "-i" "${FILEBASE}_${i}.csv" "-o" "${OUTPUT_CSV}" "-k" "${MPTS}" >> ${OUTPUT_LOG}
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=1, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=2, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=3, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=4, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=3, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
+/home/martin/.conda/envs/hdbscan-venv/lib/python3.8/site-packages/sklearn/utils/validation.py:70: FutureWarning: Pass centers=6, cluster_std=1.0 as keyword args. From version 1.0 (renaming of 0.25) passing these as positional arguments will result in an error
+  warnings.warn(f"Pass {args_msg} as keyword args. From version "
