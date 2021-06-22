@@ -51,7 +51,7 @@ def main(args):
     xticks = [int(d) for d in pivotted.columns]
 
     sns.heatmap(pivotted, cmap='RdBu_r', linewidths=.7,
-                vmin=0, vmax=3, yticklabels=yticks, xticklabels=xticks)
+                vmin=0, yticklabels=yticks, xticklabels=xticks)
     plt.yticks(rotation=0)
     plt.ylabel('d',rotation=0)
     
