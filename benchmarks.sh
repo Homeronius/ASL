@@ -49,14 +49,14 @@ mkdir -p plots/${TIME}
 # Total Comparison flops/cycles
 
 # TEST
-# N=3
-# NFIX=3
-# D=32
+N=3
+NFIX=3
+D=32
 
 # BENCHMARKING
-N=12
-NFIX=7
-D=64
+# N=12
+# NFIX=7
+# D=64
 
 # Basic everything
 if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "mpts" ] || [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
@@ -240,7 +240,7 @@ if [ $2 = "all" ]; then
         --files basic.csv \
                 basic_distvec_quickvec_primvec.csv \
                 advprim.csv \
-                advprim_distvec_quickvec.csv  \
+                advprim_distvec.csv  \
         --save-path plots/${TIME}/performance_basic_vs_advanced.pdf \
     
     python helper_scripts/plot_performance_alt.py --system $1  \
@@ -497,8 +497,8 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
     ./run_perf_measurements.sh gcc_advprim_autovec ./build/bin/hdbscan_benchmark  perf_data_d${D} ${N} ${TIME}
 
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=cc \
-        -DCMAKE_CXX_COMPILER=c++ \
+        -DCMAKE_C_COMPILER=gcc-11 \
+        -DCMAKE_CXX_COMPILER=g++-11 \
         -DCMAKE_CXX_FLAGS="-O3 -march=native" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
@@ -721,7 +721,8 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
         -DCMAKE_C_COMPILER=${C_COMPILER} \
         -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
         -DCMAKE_CXX_FLAGS="-O3 -march=native -DHDBSCAN_BLOCK_SIZE=80" \
-        -DPACKLEFT_WLOOKUP=0 \
+        -DPACKLEFT_WLOOKUP=1 \
+        -DHDBSCAN_QUICKSELECT=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_TRIANG=0 \
         -DHDBSCAN_PRECOMPUTE_DIST_BLOCKED=0 \
         -DHDBSCAN_VERBOSE=0 \
@@ -742,13 +743,11 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
 
     declare -a basic_arr=("hdbscan_basic"
                            "hdbscan_basic_distvec"
-                           "hdbscan_basic_distvec_quickvec"
                            "hdbscan_basic_distvec_quickvec_primvec"
     )
 
     declare -a advprim_arr=("hdbscan"
                             "hdbscan_distvec"
-                            "hdbscan_distvec_quickvec"
                             "hdbscan_distvec_quickvec_primvec"
     )
 
