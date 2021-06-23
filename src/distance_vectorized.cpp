@@ -201,7 +201,6 @@ __m256d euclidean_distance_4_opt_ret_simd(double *base, double *p1, double *p2,
   return _mm256_sqrt_pd(sum);
 }
 
-// 44 double flops per 4 distances
 void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
                                   double *p3, double *p4, double *res) {
   __m256d base_vec = _mm256_loadu_pd(base);
@@ -218,10 +217,10 @@ void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
     __m256d diff2 = _mm256_sub_pd(base_vec, pvb2);
     __m256d sum2 = _mm256_mul_pd(diff2, diff2);
 
-    __m256d switched3 = _mm256_permute_pd(sum1, 1);
-    __m256d switched4 = _mm256_permute_pd(sum2, 1);
-    __m256d b1 = _mm256_blend_pd(sum1, sum2, 0b0101);
-    __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b0101);
+    __m256d switched3 = _mm256_permute_pd(sum1, 0b0101);
+    __m256d switched4 = _mm256_permute_pd(sum2, 0b0101);
+    __m256d b1 = _mm256_blend_pd(sum1, sum2, 0b1010);
+    __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b1010);
     partial_sum1 = _mm256_add_pd(b1, b2);
   }
   {
@@ -233,20 +232,73 @@ void euclidean_distance_4_opt_alt(double *base, double *p1, double *p2,
     __m256d diff4 = _mm256_sub_pd(base_vec, p4_vec);
     __m256d sum4 = _mm256_mul_pd(diff4, diff4);
 
-    __m256d switched3 = _mm256_permute_pd(sum3, 1);
-    __m256d switched4 = _mm256_permute_pd(sum4, 1);
-    __m256d b1 = _mm256_blend_pd(sum3, sum4, 0b0101);
-    __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b0101);
+    __m256d switched3 = _mm256_permute_pd(sum3, 0b0101);
+    __m256d switched4 = _mm256_permute_pd(sum4, 0b0101);
+    __m256d b1 = _mm256_blend_pd(sum3, sum4, 0b1010);
+    __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b1010);
     partial_sum2 = _mm256_add_pd(b1, b2);
   }
 
   __m256d perm1 = _mm256_permute4x64_pd(partial_sum1, 0b11011000);
   __m256d perm2 = _mm256_permute4x64_pd(partial_sum2, 0b11011000);
 
-  __m256d switched3 = _mm256_permute_pd(perm1, 1);
-  __m256d switched4 = _mm256_permute_pd(perm2, 1);
-  __m256d b1 = _mm256_blend_pd(perm1, perm2, 0b0101);
-  __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b0101);
+  __m256d switched3 = _mm256_permute_pd(perm1, 0b0101);
+  __m256d switched4 = _mm256_permute_pd(perm2, 0b0101);
+  __m256d b1 = _mm256_blend_pd(perm1, perm2, 0b1010);
+  __m256d b2 = _mm256_blend_pd(switched3, switched4, 0b1010);
+  __m256d sum = _mm256_add_pd(b1, b2);
+
+  __m256d sqrt = _mm256_sqrt_pd(sum);
+  _mm256_storeu_pd(res, sqrt);
+
+#ifdef HDBSCAN_INSTRUMENT
+  hdbscan_sqrt_counter += 4;
+#endif
+}
+
+// 44 double flops per 4 distances
+void euclidean_distance_4_opt_alt_2(double *base, double *p1, double *p2,
+                                  double *p3, double *p4, double *res) {
+  __m256d base_vec = _mm256_loadu_pd(base);
+
+  __m256d partial_sum1;
+  __m256d partial_sum2;
+
+  {
+    __m256d p1_vec = _mm256_loadu_pd(p1);
+    __m256d diff1 = _mm256_sub_pd(base_vec, p1_vec);
+    __m256d sum1 = _mm256_mul_pd(diff1, diff1);
+
+    __m256d pvb2 = _mm256_loadu_pd(p3);
+    __m256d diff2 = _mm256_sub_pd(base_vec, pvb2);
+    __m256d sum2 = _mm256_mul_pd(diff2, diff2);
+
+    __m256d b1 = _mm256_blend_pd(sum1, sum2, 0b0101);
+    __m256d switched = _mm256_blend_pd(sum1, sum2, 0b1010);
+    __m256d b2 = _mm256_permute_pd(switched, 0b0101);
+    partial_sum1 = _mm256_add_pd(b1, b2);
+  }
+  {
+    __m256d p3_vec = _mm256_loadu_pd(p2);
+    __m256d diff3 = _mm256_sub_pd(base_vec, p3_vec);
+    __m256d sum3 = _mm256_mul_pd(diff3, diff3);
+
+    __m256d p4_vec = _mm256_loadu_pd(p4);
+    __m256d diff4 = _mm256_sub_pd(base_vec, p4_vec);
+    __m256d sum4 = _mm256_mul_pd(diff4, diff4);
+
+    __m256d b1 = _mm256_blend_pd(sum3, sum4, 0b1010);
+    __m256d switched = _mm256_blend_pd(sum3, sum4, 0b0101);
+    __m256d b2 = _mm256_permute_pd(switched, 0b0101);
+    partial_sum2 = _mm256_add_pd(b1, b2);
+  }
+
+  __m256d perm1 = _mm256_permute4x64_pd(partial_sum1, 0b11011000);
+  __m256d perm2 = _mm256_permute4x64_pd(partial_sum2, 0b11011000);
+
+  __m256d b1 = _mm256_blend_pd(perm1, perm2, 0b1010);
+  __m256d switched = _mm256_blend_pd(perm1, perm2, 0b0101);
+  __m256d b2 = _mm256_permute_pd(switched, 0b0101);
   __m256d sum = _mm256_add_pd(b1, b2);
 
   __m256d sqrt = _mm256_sqrt_pd(sum);
