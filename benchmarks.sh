@@ -164,14 +164,12 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec.csv \
-                basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/performance_basic.pdf
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec.csv \
-                basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/performance_basic_linear.pdf \
         --x-scale=linear
@@ -195,7 +193,6 @@ if [ $2 = "advanced" ] || [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files advprim.csv \
                 advprim_distvec.csv \
-                advprim_distvec_quickvec.csv \
                 advprim_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/performance_advprim.pdf
     
@@ -203,7 +200,6 @@ if [ $2 = "advanced" ] || [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files advprim.csv \
                 advprim_distvec.csv \
-                advprim_distvec_quickvec.csv \
                 advprim_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/performance_advprim_linear.pdf \
         --x-scale=linear
@@ -219,7 +215,6 @@ if [ $2 = "basic" ] || [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files basic.csv \
                 basic_distvec.csv \
-                basic_distvec_quickvec.csv \
                 basic_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/cycles_basic.pdf \
         --metric=cycles \
@@ -232,7 +227,6 @@ if [ $2 = "advanced" ] || [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files advprim.csv \
                 advprim_distvec.csv \
-                advprim_distvec_quickvec.csv \
                 advprim_distvec_quickvec_primvec.csv  \
         --save-path plots/${TIME}/cycles_advprim.pdf \
         --metric=cycles \
@@ -244,7 +238,7 @@ if [ $2 = "all" ]; then
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
-                basic_distvec_quickvec.csv \
+                basic_distvec_quickvec_primvec.csv \
                 advprim.csv \
                 advprim_distvec_quickvec.csv  \
         --save-path plots/${TIME}/performance_basic_vs_advanced.pdf \
@@ -252,18 +246,18 @@ if [ $2 = "all" ]; then
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
-                basic_distvec_quickvec.csv \
+                basic_distvec_quickvec_primvec.csv \
                 advprim.csv \
-                advprim_distvec_quickvec.csv  \
+                advprim_distvec.csv  \
         --save-path plots/${TIME}/performance_basic_vs_advanced_linear.pdf \
         --x-scale=linear 
 
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files basic.csv \
-                basic_distvec_quickvec.csv \
+                basic_distvec_quickvec_primvec.csv \
                 advprim.csv \
-                advprim_distvec_quickvec.csv  \
+                advprim_distvec.csv  \
         --save-path plots/${TIME}/cycles_basic_vs_advanced.pdf \
         --metric=cycles \
         --x-scale=linear
@@ -273,12 +267,16 @@ if [ $2 = "all" ]; then
         --data-path data/timings/${TIME} \
         --files reference_hdbscan.csv \
                 basic.csv basic_distvec_quickvec_primvec.csv \
+                basic_distvec.csv \
+                advprim.csv \
                 advprim_distvec.csv \
         --save-path plots/${TIME}/cycles_ref_vs_ours.pdf --x-scale=linear --metric=cycles
     python helper_scripts/plot_performance_alt.py --system $1  \
         --data-path data/timings/${TIME} \
         --files reference_hdbscan.csv \
                 basic.csv basic_distvec_quickvec_primvec.csv \
+                basic_distvec.csv \
+                advprim.csv \
                 advprim_distvec.csv \
         --save-path plots/${TIME}/performance_ref_vs_ours.pdf --x-scale=linear
 fi
@@ -484,8 +482,8 @@ if [ $2 = "gcc-v-clang" ] || [ $2 = "all" ]; then
     mkdir -p build
 
     cd build && cmake -G Ninja .. \
-        -DCMAKE_C_COMPILER=cc \
-        -DCMAKE_CXX_COMPILER=c++ \
+        -DCMAKE_C_COMPILER=gcc-11 \
+        -DCMAKE_CXX_COMPILER=g++-11 \
         -DCMAKE_CXX_FLAGS="-O3 -march=native -ffast-math" \
         -DPACKLEFT_WLOOKUP=1 \
         -DHDBSCAN_QUICKSELECT=0 \
