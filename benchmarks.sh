@@ -49,14 +49,14 @@ mkdir -p plots/${TIME}
 # Total Comparison flops/cycles
 
 # TEST
-N=3
-NFIX=3
-D=32
+# N=3
+# NFIX=3
+# D=32
 
 # BENCHMARKING
-# N=12
-# NFIX=7
-# D=64
+N=12
+NFIX=7
+D=64
 
 # Basic everything
 if [ $2 = "basic" ] || [ $2 = "advanced" ] ||  [ $2 = "reference" ] || [ $2 = "mpts" ] || [ $2 = "amd-v-intel" ] || [ $2 = "all" ]; then
