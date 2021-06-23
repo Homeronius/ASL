@@ -732,6 +732,16 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
         cd ..
     #cd build && ninja && cd ..
 
+    # build reference binary separately
+
+    cd references/hdbscan-cpp && make clean
+    if [ $1 = "amd" ]; then
+        make CXX=${CXX_COMPILER} CPPFLAGS="-DBENCHMARK_AMD -march=native"
+    else
+        make CXX=${CXX_COMPILER} CPPFLAGS="-march=native"
+    fi
+    cd ../..
+
     declare -a basic_arr=("hdbscan_basic"
                            "hdbscan_basic_distvec"
                            "hdbscan_basic_distvec_quickvec"
@@ -756,7 +766,7 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
     echo ===============
     echo Basic binaries:
     echo ===============
-    for D in 4 20; do
+    for D in 64; do
         outfile="${save_dir}basic_cg_N${N}_d${D}.out"
         touch ${outfile}
         for i in "${basic_arr[@]}"; do
@@ -769,7 +779,7 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
     echo =======================
     echo Advanced Prim binaries:
     echo =======================
-    for D in 4 20; do
+    for D in 64; do
         outfile="${save_dir}advprim_cg_N${N}_d${D}.out"
         touch $outfile
         for i in "${advprim_arr[@]}"; do
@@ -783,7 +793,7 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
     echo ===============
     echo Blocked-v-Triang binaries:
     echo ===============
-    for D in 4 20; do
+    for D in 64; do
         outfile="${save_dir}blocked_v_triang_cg_N${N}_d${D}.out"
         touch $outfile
         for i in "${blocked_v_distvec_arr[@]}"; do
@@ -791,6 +801,19 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
            valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./build/bin/$i data/perf_data_d${D}_${N}.csv 2>> $outfile
            printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
         done
+    done
+
+
+    echo ===============
+    echo Reference binary:
+    echo ===============
+    # a bit hacky, but our script assumes binary is in build
+    for D in 64; do
+        outfile="${save_dir}reference_cg_N${N}_d${D}.out"
+        touch $outfile
+        printf "Running Cache analysis for reference implementation\n\n" >> $outfile
+        valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./references/hdbscan-cpp/main data/perf_data_d${D}_${N}.csv 2>> $outfile
+        printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
     done
 
 fi
