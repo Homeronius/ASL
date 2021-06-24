@@ -197,10 +197,10 @@ def get_advprim_data_full(system):
 
 def get_advprim_data_report(system):
     OI = [
-        0.16735530610578,
-        0.581435085911027,
+        0.165667840808535,
+        0.573198429579793,
     ]
-    P = [0.888782272389665, 2.18095817743195]
+    P = [0.894395719556098, 2.42976790208966]
     labels = [
         "advprim",
         "advprim_distvec",
@@ -211,10 +211,10 @@ def get_advprim_data_report(system):
 
 def get_basic_data_report(system):
     OI = [
-        0.160056609109148,
-        0.55816535862059,
+        0.110449336624287,
+        0.546927204666479,
     ]
-    P = [0.902495855011091, 1.98102311080018]
+    P = [0.891624333757501, 2.3236811319306]
     labels = [
         "basic",
         "basic_distvec_quickvec_primvec",
