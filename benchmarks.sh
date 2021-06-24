@@ -715,6 +715,9 @@ fi
 
 if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
 
+    N=10
+    D=64
+
     rm -rf build
     mkdir -p build
     cd build && cmake -G Ninja .. \
@@ -759,7 +762,7 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
     mkdir -p ${save_dir}
     #python helper_scripts/generate_clusters.py data 3 4
     #python helper_scripts/generate_clusters.py data 6 20
-    python helper_scripts/generate_clusters.py data 6 64
+    python helper_scripts/generate_clusters.py data 6 ${D}
 
     echo ===============
     echo Basic binaries:
@@ -810,7 +813,7 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
         outfile="${save_dir}reference_cg_N${N}_d${D}.out"
         touch $outfile
         printf "Running Cache analysis for reference implementation\n\n" >> $outfile
-        valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./references/hdbscan-cpp/main data/perf_data_d${D}_${N}.csv 2>> $outfile
+        valgrind --tool=cachegrind --cachegrind-out-file="cg.out" ./references/hdbscan-cpp/main -i data/perf_data_d${D}_${N}.csv 2>> $outfile
         printf "\n////////////////////////////////////////////////////////////////////////////////////\n\n" >> $outfile
     done
 
