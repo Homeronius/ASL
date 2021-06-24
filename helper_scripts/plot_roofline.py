@@ -45,7 +45,8 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
     if roof_2 is not None:
         y_vectorized = roofline_vectorized(x)
 
-    fig = plt.figure(figsize=(8, 8))
+    fig = plt.figure()
+    # fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111)
 
     # Plot 1st roofline
@@ -56,8 +57,8 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
 
     ax.set_xlabel("I [flops/byte]")
     # ax.set_ylabel("Performance [FLOPs / cycle]")
-    title = r"$\bf{Roofline\ plot}$ (" + system + ")"
-    title += "\n\n Performance [flops/cycle]"
+    title = r"$\bf{Roofline\ plot\ on\ AMD\ Ryzen\ 7\ 4800H\ (Zen\ 2),\ 2.9GHz}$"
+    title += "\n Performance [flops/cycle]"
     ax.set_title(title, loc="left")
 
     ax.set_yscale("log", base=2)
@@ -103,7 +104,7 @@ def create_roofline(beta, roof_1=None, roof_2=None, out_filename=None, system="I
 
     # Save to file if requested
     if out_filename is not None:
-        out_filename = "plots/roofline/" + out_filename + "_" + system + ".svg"
+        out_filename = "plots/roofline/" + out_filename + "_" + system + ".pdf"
         fig.savefig(out_filename, bbox_inches="tight")
 
 
@@ -194,6 +195,34 @@ def get_advprim_data_full(system):
     return OI, P, labels, markers
 
 
+def get_advprim_data_report(system):
+    OI = [
+        0.16735530610578,
+        0.581435085911027,
+    ]
+    P = [0.888782272389665, 2.18095817743195]
+    labels = [
+        "advprim",
+        "advprim_distvec",
+    ]
+    markers = ["x", "+"]
+    return OI, P, labels, markers
+
+
+def get_basic_data_report(system):
+    OI = [
+        0.160056609109148,
+        0.55816535862059,
+    ]
+    P = [0.902495855011091, 1.98102311080018]
+    labels = [
+        "basic",
+        "basic_distvec_quickvec_primvec",
+    ]
+    markers = ["s", "o"]
+    return OI, P, labels, markers
+
+
 def get_advprim_data_short(system):
     if system == "Intel":
         OI = [
@@ -246,8 +275,8 @@ def showcase():
 
 
 def main():
-    system = "Intel"
-    # system = "AMD"
+    # system = "Intel"
+    system = "AMD"
 
     # Define hardware properties
     if system == "Intel":
@@ -262,8 +291,8 @@ def main():
     Roofline = namedtuple("Roofline", ["pi", "OI", "P", "labels", "markers"])
 
     # All optimizations
-    sequential = Roofline(pi, *get_basic_data_full(system))
-    vectorized = Roofline(pi_vec, *get_advprim_data_full(system))
+    sequential = Roofline(pi, *get_basic_data_report(system))
+    vectorized = Roofline(pi_vec, *get_advprim_data_report(system))
 
     # Only baseline and best
     # sequential = Roofline(pi, *get_basic_data_short(system))
@@ -273,7 +302,7 @@ def main():
         beta,
         roof_1=sequential,
         roof_2=vectorized,
-        out_filename="combined_extended_roofline",
+        out_filename="roofline",
         system=system,
     )
 
