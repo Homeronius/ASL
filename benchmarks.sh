@@ -757,8 +757,9 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
 
     save_dir="./data/timings/${TIME}/"
     mkdir -p ${save_dir}
-    python helper_scripts/generate_clusters.py data 3 4
-    python helper_scripts/generate_clusters.py data 6 20
+    #python helper_scripts/generate_clusters.py data 3 4
+    #python helper_scripts/generate_clusters.py data 6 20
+    python helper_scripts/generate_clusters.py data 6 64
 
     echo ===============
     echo Basic binaries:
