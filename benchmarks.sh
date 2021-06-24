@@ -804,6 +804,13 @@ if [ $2 = "cache_analysis" ] || [ $2 = "all" ]; then
         done
     done
 
+    cd references/hdbscan-cpp && make clean
+    if [ $1 = "amd" ]; then
+        make CXX=${CXX_COMPILER} CPPFLAGS="-DBENCHMARK_AMD -DRUN_ONCE -march=native"
+    else
+        make CXX=${CXX_COMPILER} CPPFLAGS="-march=native -DRUN_ONCE"
+    fi
+    cd ../..
 
     echo ===============
     echo Reference binary:

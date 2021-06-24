@@ -82,6 +82,10 @@ int main(int argc, char **argv) {
   cout << "n: " << n << "\n";
   cout << "d: " << d << "\n";
 
+#ifndef DRUN_ONCE
+  compute_hdbscan();
+  return 0;
+#endif
 
   setlocale(LC_NUMERIC, "");
 
