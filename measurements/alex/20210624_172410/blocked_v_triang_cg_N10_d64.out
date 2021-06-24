@@ -1,0 +1,54 @@
+Running Cache analysis for hdbscan_basic_blocked
+
+==863092== Cachegrind, a cache and branch-prediction profiler
+==863092== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==863092== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==863092== Command: ./build/bin/hdbscan_basic_blocked data/perf_data_d64_10.csv
+==863092== 
+--863092-- warning: L3 cache found, using its data for the LL simulation.
+==863092== 
+==863092== I   refs:      55,902,719,779
+==863092== I1  misses:            28,162
+==863092== LLi misses:             2,546
+==863092== I1  miss rate:           0.00%
+==863092== LLi miss rate:           0.00%
+==863092== 
+==863092== D   refs:      15,750,880,766  (15,043,017,955 rd   + 707,862,811 wr)
+==863092== D1  misses:       970,483,509  (   956,989,813 rd   +  13,493,696 wr)
+==863092== LLd misses:        58,534,514  (    45,274,353 rd   +  13,260,161 wr)
+==863092== D1  miss rate:            6.2% (           6.4%     +         1.9%  )
+==863092== LLd miss rate:            0.4% (           0.3%     +         1.9%  )
+==863092== 
+==863092== LL refs:          970,511,671  (   957,017,975 rd   +  13,493,696 wr)
+==863092== LL misses:         58,537,060  (    45,276,899 rd   +  13,260,161 wr)
+==863092== LL miss rate:             0.1% (           0.1%     +         1.9%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
+Running Cache analysis for hdbscan_basic_triang
+
+==863309== Cachegrind, a cache and branch-prediction profiler
+==863309== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==863309== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==863309== Command: ./build/bin/hdbscan_basic_triang data/perf_data_d64_10.csv
+==863309== 
+--863309-- warning: L3 cache found, using its data for the LL simulation.
+==863309== 
+==863309== I   refs:      33,768,967,930
+==863309== I1  misses:            28,129
+==863309== LLi misses:             2,516
+==863309== I1  miss rate:           0.00%
+==863309== LLi miss rate:           0.00%
+==863309== 
+==863309== D   refs:       8,944,820,242  (8,382,953,863 rd   + 561,866,379 wr)
+==863309== D1  misses:       596,682,664  (  577,145,844 rd   +  19,536,820 wr)
+==863309== LLd misses:        86,697,736  (   76,454,307 rd   +  10,243,429 wr)
+==863309== D1  miss rate:            6.7% (          6.9%     +         3.5%  )
+==863309== LLd miss rate:            1.0% (          0.9%     +         1.8%  )
+==863309== 
+==863309== LL refs:          596,710,793  (  577,173,973 rd   +  19,536,820 wr)
+==863309== LL misses:         86,700,252  (   76,456,823 rd   +  10,243,429 wr)
+==863309== LL miss rate:             0.2% (          0.2%     +         1.8%  )
+
+////////////////////////////////////////////////////////////////////////////////////
+
