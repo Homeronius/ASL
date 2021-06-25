@@ -215,13 +215,15 @@ def get_basic_data_report(system):
     OI = [
         0.110449336624287,
         0.546927204666479,
+        0.161438926731858,
     ]
-    P = [0.891624333757501, 2.3236811319306]
+    P = [0.891624333757501, 2.3236811319306, 1.01182555871561]
     labels = [
         "basic",
         "basic_distvec_quickvec_primvec",
+        "basic_blocked_40",
     ]
-    markers = ["s", "o"]
+    markers = ["s", "o", "^"]
     return OI, P, labels, markers
 
 
