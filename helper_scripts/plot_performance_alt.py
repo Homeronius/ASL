@@ -83,6 +83,7 @@ def main(args):
             ax.xaxis.set_major_locator(plt.MultipleLocator(2048))
             # ax.xaxis.set_major_locator(plt.LogLocator(base=2, subs=[16]))
             # ax.xaxis.set_major_formatter(plt.FuncFormatter(format_func))
+            # ax.set_xlim(right=17000)
         elif args.x_scale == "log":
             (line,) = ax.semilogx(X_axis, y, linestyle="-", marker="o", base=2)
         else:
