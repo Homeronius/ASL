@@ -199,13 +199,15 @@ def get_advprim_data_report(system):
     OI = [
         0.165667840808535,
         0.573198429579793,
+        0.040057014751382,
     ]
-    P = [0.894395719556098, 2.42976790208966]
+    P = [0.894395719556098, 2.42976790208966, 0.230498164263463]
     labels = [
         "advprim",
         "advprim_distvec",
+        "reference",
     ]
-    markers = ["x", "+"]
+    markers = ["x", "+", "D"]
     return OI, P, labels, markers
 
 
