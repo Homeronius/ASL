@@ -6,7 +6,7 @@
 
 ```bash
 mkdir build && cd build
-cmake -G Ninja ..
+cmake -DCMAKE_CXX_FLAGS="-march=native" -G Ninja ..
 ninja        # building binaries
 ninja check  # running tests
 ```
